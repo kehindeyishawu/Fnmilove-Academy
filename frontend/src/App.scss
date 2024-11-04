@@ -1,0 +1,56 @@
+@use "./config" as *;
+
+// Montserrat Font
+@font-face {
+    font-family: 'Montserrat';
+    src: local('Montserrat-Bold'),
+    url('/fonts/Montserrat-Bold.woff2') format(woff2),
+    url('/fonts/Montserrat-Bold.woff') format(woff),
+    url('/fonts/Montserrat-Bold.ttf') format(truetype);
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Montserrat';
+    src: local('Montserrat-Regular'),
+    url('/fonts/Montserrat-Regular.woff2') format(woff2),
+    url('/fonts/Montserrat-Regular.woff') format(woff),
+    url('/fonts/Montserrat-Regular.ttf') format(truetype);
+    font-weight: normal;
+    font-style: normal;
+}
+// Nunito Font
+@font-face {
+    font-family: 'Nunito';
+    src: local('Nunito-Bold'),
+    url('/fonts/Nunito-Bold.woff2') format(woff2),
+    url('/fonts/Nunito-Bold.woff') format(woff),
+    url('/fonts/Nunito-Bold.ttf') format(truetype);
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Nunito';
+    src: local('Nunito-Regular'),
+    url('/fonts/Nunito-Regular.woff2') format(woff2),
+    url('/fonts/Nunito-Regular.woff') format(woff),
+    url('/fonts/Nunito-Regular.ttf') format(truetype);
+    font-weight: normal;
+    font-style: normal;
+}
+// Radley Font
+@font-face {
+    font-family: 'Radley';
+    src: local('Radley-Italic'),
+    url('/fonts/Radley-Italic.woff2') format(woff2),
+    url('/fonts/Radley-Italic.woff') format(woff),
+    url('/fonts/Radley-Italic.ttf') format(truetype);
+    font-weight: normal;
+    font-style: italic;
+}
+
+
+Body{
+    font-family: "Nunito", sans-serif;
+}
+

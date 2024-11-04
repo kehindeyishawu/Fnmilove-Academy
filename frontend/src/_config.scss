@@ -1,0 +1,9 @@
+
+/* import bootstrap to set changes */
+@forward '../node_modules/bootstrap/scss/bootstrap.scss' with(
+    $primary: #ffbd59,
+    $secondary: #463f61,
+    $info: #1c8cde,
+    $light: #c2cbca,
+    $dark: #000000,
+);
