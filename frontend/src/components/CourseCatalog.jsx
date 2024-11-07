@@ -21,7 +21,7 @@ const CourseCatalog = () => {
                 </div>
                 <div className="col-md-3">
                     <div className="bg-info"></div>
-                    <div className="text-center fw-bold my-2">Content Writing</div>
+                    <div className="text-center fw-bold my-2">Content Creation</div>
                 </div>
             </div>
             <div className="row">
