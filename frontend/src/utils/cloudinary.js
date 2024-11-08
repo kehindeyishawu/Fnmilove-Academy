@@ -12,8 +12,9 @@ export function setFullWidth(){
     return `w_${currentScreenWidth>=2000? 2000: currentScreenWidth},ar_${currentScreenWidth <= smScreen ? "4:3" : "16:9"},c_fill,f_auto,q_auto,dpr_${devicePixelRatio}`
 }
 
-export function setContainerFullWidth(ar=null, crop=null){
+export function setContainerFullWidth(ar="", crop=""){
     let preset = `${crop}f_auto,q_auto,dpr_${devicePixelRatio}`
+    let currentScreenWidth = screen.width;
 
     if (screen.width<xsScreen) {
         return `w_${currentScreenWidth},${ar}` + preset
@@ -30,8 +31,9 @@ export function setContainerFullWidth(ar=null, crop=null){
 }
 
 
-export function setContainerHalfWidth(ar=null, crop=null){
+export function setContainerHalfWidth(ar="", crop=""){
     let preset = `${crop}f_auto,q_auto,dpr_${devicePixelRatio}`
+    let currentScreenWidth = screen.width;
 
     if (screen.width<xsScreen) {
         return `w_${currentScreenWidth},${ar}` + preset
@@ -48,8 +50,9 @@ export function setContainerHalfWidth(ar=null, crop=null){
 }
 
 
-export function setContainerquarterWidth(ar=null, crop=null){
+export function setContainerQuarterWidth(ar="", crop=""){
     let preset = `${crop}f_auto,q_auto,dpr_${devicePixelRatio}`
+    let currentScreenWidth = screen.width;
 
     if (screen.width<xsScreen) {
         return `w_${currentScreenWidth},${ar}` + preset

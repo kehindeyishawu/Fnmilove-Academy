@@ -1,45 +1,43 @@
 import { BiSolidSchool } from "react-icons/bi";
 import { FaArrowRightLong } from "react-icons/fa6";
-
+import { setContainerQuarterWidth } from "../utils/cloudinary";
 
 const CourseCatalog = () => {
     return (
         <div className="container">
-            <div className="row mb-5">
+            <div className="row row-gap-3">
                 <div className="col-md-6">
                     <small className="fw-bold text-primary fs-6">
                         <BiSolidSchool/> {""}
                         Course Catalog
                     </small>
-                    <h1 className="fw-bold">Explore Our Categories</h1>
-                    <p className="mb-4">Discover a range of hands-on training programs designed to equip you with the skills needed for a successful career.</p>
+                    <h1 className="fw-bold mb-3">Explore Our Categories</h1>
+                    <p className="mb-5">Discover a range of hands-on training programs designed to equip you with the skills needed for a successful career.</p>
                     <a href="" className="btn btn-primary btn-lg fw-bold rounded-0">All Courses <FaArrowRightLong/></a>
                 </div>
                 <div className="col-md-3">
-                    <div className="bg-light"></div>
+                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731024142/Fnmilove%20Academy/makeup31_n8e2we.png`} className="img-fluid" alt="Makeup Set" />
                     <div className="text-center fw-bold my-2">Make-up</div>
                 </div>
                 <div className="col-md-3">
-                    <div className="bg-info"></div>
+                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731024141/Fnmilove%20Academy/Content81_utsreb.png`} className="img-fluid" alt="Content Creation" />
                     <div className="text-center fw-bold my-2">Content Creation</div>
                 </div>
-            </div>
-            <div className="row">
                 <div className="col-md-3">
-                    <div className="bg-light h-100"></div>
-                    <div className="fw-bold my-2">Fashion Design</div>
+                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731026125/Fnmilove%20Academy/fashion_vyb2oi.png`} className="img-fluid" alt="Fashion Design" />
+                    <div className="text-center fw-bold my-2">Fashion Design</div>
                 </div>
                 <div className="col-md-3">
-                    <div className="bg-light h-100"></div>
-                    <div className="fw-bold my-2">Photography</div>
+                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731026124/Fnmilove%20Academy/photography_moek2w.png`} className="img-fluid" alt="Photography" />
+                    <div className="text-center fw-bold my-2">Photography</div>
                 </div>
                 <div className="col-md-3">
-                    <div className="bg-light h-100"></div>
-                    <span>Web Development</span>
+                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731026126/Fnmilove%20Academy/web-design_gsjbwg.png`} className="img-fluid" alt="Web Development" />
+                    <div className="text-center fw-bold my-2">Web Development</div>
                 </div>
                 <div className="col-md-3">
-                    <div className="bg-light h-100"></div>
-                    <span>Graphics Design</span>
+                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731026124/Fnmilove%20Academy/graphic-designer1_i5uhsw.png`} className="img-fluid" alt="Graphics Design" />
+                    <div className="text-center fw-bold my-2">Graphics Design</div>
                 </div>
             </div>
         </div>

@@ -22,7 +22,9 @@ function App() {
         <section className='mt-5'>
           <CourseCatalog/>
         </section>
-        <section className='mt-5'></section>
+        <section className='mt-5'>
+          
+        </section>
       </main>
       <footer></footer>
     </>
