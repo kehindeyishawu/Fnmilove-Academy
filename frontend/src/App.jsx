@@ -4,6 +4,7 @@ import HeadNav from './components/HeadNav'
 import Slider from './components/Slider.jsx'
 import IconWrapper from './components/IconWrapper.jsx'
 import CourseCatalog from './components/CourseCatalog.jsx'
+import WhyUs from './components/WhyUs.jsx'
 
 function App() {
 
@@ -22,8 +23,8 @@ function App() {
         <section className='mt-5'>
           <CourseCatalog/>
         </section>
-        <section className='mt-5'>
-          
+        <section className='top-spacing'>
+          <WhyUs/>
         </section>
       </main>
       <footer></footer>

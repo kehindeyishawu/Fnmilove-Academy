@@ -11,8 +11,8 @@ const CourseCatalog = () => {
                         <BiSolidSchool/> {""}
                         Course Catalog
                     </small>
-                    <h1 className="fw-bold mb-3">Explore Our Categories</h1>
-                    <p className="mb-5">Discover a range of hands-on training programs designed to equip you with the skills needed for a successful career.</p>
+                    <h1 className="fw-bold mb-lg-3">Explore Our Categories</h1>
+                    <p className="mb-4 mb-lg-5">Discover a range of hands-on training programs designed to equip you with the skills needed for a successful career.</p>
                     <a href="" className="btn btn-primary btn-lg fw-bold rounded-0">All Courses <FaArrowRightLong/></a>
                 </div>
                 <div className="col-md-3">
