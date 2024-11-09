@@ -5,6 +5,7 @@ import Slider from './components/Slider.jsx'
 import IconWrapper from './components/IconWrapper.jsx'
 import CourseCatalog from './components/CourseCatalog.jsx'
 import WhyUs from './components/WhyUs.jsx'
+import TrendingCourses from './components/TrendingCourses.jsx'
 
 function App() {
 
@@ -25,6 +26,9 @@ function App() {
         </section>
         <section className='top-spacing'>
           <WhyUs/>
+        </section>
+        <section className='top-spacing'>
+          <TrendingCourses/>
         </section>
       </main>
       <footer></footer>
