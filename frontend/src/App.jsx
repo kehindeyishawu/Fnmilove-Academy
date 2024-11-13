@@ -10,6 +10,7 @@ import Testimonial from './components/Testimonial.jsx'
 import IframeVideo from './components/IframeVideo.jsx'
 import Posts from './components/Posts.jsx'
 import Team from './components/Team.jsx'
+import FAQs from './components/FAQs.jsx'
 
 function App() {
 
@@ -47,7 +48,7 @@ function App() {
           <Team />
         </section>
         <section>
-          
+          <FAQs />
         </section>
       </main>
       <footer></footer>
