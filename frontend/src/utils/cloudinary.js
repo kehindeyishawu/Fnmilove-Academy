@@ -7,6 +7,8 @@ let smScreen =  767;
 let mdScreen =  991;
 let lgScreen =  1199;
 
+// options: ar,c,
+
 export function setFullWidth(){
     let currentScreenWidth = screen.width
     return `w_${currentScreenWidth>=2000? 2000: currentScreenWidth},ar_${currentScreenWidth <= smScreen ? "4:3" : "16:9"},c_fill,f_auto,q_auto,dpr_${devicePixelRatio}`

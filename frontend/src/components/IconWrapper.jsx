@@ -10,7 +10,8 @@ const IconWrapper = () => {
                     <div className="row align-items-center justify-content-between py-3">
                         <FaBook className="display-4 col-2" />
                         <div className="col-10">
-                            <h4 className="fw-bold fs-5 text-secondary">Comprehensive Courses</h4>
+                            <h4 className="fw-bold fs-5 text-secondary d-none d-md-block">Comprehensive Courses</h4>
+                            <h4 className="fw-bold fs-6 text-secondary d-md-none">Comprehensive Courses</h4>
                             <span>
                                 Explore a wide range of courses with detailed descriptions, durations, prerequisites, and outcomes to suit your career goals.
                             </span>
@@ -21,7 +22,8 @@ const IconWrapper = () => {
                     <div className="row align-items-center justify-content-between py-3">
                         <FaChalkboardTeacher className="display-4 col-2" />
                         <div className="col-10">
-                            <h4 className="fw-bold fs-5 text-secondary">Expert Instructors</h4>
+                            <h4 className="fw-bold fs-5 text-secondary d-none d-md-block">Expert Instructors</h4>
+                            <h4 className="fw-bold fs-6 text-secondary d-md-none">Expert Instructors</h4>
                             <span>
                                 Learn from the best! Meet our highly qualified instructors and gain from their extensive experience.
                             </span>
@@ -32,7 +34,8 @@ const IconWrapper = () => {
                     <div className="row align-items-center justify-content-between py-3">
                         <FaTools className="display-4 col-2" />
                         <div className="col-10">
-                            <h4 className="fw-bold fs-5 text-secondary">Interactive Learning Tools</h4>
+                            <h4 className="fw-bold fs-5 text-secondary d-none d-md-block">Interactive Learning Tools</h4>
+                            <h4 className="fw-bold fs-6 text-secondary d-md-none">Interactive Learning Tools</h4>
                             <span>
                                 Engage with quizzes, forums, and live chat to make your learning experience interactive and dynamic.
                             </span>
