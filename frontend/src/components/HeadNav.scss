@@ -17,5 +17,22 @@
 .head-nav{
     .fnmi-logo{
         vertical-align: bottom;
+        width: 61px;
+    }
+    .academy-logo{
+        width: 50px;
+    }
+}
+
+
+@media (max-width: 767px) {
+    .head-nav {
+        .fnmi-logo {
+            width: 38px;
+        }
+
+        .academy-logo {
+            width: 35px;
+        }
     }
 }

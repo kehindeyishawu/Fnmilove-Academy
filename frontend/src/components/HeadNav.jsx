@@ -10,8 +10,8 @@ function HeadNav() {
             <Navbar expand="lg" className="bg-body-white" data-bs-theme="light">
                 <Container>
                     <Navbar.Brand href="#home">
-                        <img src="/fnmi-logo.png" className="fnmi-logo" width={45} alt="Fnmilove Generic Logo" />
-                        <img src="/logo.png" width={43} alt="Fnmilove Academy Logo" />
+                        <img src="/fnmi-logo.png" className="fnmi-logo" alt="Fnmilove Generic Logo" />
+                        <img src="/logo.png" className="academy-logo" alt="Fnmilove Academy Logo" />
                         {" "} <h1 className="radley-font fs-4 text-dark d-inline border-start border-2 border-light ps-1 py-2 align-middle">Fnmilove Academy</h1>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
