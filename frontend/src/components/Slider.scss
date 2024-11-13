@@ -1,20 +1,23 @@
-
-
-.carousel-caption{
-    position: absolute;
-    top: 50%;
-    left: 10%;
-    transform: translateY(-40%);
-    text-align: left;
+.slider{
+    .carousel-caption{
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        transform: translateY(-40%);
+        text-align: left;
+    }
+    
+    h3{
+        color: white;
+    }
 }
 
-h3{
-    color: white;
-}
 
 
 @media (max-width: 767px){
-    .carousel-caption {
-        top:32%;
+    .slider{
+        .carousel-caption {
+            top:32%;
+        }
     }
 }
