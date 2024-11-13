@@ -11,6 +11,7 @@ import IframeVideo from './components/IframeVideo.jsx'
 import Posts from './components/Posts.jsx'
 import Team from './components/Team.jsx'
 import FAQs from './components/FAQs.jsx'
+import Footer from './components/Footer.jsx'
 
 function App() {
 
@@ -51,7 +52,9 @@ function App() {
           <FAQs />
         </section>
       </main>
-      <footer></footer>
+      <footer className='top-spacing'>
+        <Footer/>
+      </footer>
     </>
   )
 }
