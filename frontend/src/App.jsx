@@ -47,7 +47,7 @@ function App() {
         <section className='top-spacing'>
           <Team />
         </section>
-        <section>
+        <section className='top-spacing'>
           <FAQs />
         </section>
       </main>
