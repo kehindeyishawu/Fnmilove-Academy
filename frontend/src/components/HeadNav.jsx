@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { NavLink } from "react-router-dom";
 
 function HeadNav() {
     return (
@@ -17,11 +18,11 @@ function HeadNav() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mx-auto fw-bold text-center">
-                            <Nav.Link href="#home" className="text-dark">Home</Nav.Link>
-                            <Nav.Link href="#link">About</Nav.Link>
-                            <Nav.Link href="#link">Courses</Nav.Link>
-                            <Nav.Link href="#link">Blog</Nav.Link>
-                            <Nav.Link href="#link">FAQs</Nav.Link>
+                            <Nav.Link as={NavLink} to="/" className="">Home</Nav.Link>
+                            <Nav.Link as={NavLink} to="/about">About</Nav.Link>
+                            <Nav.Link as={NavLink} to="/courses">Courses</Nav.Link>
+                            <Nav.Link href="/blog">Blog</Nav.Link>
+                            <Nav.Link as={NavLink} to="#FAQs">FAQs</Nav.Link>
                         </Nav>
                         <Nav>
                             <a href="" className="btn btn-primary rounded-0 fw-bold px-4">Join Us</a>
