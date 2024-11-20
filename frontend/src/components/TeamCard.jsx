@@ -1,4 +1,5 @@
 import { setContainerQuarterWidth } from "../utils/cloudinary"
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 
 const TeamCard = ({img, name, position }) => {
     return (

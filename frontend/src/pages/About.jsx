@@ -80,7 +80,7 @@ const About = () => {
         </div>
       </section>
       <section className="top-spacing">
-        <Team />
+        <Team present={"all"}/>
       </section>
       <section className="container mt-5">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum mollitia iusto sed, culpa eos, nemo necessitatibus veniam asperiores iure exercitationem vel facilis labore assumenda laborum consequatur unde, officiis natus aliquam obcaecati omnis deserunt quos. Esse vero perspiciatis accusamus et, excepturi nobis. Sint commodi pariatur, facilis magnam harum, at minima impedit odit quis aliquid sunt laboriosam ea tempora reprehenderit aperiam. Magnam hic molestias cumque blanditiis quam tenetur, itaque necessitatibus! Eligendi officia tempore doloribus cupiditate a delectus quidem et repellat impedit dolores temporibus quibusdam alias aperiam blanditiis cumque inventore voluptatem, eos, natus nemo in sint similique. Quisquam quo veritatis maxime deleniti at?</p>
