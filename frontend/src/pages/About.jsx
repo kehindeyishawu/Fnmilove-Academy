@@ -10,10 +10,10 @@ import "./About.scss"
 const About = () => {
   return (
     <main id="about">
-      <div className="vertical-padding rounded-bottom text-center banner">
+      <section className="vertical-padding rounded-bottom text-center banner">
         <h1 className="text-white fw-bold">About Us</h1>
         <div className="text-white"> <Link className="text-decoration-none" to="/">Home</Link> {'>>'} About </div>
-      </div>
+      </section>
       <section className="container mt-5">
         <div className="row">
           <div className="col-md-6">

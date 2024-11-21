@@ -19,7 +19,7 @@ const TrendingCourses = () => {
                             <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainer3rdWidth("ar_16:9,")}/v1731166999/Fnmilove%20Academy/cosmetics-makeup_yckopj.jpg`} className="card-img-top rounded-0" alt="..." />
                             <div className="card-body position-relative">
                                 <small className="fw-bold">Top Rated</small>
-                                <span className="card-play-icon bg-primary">
+                                <span className="card-play-icon text-bg-primary">
                                     <FaPlay />
                                 </span>
                                 <h2 className="card-title h6 fw-bold text-secondary">Advanced Bridal Makeup: Creating Stunning Wedding Looks</h2>
@@ -36,7 +36,7 @@ const TrendingCourses = () => {
                             <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainer3rdWidth("ar_16:9,")}/v1731167976/Fnmilove%20Academy/content-marketing_ajukbi.jpg`} className="card-img-top rounded-0" alt="..." />
                             <div className="card-body position-relative">
                                 <small className="fw-bold">Expert Recommended</small>
-                                <span className="card-play-icon bg-secondary text-white">
+                                <span className="card-play-icon text-bg-secondary">
                                     <FaPlay />
                                 </span>
                                 <h2 className="card-title h6 fw-bold text-secondary">Content Creation 101: Building Your Brand on Social Media</h2>
@@ -53,7 +53,7 @@ const TrendingCourses = () => {
                             <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainer3rdWidth("ar_16:9,")}/v1731146322/Fnmilove%20Academy/group_ijbkzs.jpg`} className="card-img-top rounded-0" alt="..." />
                             <div className="card-body position-relative">
                                 <small className="fw-bold">Most Popular</small>
-                                <span className="card-play-icon bg-info text-white">
+                                <span className="card-play-icon text-bg-info">
                                     <FaPlay />
                                 </span>
                                 <h2 className="card-title h6 fw-bold text-secondary">Introduction to Fashion Design: From Concept to Creation</h2>

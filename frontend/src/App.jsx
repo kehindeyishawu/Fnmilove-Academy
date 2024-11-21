@@ -1,7 +1,7 @@
 import './App.scss'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Layout from './Layout.jsx'
-import Home from './pages/home.jsx'
+import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import Courses from './pages/Courses.jsx'
 
