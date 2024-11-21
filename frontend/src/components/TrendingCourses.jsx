@@ -1,7 +1,36 @@
 import { BiSolidSchool } from "react-icons/bi";
-import { FaPlay } from "react-icons/fa6";
-import { setContainer3rdWidth } from "../utils/cloudinary";
 import "./TrendingCourses.scss"
+import CourseCard from "./CourseCard";
+
+let courseDB = [
+    {
+        img: "cosmetics-makeup_yckopj",
+        trend: "Top Rated",
+        tipColor: "primary",
+        title: "Advanced Bridal Makeup: Creating Stunning Wedding Looks",
+        tutors: "Fnmilove Academy, Mr. Adams and ...",
+        url: "",
+        price: "199"
+    },
+    {
+        img: "content-marketing_ajukbi",
+        trend: "Expert Recommended",
+        tipColor: "secondary",
+        title: "Content Creation 101: Building Your Brand on Social Media",
+        tutors: "Fnmilove Academy, Miss Kunle and Vincent",
+        url: "",
+        price: "159"
+    },
+    {
+        img: "group_ijbkzs",
+        trend: "Most Popular",
+        tipColor: "info",
+        title: "Introduction to Fashion Design: From Concept to Creation",
+        tutors: "Fnmilove Academy, Mr Ajaiye and Mrs. Ron...",
+        url: "",
+        price: "199"
+    },
+]
 
 const TrendingCourses = () => {
     return (
@@ -14,57 +43,7 @@ const TrendingCourses = () => {
             <p className="text-center text-light mb-4">Expolre our most popular courses and stay ahead in your career with the latest skills and knowledge</p>
             <div className="container">
                 <div className="row row-cols-1 row-cols-md-2 gy-4 row-cols-lg-3 justify-content-center">
-                    <div className="col">
-                        <div className="card rounded-top-0">
-                            <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainer3rdWidth("ar_16:9,")}/v1731166999/Fnmilove%20Academy/cosmetics-makeup_yckopj.jpg`} className="card-img-top rounded-0" alt="..." />
-                            <div className="card-body position-relative">
-                                <small className="fw-bold">Top Rated</small>
-                                <span className="card-play-icon text-bg-primary">
-                                    <FaPlay />
-                                </span>
-                                <h2 className="card-title h6 fw-bold text-secondary">Advanced Bridal Makeup: Creating Stunning Wedding Looks</h2>
-                                <p className="card-text mb-4 mt-3">Fnmilove Academy, Mr. Adams and ...</p>
-                                <div className="hstack justify-content-between">
-                                    <a href="#" className="btn btn-primary rounded-0 fw-bold">BUY NOW</a>
-                                    <span className="fw-bold fs-4">$199</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="card rounded-top-0">
-                            <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainer3rdWidth("ar_16:9,")}/v1731167976/Fnmilove%20Academy/content-marketing_ajukbi.jpg`} className="card-img-top rounded-0" alt="..." />
-                            <div className="card-body position-relative">
-                                <small className="fw-bold">Expert Recommended</small>
-                                <span className="card-play-icon text-bg-secondary">
-                                    <FaPlay />
-                                </span>
-                                <h2 className="card-title h6 fw-bold text-secondary">Content Creation 101: Building Your Brand on Social Media</h2>
-                                <p className="card-text mb-4 mt-3">Fnmilove Academy, Miss Kunle and Vincent</p>
-                                <div className="hstack justify-content-between">
-                                    <a href="#" className="btn btn-primary rounded-0 fw-bold">BUY NOW</a>
-                                    <span className="fw-bold fs-4">$159</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="card rounded-top-0">
-                            <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainer3rdWidth("ar_16:9,")}/v1731146322/Fnmilove%20Academy/group_ijbkzs.jpg`} className="card-img-top rounded-0" alt="..." />
-                            <div className="card-body position-relative">
-                                <small className="fw-bold">Most Popular</small>
-                                <span className="card-play-icon text-bg-info">
-                                    <FaPlay />
-                                </span>
-                                <h2 className="card-title h6 fw-bold text-secondary">Introduction to Fashion Design: From Concept to Creation</h2>
-                                <p className="card-text mb-4 mt-3">Fnmilove Academy, Mr Ajaiye and Mrs. Ron...</p>
-                                <div className="hstack justify-content-between">
-                                    <a href="#" className="btn btn-primary rounded-0 fw-bold">BUY NOW</a>
-                                    <span className="fw-bold fs-4">$199</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {courseDB.map((e)=> <CourseCard img={e.img} trend={e.trend} tipColor={e.tipColor} title={e.title} tutors={e.tutors} price={e.price} />)}
                     <div className="col text-center align-self-center">
                         <a href="" className="btn btn-outline-primary btn-lg rounded-0 fw-bold">Browse More</a>
                     </div>
