@@ -10,7 +10,7 @@ let courseDB = [
         title: "Advanced Bridal Makeup: Creating Stunning Wedding Looks",
         tutors: "Fnmilove Academy, Mr. Adams and ...",
         url: "",
-        price: "199"
+        price: "350,000"
     },
     {
         img: "content-marketing_ajukbi",
@@ -19,7 +19,7 @@ let courseDB = [
         title: "Content Creation 101: Building Your Brand on Social Media",
         tutors: "Fnmilove Academy, Miss Kunle and Vincent",
         url: "",
-        price: "159"
+        price: "159,000"
     },
     {
         img: "group_ijbkzs",
@@ -28,7 +28,7 @@ let courseDB = [
         title: "Introduction to Fashion Design: From Concept to Creation",
         tutors: "Fnmilove Academy, Mr Ajaiye and Mrs. Ron...",
         url: "",
-        price: "199"
+        price: "199,000"
     },
 ]
 

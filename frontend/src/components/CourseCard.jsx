@@ -17,7 +17,7 @@ const CourseCard = ({ img, trend, tipColor, title, tutors, url="#", price }) => 
                         <p className="card-text mb-4 mt-3">{tutors}</p>
                         <div className="hstack justify-content-between">
                             <Link to={url} className="btn btn-primary rounded-0 fw-bold">BUY NOW</Link>
-                            <span className="fw-bold fs-4">{price}</span>
+                            <span className="fw-bold fs-4">₦{price}</span>
                         </div>
                     </div>
                 </div>

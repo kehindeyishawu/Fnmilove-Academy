@@ -30,7 +30,7 @@ const About = () => {
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab quas sint non tempore necessitatibus quibusdam voluptatibus, maiores in quae repellendus vel iusto deleniti, hic natus.
           </div>
         </div>
-        <div className="row mt-5">
+        <div className="row mt-5 gy-3">
           <div className="col-md-4">
             <div className="hstack shadow-lg gap-2 px-2 pt-3 rounded-4">
               <div className="p-3 bg-primary text-white rounded-circle">

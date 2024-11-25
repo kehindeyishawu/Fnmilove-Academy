@@ -22,11 +22,11 @@ function HeadNav() {
                             <Nav.Link as={NavLink} to="/" className="">Home</Nav.Link>
                             <Nav.Link as={NavLink} to="/about">About</Nav.Link>
                             <Nav.Link as={NavLink} to="/courses">Courses</Nav.Link>
-                            <Nav.Link href="https://aveda.edu/">Blog</Nav.Link>
+                            <Nav.Link as={NavLink} to="/blog">Blog</Nav.Link>
                             <Nav.Link as={HashLink} to="/#FAQs">FAQs</Nav.Link>
                         </Nav>
                         <Nav>
-                            <a href="" className="btn btn-primary rounded-0 fw-bold px-4">Join Us</a>
+                            <NavLink to="/login" className="btn btn-primary rounded-0 fw-bold px-4">Join Us</NavLink>
                             {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">
