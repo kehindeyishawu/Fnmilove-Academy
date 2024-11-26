@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { setContainerFullWidth } from "../utils/cloudinary"
+import { setContainerHalfWidth } from "../utils/cloudinary"
 import { FaArrowRightLong } from "react-icons/fa6"
 import { Link } from "react-router-dom"
 
@@ -22,11 +22,11 @@ const Signup = () => {
     }
 
     return (
-        <>
+        <main>
             <div className="container-fluid px-0">
                 <div className="row g-0">
                     <div className="col-md-6 col-lg-4 d-none d-md-block">
-                        <img className="img-fluid" src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerFullWidth(`ar_${screen.width >= 1199 ? "1:2," : "1:3,"}g_face,c_fill,`)}/Fnmilove%20Academy/salon-sat`} alt="" />
+                        <img className="img-fluid" src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerHalfWidth(`ar_${screen.width >= 1199 ? "1:2," : "1:3,"}`)}/Fnmilove%20Academy/cosmetics-1`} alt="" />
                     </div>
                     <div className="col-md-6 mx-auto">
                         <div className="container-fluid mt-4 mt-lg-3">
@@ -83,7 +83,7 @@ const Signup = () => {
                                 </div>
                                 <div className="col">
                                     <div className="form-floating">
-                                        <input type="password" name="confirmPassword" onChange={handlePasswordConfirmation} value={formFields.confirmPassword} className="form-control rounded-0" id="floatingPasswordConfirm" required placeholder="Password" />
+                                        <input type="password" name="confirmPassword" onChange={handlePasswordConfirmation} value={formFields.confirmPassword} className="form-control rounded-0" id="floatingPasswordConfirm" pattern={formFields.password} required placeholder="Password" />
                                         <label for="floatingPasswordConfirm">Confirm Password</label>
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@ const Signup = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </main>
     )
 }
 

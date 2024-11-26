@@ -24,10 +24,10 @@ const About = () => {
             <h2 className="fw-bold text-secondary h1">Welcome To The Fnmilove Company</h2>
           </div>
           <div className="col-md-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita enim repellendus tempore ratione facilis quia dolores fugiat commodi ab ad repudiandae amet, aperiam dolorum doloribus.
+            Discover excellence in beauty and lifestyle at FunmiLove Academy in vibrant Lekki, Lagos. We’re a premier Cosmetology and Vocational Academy, plus a Fashion and Lifestyle hub.
           </div>
           <div className="col-md-3">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab quas sint non tempore necessitatibus quibusdam voluptatibus, maiores in quae repellendus vel iusto deleniti, hic natus.
+            We create a nurturing and inclusive environment where students can thrive, grow, and become industry leaders. Join us and transform your passion into a successful and fulfilling career!
           </div>
         </div>
         <div className="row mt-5 gy-3">
@@ -38,7 +38,7 @@ const About = () => {
               </div>
               <div className="text-justify">
                 <h3 className="fs-6 fw-bold">Salon</h3>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos, ehgdi.</p>
+                <p>Top-notch hair, nail, and makeup services for a fabulous and confident look.</p>
               </div>
             </div>
           </div>
@@ -49,7 +49,7 @@ const About = () => {
               </div>
               <div className="text-justify">
                 <h3 className="fs-6 fw-bold">Academy</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, sint?</p>
+                <p>Master beauty and creative skills to become industry leaders and entrepreneurs.</p>
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@ const About = () => {
               </div>
               <div className="text-justify">
                 <h3 className="fs-6 fw-bold">Lounge</h3>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos, ehgdi.</p>
+                <p>Relax and rejuvenate with luxurious treatments in a serene, soothing setting.</p>
               </div>
             </div>
           </div>
@@ -79,12 +79,72 @@ const About = () => {
           </div>
         </div>
       </section>
+      <article className="container top-spacing">
+        <div className="text-start">
+          <small className="fw-bold text-primary fs-6 d-block text-center">
+            <BiSolidSchool /> {""}
+            This is Us
+          </small>
+          <h2 className="fw-bold text-center">EXECUTIVE SUMMARY</h2>
+          <p>
+            FunmiLove Academy is a leading Cosmetology and Vocational Academy, combined with a Fashion and Lifestyle house, situated in Lekki Peninsula Scheme II, Ajah, Lagos. Our academy is dedicated to equipping individuals with advanced skills in haircare (for both men and women), nail care, makeup artistry, massage therapy, gelé tying, content creation, photography, and fashion design, empowering them to excel in the beauty, creative, and lifestyle industries.
+          </p>
+          <p>
+            At FunmiLove Academy, we go beyond technical education to foster well-rounded professionals. Our curriculum integrates essential skills in Customer Service, Marketing, Financial Literacy, and Managerial/Entrepreneurial Training alongside Positive Mindset Development to nurture socially responsible entrepreneurs.
+          </p>
+          <p>
+            To further instill a sense of purpose and community spirit, all our students are required to complete a specific amount of community or charity work before receiving certification. This initiative ensures that our graduates not only excel professionally but also contribute positively to society.
+          </p>
+        </div>
+        <div className="mt-5 text-start">
+          <small className="fw-bold text-primary fs-6 d-block text-center">
+            <BiSolidSchool /> {""}
+            Inspiring Excellence
+          </small>
+          <h2 className="fw-bold text-center">OUR MISSION</h2>
+          <p>
+            Our mission is to provide a holistic and well-balanced learning experience that equips individuals with the skills, ethics, and mindset needed to succeed as morally upright and highly effective entrepreneurs in their chosen fields.
+          </p>
+        </div>
+        <div className="mt-5 text-start">
+          <small className="fw-bold text-primary fs-6 d-block text-center">
+            <BiSolidSchool /> {""}
+            Inspiring Innovation
+          </small>
+          <h2 className="fw-bold text-center">OUR VISION</h2>
+          <p>
+              We aspire to be a recognized leader in vocational and cosmetology education, producing highly skilled professionals and innovative social entrepreneurs who inspire positive change and make meaningful contributions to their communities. By staying ahead of industry trends, we are committed to meeting the growing demand for exceptional talent in the beauty, fashion, photography, and creative sectors.
+          </p>
+        </div>
+        <div className="mt-5 text-start">
+          <small className="fw-bold text-primary fs-6 d-block text-center">
+            <BiSolidSchool /> {""}
+            Empowering communities
+          </small>
+          <h2 className="fw-bold text-center">CORPORATE SOCIAL RESPONSIBILITY</h2>
+          <p>
+              FunmiLove Academy takes pride in its commitment to social impact. Through the FunmiLove Empowerment Foundation, we provide scholarships to passionate individuals who face financial challenges but demonstrate immense potential. Over the first three years, we will enroll 8 full-time scholarship students annually, prioritizing candidates from Lagos State while extending opportunities to students nationwide. This initiative ensures that talent and ambition are never hindered by financial limitations.
+          </p>
+        </div>
+        <div className="mt-5 text-start">
+          <small className="fw-bold text-primary fs-6 d-block text-center">
+            <BiSolidSchool /> {""}
+            Beauty Hub
+          </small>
+          <h2 className="fw-bold text-center">COMPANY DESCRIPTION</h2>
+          <p>
+            FunmiLove Academy was founded by [Funmilola Alabi], a seasoned expert in the hair and beauty industry with a deep passion for education and empowerment. With a clear vision to transform dreams into thriving careers, the academy delivers an unparalleled learning experience that emphasizes quality, creativity, and innovation.
+          </p>
+          <p>
+          Our diverse programs are designed to empower students with practical expertise in haircare, beauty services (nails, massage, makeup, and gelé tying), photography, content creation, and fashion design while integrating vital skills in Customer Service, Marketing, and Business Management.
+          </p>
+          <p>
+            At FunmiLove Academy, we provide more than education—we create a supportive, inclusive, and inspiring environment where students can thrive as professionals and leaders. We strive to mold individuals into not just skilled experts but also socially responsible and community-conscious entrepreneurs capable of dominating their industries.
+          </p>
+        </div>
+      </article>
       <section className="top-spacing">
-        <Team present={"all"}/>
-      </section>
-      <section className="container mt-5">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum mollitia iusto sed, culpa eos, nemo necessitatibus veniam asperiores iure exercitationem vel facilis labore assumenda laborum consequatur unde, officiis natus aliquam obcaecati omnis deserunt quos. Esse vero perspiciatis accusamus et, excepturi nobis. Sint commodi pariatur, facilis magnam harum, at minima impedit odit quis aliquid sunt laboriosam ea tempora reprehenderit aperiam. Magnam hic molestias cumque blanditiis quam tenetur, itaque necessitatibus! Eligendi officia tempore doloribus cupiditate a delectus quidem et repellat impedit dolores temporibus quibusdam alias aperiam blanditiis cumque inventore voluptatem, eos, natus nemo in sint similique. Quisquam quo veritatis maxime deleniti at?</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum mollitia iusto sed, culpa eos, nemo necessitatibus veniam asperiores iure exercitationem vel facilis labore assumenda laborum consequatur unde, officiis natus aliquam obcaecati omnis deserunt quos. Esse vero perspiciatis accusamus et, excepturi nobis. Sint commodi pariatur, facilis magnam harum, at minima impedit odit quis aliquid sunt laboriosam ea tempora reprehenderit aperiam. Magnam hic molestias cumque blanditiis quam tenetur, itaque necessitatibus! Eligendi officia tempore doloribus cupiditate a delectus quidem et repellat impedit dolores temporibus quibusdam alias aperiam blanditiis cumque inventore voluptatem, eos, natus nemo in sint similique. Quisquam quo veritatis maxime deleniti at?</p>
+        <Team present={"all"} />
       </section>
     </main>
   )

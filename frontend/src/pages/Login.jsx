@@ -17,7 +17,7 @@ const Login = () => {
     }
 
     return (
-        <>
+        <main>
             <div className="container-fluid px-0">
                 <div className="row g-0">
                     <div className="col-md-6 col-lg-4">
@@ -74,7 +74,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </main>
     )
 }
 

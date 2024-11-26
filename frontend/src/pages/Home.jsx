@@ -20,7 +20,7 @@ const home = () => {
                 <section className='mt-5'>
                     <CourseCatalog/>
                 </section>
-                <section className='top-spacing'>
+                <section className='top-spacing' id="home-why-us">
                     <WhyUs/>
                 </section>
                 <section className='top-spacing'>

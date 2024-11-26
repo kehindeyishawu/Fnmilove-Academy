@@ -7,6 +7,8 @@ import Courses from './pages/Courses.jsx'
 import Blog from './pages/Blog.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
+import Privacy from './pages/Privacy.jsx'
+import Terms from './pages/Terms.jsx'
 
 function App() {
   const router = createBrowserRouter([
@@ -29,6 +31,14 @@ function App() {
         {
           path: "/blog",
           element: <Blog/>
+        },
+        {
+          path: "/privacy",
+          element: <Privacy/>
+        },
+        {
+          path: "/terms",
+          element: <Terms/>
         },
       ]
     },
