@@ -5,9 +5,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { NavLink } from "react-router-dom";
 import {HashLink} from "react-router-hash-link"
-import ContactDialog from "./ContactDialog";
 
-function HeadNav() {
+function HeadNav({ setShowModal }) {
     return (
         <div className="head-nav">
             <Navbar expand="lg" className="bg-body-white" data-bs-theme="light">
@@ -25,7 +24,7 @@ function HeadNav() {
                             <Nav.Link as={NavLink} to="/courses">Courses</Nav.Link>
                             <Nav.Link as={NavLink} to="/blog">Blog</Nav.Link>
                             <Nav.Link as={HashLink} to="/#FAQs">FAQs</Nav.Link>
-                            <ContactDialog/>
+                            <Nav.Link onClick={()=> setShowModal(true)}>Contact</Nav.Link>
                         </Nav>
                         <Nav>
                             <NavLink to="/login" className="btn btn-primary rounded-0 fw-bold px-4">Join Us</NavLink>

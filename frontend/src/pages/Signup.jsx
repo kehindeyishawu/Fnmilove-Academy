@@ -60,38 +60,38 @@ const Signup = () => {
                                 <div className="col">
                                     <div className="form-floating">
                                         <input type="text" name="firstname" onChange={handleFormInput} value={formFields.firstname} className="form-control rounded-0" id="floating-firstname" required placeholder="name@example.com" />
-                                        <label for="floating-firstname">First Name</label>
+                                        <label htmlFor="floating-firstname">First Name</label>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="form-floating">
                                         <input type="text" name="lastname" onChange={handleFormInput} value={formFields.lastname} className="form-control rounded-0" id="floating-lastname" required placeholder="name@example.com" />
-                                        <label for="floating-lastname">Last Name</label>
+                                        <label htmlFor="floating-lastname">Last Name</label>
                                     </div>
                                 </div>
                             </div>
                             <div className="form-floating mb-3">
                                 <input type="email" name="email" onChange={handleFormInput} value={formFields.email} className="form-control rounded-0" id="floatingInput" required placeholder="name@example.com" />
-                                <label for="floatingInput">Email address</label>
+                                <label htmlFor="floatingInput">Email address</label>
                             </div>
                             <div className="row row-cols-1 row-cols-md-2 mb-3">
                                 <div className="col">
                                     <div className="form-floating">
                                         <input type="password" name="password" onChange={handleFormInput} value={formFields.password} className="form-control rounded-0" id="floatingPassword" required placeholder="Password" />
-                                        <label for="floatingPassword">Password</label>
+                                        <label htmlFor="floatingPassword">Password</label>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="form-floating">
                                         <input type="password" name="confirmPassword" onChange={handlePasswordConfirmation} value={formFields.confirmPassword} className="form-control rounded-0" id="floatingPasswordConfirm" pattern={formFields.password} required placeholder="Password" />
-                                        <label for="floatingPasswordConfirm">Confirm Password</label>
+                                        <label htmlFor="floatingPasswordConfirm">Confirm Password</label>
                                     </div>
                                 </div>
                             </div>
                             <div className="hstack justify-content-between mb-4">
                                 <div class="form-check">
                                     <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                                    <label className="form-check-label" for="exampleCheck1">I accept the <Link className="link-dark" to="/privacy">Privacy Policy</Link> and <Link className="link-dark" to="/terms">Terms of Service</Link></label>
+                                    <label className="form-check-label" htmlFor="exampleCheck1">I accept the <Link className="link-dark" to="/privacy">Privacy Policy</Link> and <Link className="link-dark" to="/terms">Terms of Service</Link></label>
                                 </div>
                             </div>
                             <button className="btn btn-primary py-2 mb-4 mb-lg-3 fw-bold rounded-0 w-100 hstack">
