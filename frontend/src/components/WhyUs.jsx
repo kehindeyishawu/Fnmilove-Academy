@@ -1,6 +1,8 @@
 import { setContainerHalfWidth } from "../utils/cloudinary"
 import { BiSolidSchool } from "react-icons/bi";
 import { FaRegCircleCheck, FaArrowRight } from "react-icons/fa6";
+// import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 
 const WhyUs = () => {
@@ -67,7 +69,7 @@ const WhyUs = () => {
                             </div>
                         </div>
                     </div>
-                    <a href="" className="btn btn-lg btn-dark p-3 rounded-0 d-none d-md-inline">Job Postings <FaArrowRight/></a>
+                    <HashLink to="/blog#" className="btn btn-lg btn-dark p-3 rounded-0 d-none d-md-inline">Job Postings <FaArrowRight/></HashLink>
                 </div>
             </div>
                 {/* The ones below (P , Div & a tag ) are the counterpart that will show on mobile */}
@@ -121,7 +123,7 @@ const WhyUs = () => {
                         </div>
                     </div>
                 </div>
-                <a href="" className="btn btn-lg btn-dark rounded-0 d-block mt-2 d-md-none">Job Postings <FaArrowRight /></a>
+                <HashLink to="/blog#" className="btn btn-lg btn-dark rounded-0 d-block mt-2 d-md-none">Job Postings <FaArrowRight /></HashLink>
         </div>
     )
 }

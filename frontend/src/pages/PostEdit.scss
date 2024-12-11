@@ -1,0 +1,25 @@
+#post-edit{
+    background-color: #f5f5f5;
+    padding: 6rem 0;
+    #title-input{
+        box-shadow: none;
+        border-color: currentColor;
+    }
+    .featuredImg-label{
+        padding: 4rem 0;
+        text-align: center;
+        width: 100%;
+        border: 5px dotted black;
+        cursor: pointer;
+    }
+    .img-mod{
+        display: flex;
+        justify-content: space-between;
+        color: var(--info-color);
+        text-decoration: underline;
+        font-size: .9rem;
+        span, label{
+            cursor: pointer;
+        }
+    }
+}

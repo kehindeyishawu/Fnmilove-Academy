@@ -11,7 +11,7 @@ function HeadNav({ setShowModal }) {
         <div className="head-nav">
             <Navbar expand="lg" className="bg-body-white" data-bs-theme="light">
                 <Container>
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand as={NavLink} to="/">
                         <img src="/fnmi-logo.png" className="fnmi-logo" alt="Fnmilove Generic Logo" />
                         <img src="/logo.png" className="academy-logo" alt="Fnmilove Academy Logo" />
                         {" "} <h1 className="radley-font fs-4 text-dark d-inline border-start border-2 border-light ps-1 py-2 align-middle">Fnmilove Academy</h1>

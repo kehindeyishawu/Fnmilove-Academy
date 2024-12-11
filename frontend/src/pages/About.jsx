@@ -3,14 +3,20 @@ import { BiSolidSchool } from "react-icons/bi";
 import { PiHairDryerFill } from "react-icons/pi";
 import { HiMiniAcademicCap } from "react-icons/hi2";
 import { GrLounge } from "react-icons/gr";
-import { setContainerFullWidth, setContainerHalfWidth } from "../utils/cloudinary";
+import { setContainerFullWidth, setContainerHalfWidth, cloudname, setFullWidth } from "../utils/cloudinary";
 import Team from "../components/Team";
-import "./About.scss"
 
 const About = () => {
+
+  let bannerStyles = {
+    backgroundImage: `url('${cloudname}${setFullWidth("4:1")}/Fnmilove%20Academy/group_hlsizx')`,
+    backgroundPosition: "center",
+    backgroundSize: "cover"
+  }
+
   return (
     <main id="about">
-      <section className="vertical-padding rounded-bottom text-center banner">
+      <section className="vertical-padding rounded-bottom text-center" style={bannerStyles}>
         <h1 className="text-white fw-bold">About Us</h1>
         <div className="text-white"> <Link className="text-decoration-none" to="/">Home</Link> {'>>'} About </div>
       </section>

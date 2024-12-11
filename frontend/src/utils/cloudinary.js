@@ -9,6 +9,8 @@ let lgScreen =  1199;
 
 // options: ar,c,
 
+export let cloudname = "https://res.cloudinary.com/kkenny/image/upload/";
+
 export function setFullWidth(ar){
     let currentScreenWidth = screen.width
     return `w_${currentScreenWidth>=2000? 2000: currentScreenWidth},ar_${currentScreenWidth <= smScreen ? ar||"4:3" : ar||"16:9"},c_fill,f_auto,q_auto,dpr_${devicePixelRatio}`

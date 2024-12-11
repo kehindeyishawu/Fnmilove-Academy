@@ -50,23 +50,23 @@ const Login = () => {
                         <form onSubmit={formSubmit} className="mt-3 container-fluid">
                             <div className="form-floating mb-3">
                                 <input type="email" name="email" onChange={handleFormInput} value={formFields.email} className="form-control rounded-0" id="floatingInput" required placeholder="name@example.com"/>
-                                <label for="floatingInput">Email address</label>
+                                <label htmlFor="floatingInput">Email address</label>
                             </div>
                             <div className="form-floating mb-3">
                                 <input type="password" name="password" onChange={handleFormInput} value={formFields.password} className="form-control rounded-0" id="floatingPassword" required placeholder="Password"/>
-                                <label for="floatingPassword">Password</label>
+                                <label htmlFor="floatingPassword">Password</label>
                             </div>
                             <div className="hstack justify-content-between mb-4">
                                 <div class="form-check">
                                     <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-                                    <label className="form-check-label" for="exampleCheck1">Keep me logged in</label>
+                                    <label className="form-check-label" htmlFor="exampleCheck1">Keep me logged in</label>
                                 </div>
                                 <a href="" className="link-dark">Forgot password</a>
                             </div>
                             <button className="btn btn-primary py-2 mb-4 fw-bold rounded-0 w-100 hstack">
                                 <span className="mx-auto">Log in</span> <FaArrowRightLong />
                             </button>
-                            <div className="text-center form-text">Don't have an account yet? <Link to="/signin" className="link-info">Sign Up</Link></div>
+                            <div className="text-center form-text">Don't have an account yet? <Link to="/signup" className="link-info">Sign Up</Link></div>
                         </form>
                     </div>
                     <div className="col-md-6 col-lg-8 d-none d-md-block">
