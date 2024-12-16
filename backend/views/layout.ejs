@@ -2,19 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>Title</title>
     <link rel="stylesheet" href="app.min.css">
 </head>
 <body>
-    <header>
-        I am the Header
-    </header>
-    <main>
-        <%- body %>
-    </main>
-    <footer>
-        I am the Footer
-    </footer>
+    <%- include("./partials/header") %>
+    <%- body %>
+    <%- include("./partials/contactDialog") %>
+    <%- include("./partials/footer") %>
+    <script src="bootstrap.min.js"></script>
 </body>
 </html>

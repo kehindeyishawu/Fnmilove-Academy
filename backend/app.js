@@ -13,7 +13,13 @@ app.set("view engine", "ejs")
 app.use(expressEjsLayouts)
 app.set("layout", "layout")
 
-app.get("/", (req, res)=>{
+app.get("/course", (req, res)=>{
+    res.render("pages/course")
+})
+app.get("/job", (req, res)=>{
+    res.render("pages/job")
+})
+app.get("/article", (req, res)=>{
     res.render("pages/article")
 })
 
