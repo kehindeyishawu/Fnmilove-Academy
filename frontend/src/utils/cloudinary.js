@@ -9,7 +9,7 @@ let lgScreen =  1199;
 
 // options: ar,c,
 
-export let cloudname = "https://res.cloudinary.com/kkenny/image/upload/";
+export let cloudname = "kkenny";
 
 export function setFullWidth(ar){
     let currentScreenWidth = screen.width

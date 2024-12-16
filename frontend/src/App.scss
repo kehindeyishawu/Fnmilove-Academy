@@ -38,6 +38,17 @@
     font-weight: normal;
     font-style: normal;
 }
+// Radley Font
+@font-face {
+    font-family: 'Radley';
+    src: local('Radley-Italic'),
+        url('/fonts/Radley-Italic.woff2') format(woff2),
+        url('/fonts/Radley-Italic.woff') format(woff),
+        url('/fonts/Radley-Italic.ttf') format(truetype);
+    font-weight: normal;
+    font-style: italic;
+}
+
 
 .top-spacing{
     margin-top: 7rem;

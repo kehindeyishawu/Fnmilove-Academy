@@ -53,9 +53,9 @@
 }
 
 .mce-content-body{
-    /* font-family: Helvetica, Arial, sans-serif; */
     font-size: 1rem;
     font-family: "Nunito", sans-serif;
+    color: var(--dark-color);
 }
 
 h1,

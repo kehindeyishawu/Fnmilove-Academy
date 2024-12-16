@@ -9,7 +9,7 @@ import Team from "../components/Team";
 const About = () => {
 
   let bannerStyles = {
-    backgroundImage: `url('${cloudname}${setFullWidth("4:1")}/Fnmilove%20Academy/group_hlsizx')`,
+    backgroundImage: `url('https://res.cloudinary.com/${cloudname}/image/upload/${setFullWidth("4:1")}/Fnmilove%20Academy/group_hlsizx')`,
     backgroundPosition: "center",
     backgroundSize: "cover"
   }
@@ -18,7 +18,7 @@ const About = () => {
     <main id="about">
       <section className="vertical-padding rounded-bottom text-center" style={bannerStyles}>
         <h1 className="text-white fw-bold">About Us</h1>
-        <div className="text-white"> <Link className="text-decoration-none" to="/">Home</Link> {'>>'} About </div>
+        <nav className="text-white"> <Link className="text-decoration-none" to="/">Home</Link> {'>>'} About </nav>
       </section>
       <section className="container mt-5">
         <div className="row">
