@@ -1,5 +1,5 @@
 import { FaPlay } from "react-icons/fa6"; 
-import { setContainer3rdWidth } from "../utils/cloudinary"
+import { cloudname, setContainer3rdWidth } from "../utils/cloudinary"
 import { Link } from "react-router-dom"
 
 const CourseCard = ({ img, trend, tipColor, title, tutors, url="#", price }) => {
@@ -7,7 +7,7 @@ const CourseCard = ({ img, trend, tipColor, title, tutors, url="#", price }) => 
         <>
             <div className="col">
                 <div className="card rounded-top-0">
-                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainer3rdWidth("ar_16:9,")}/Fnmilove%20Academy/${img}`} className="card-img-top rounded-0" alt="..." />
+                    <img src={`https://res.cloudinary.com/${cloudname}/image/upload/${setContainer3rdWidth("ar_16:9,")}/Fnmilove%20Academy/${img}`} className="card-img-top rounded-0" alt="..." />
                     <div className="card-body position-relative">
                         {trend && <small className="fw-bold">{trend}</small>}
                         <span className={`card-play-icon text-bg-${tipColor}`}>

@@ -9,7 +9,6 @@ import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Privacy from './pages/Privacy.jsx'
 import Terms from './pages/Terms.jsx'
-import JobDescription from './pages/JobDescription.jsx'
 import PostEdit from './pages/PostEdit.jsx'
 
 function App() {
@@ -49,10 +48,6 @@ function App() {
         {
           path: "/signup",
           element: <Signup />
-        },
-        {
-          path: "/job/:id",
-          element: <JobDescription/>
         },
         {
           path: "/:posttype/edit",
