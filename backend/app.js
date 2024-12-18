@@ -1,7 +1,10 @@
+import "dotenv/config"
 import express from "express"
 import {resolve} from "path"
 import expressEjsLayouts from "express-ejs-layouts"
 import { CustomError } from "./utils/customError.js"
+import { connectToDB } from "./utils/connectToDB.js"
+import {articleRouter} from "./routes/article.js"
 
 let app = express()
 
@@ -12,17 +15,17 @@ app.use(express.static(resolve("../frontend", "./public",)))
 app.set("view engine", "ejs")
 app.use(expressEjsLayouts)
 app.set("layout", "layout")
+// parse incoming form data and json
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
-app.get("/course", (req, res)=>{
-    res.render("pages/course")
-})
-app.get("/job", (req, res)=>{
-    res.render("pages/job")
-})
-app.get("/article", (req, res)=>{
-    res.render("pages/article")
+// Routes
+app.use("/articles", articleRouter)
+app.get("/test", (req, res)=>{
+    res.render("pages/article");
 })
 
+// Error Handling
 app.use((err, req, res, next)=>{
     if (err.statusCode) {
         res.status(err.statusCode).send(err.message)
@@ -31,6 +34,8 @@ app.use((err, req, res, next)=>{
     }
 })
 
-app.listen(4000, ()=>{
-    console.log("server running on port 4000")
+// Running Server
+app.listen(4000, async ()=>{
+    console.log("Server running on port 4000. Waiting for Database to connect...")
+    await connectToDB()
 })
