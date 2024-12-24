@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
-import { articleCollection } from "../utils/connectToDB.js";
+import { articleCollection, ArticleSchema } from "../utils/connectToDB.js";
 import { Router } from "express";
+import { CustomError } from "../utils/customError.js";
 
 export let articleRouter = Router();
 // Controllers
@@ -8,27 +9,27 @@ let findAllArticles = async (req, res)=>{
     let allArticle = await articleCollection.find().toArray()
     res.json(allArticle)
 }
-let findOneArticle = async (req, res)=>{
+let findOneArticle = async (req, res, next)=>{
     try {
-        let id2 = ObjectId.createFromHexString(req.params.id)
-        console.log(ObjectId.isValid(req.params.id))
-        
+        if(ObjectId.isValid(req.params.id)){
+            let id = ObjectId.createFromHexString(req.params.id)
+            let article = await articleCollection.findOne({_id: id})
+            res.json(article);
+        }else{
+            throw new CustomError("404: Page not found", 400)
+        }
     } catch (error) {
-        
+        next(error)
     }
-    console.log(id2)
-    // let article = await articleCollection.findOne({_id: ObjectId(req.params.id)})
-    // res.json(article);
 }
-let createNewArticle = async (req, res)=>{
-    let newArticle = await articleCollection.insertOne({
-        title: req.body.title,
-        featuredImg: req.body.featuredImg || "",
-        content: req.body.content,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-    })
-    res.json(newArticle)
+let createNewArticle = async (req, res, next)=>{
+    try {
+        let input = new ArticleSchema (req.body)
+        let newArticle = await articleCollection.insertOne(input)
+        res.json(newArticle)
+    } catch (error) {
+        next(error)
+    }
 }
 
 articleRouter.route("/").get(findAllArticles).post(createNewArticle)

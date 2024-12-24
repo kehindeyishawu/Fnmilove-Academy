@@ -1,4 +1,5 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
+import { CustomError } from "./customError.js";
 
 let db;
 export let courseCollection;
@@ -27,10 +28,32 @@ export async function connectToDB() {
         articleCollection = db.collection("articles")
         jobCollection = db.collection("jobs")
     } catch {
-        throw new Error("Database Error")
+        throw new Error("Database connection/network fail")
     }
 }
 
+
+let validate = (input, name)=>{
+    if(input && typeof input === "string"){
+        return input
+    }else{
+        throw new CustomError(`${name} field is empty`, 400)
+    }
+}
+
+// Schemas
+export class ArticleSchema{
+    constructor({title, featuredImg, content}){
+        this.title = validate(title, "title")
+        this.content = validate(content, "content")
+        this.featuredImg = featuredImg|| ""
+        this.createdAt = new Date()
+        this.updatedAt = new Date()
+    }
+}
+
+
+// Graceful shutdown process
 let gracefulShutdown = async ()=>{
     setTimeout(()=>{
         console.error("Forcefully shutting down")

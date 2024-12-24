@@ -22,7 +22,8 @@ app.use(express.urlencoded({extended: true}))
 // Routes
 app.use("/articles", articleRouter)
 app.get("/test", (req, res)=>{
-    res.render("pages/article");
+    throw new CustomError("Go away", 500)
+    // res.render("pages/article");
 })
 
 // Error Handling
