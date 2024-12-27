@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { FaSearch } from "react-icons/fa"
 import CourseCard from "../components/CourseCard"
 import { useState } from "react"
+import CreateButton from "../components/createButton"
 
 let courseDB = [
   {
@@ -67,6 +68,7 @@ const Courses = () => {
               <a href="" className="btn btn-outline-primary btn-lg rounded-0 fw-bold">Load More</a>
             </div>
           </div>
+          <CreateButton postType="course"/>
         </div>
       </section>
     </main>

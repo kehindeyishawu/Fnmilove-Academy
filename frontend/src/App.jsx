@@ -9,7 +9,7 @@ import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Privacy from './pages/Privacy.jsx'
 import Terms from './pages/Terms.jsx'
-import PostEdit from './pages/PostEdit.jsx'
+import JobUpdate from './pages/JobUpdate.jsx'
 
 function App() {
   const router = createBrowserRouter([
@@ -50,9 +50,17 @@ function App() {
           element: <Signup />
         },
         {
-          path: "/:posttype/edit",
-          element: <PostEdit/>
+          path: "/job/:id/edit",
+          element: <JobUpdate/>
         },
+        // {
+        //   path: "/artcle/:id/edit",
+        //   element: <PostEdit/>
+        // },
+        // {
+        //   path: "/course/id/edit",
+        //   element: <PostEdit/>
+        // },
       ]
     },
   ])

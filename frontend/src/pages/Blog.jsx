@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { FaSearch } from "react-icons/fa"
 import { useState } from "react"
 import { FaCalendarAlt } from "react-icons/fa"
+import CreateButton from "../components/createButton"
 
 
 const Blog = () => {
@@ -114,6 +115,7 @@ const Blog = () => {
                         </div>
                     </section>
                 </div>
+                <CreateButton/>
             </section>
         </main>
     )

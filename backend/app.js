@@ -3,8 +3,10 @@ import express from "express"
 import {resolve} from "path"
 import expressEjsLayouts from "express-ejs-layouts"
 import { CustomError } from "./utils/customError.js"
-import { connectToDB } from "./utils/connectToDB.js"
+import { connectToDB, postCollection } from "./utils/connectToDB.js"
 import {articleRouter} from "./routes/article.js"
+import { jobRouter } from "./routes/job.js"
+import { courseRouter } from "./routes/course.js"
 
 let app = express()
 
@@ -20,7 +22,19 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 // Routes
+app.get("/post", async (req, res)=>{
+    let allPosts = await postCollection.find().toArray()
+    if (allPosts.length === 0) {
+        throw new CustomError("No post found", 404)
+    }
+    res.json(allPosts)
+})
 app.use("/articles", articleRouter)
+app.use("/jobs", jobRouter)
+app.use("/courses", courseRouter)
+app.get("/page", (req, res)=>{
+    res.render("pages/course")
+})
 app.get("/test", (req, res)=>{
     throw new CustomError("Go away", 500)
     // res.render("pages/article");

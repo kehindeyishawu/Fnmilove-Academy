@@ -9,7 +9,7 @@ import Team from "../components/Team";
 const About = () => {
 
   let bannerStyles = {
-    backgroundImage: `url('https://res.cloudinary.com/${cloudname}/image/upload/${setFullWidth("4:1")}/Fnmilove%20Academy/group_hlsizx')`,
+    backgroundImage: `url('https://res.cloudinary.com/${cloudname}/image/upload/${setFullWidth("4:1")}/Fnmilove%20Academy/about-banner')`,
     backgroundPosition: "center",
     backgroundSize: "cover"
   }
@@ -74,13 +74,13 @@ const About = () => {
       </section>
       <section className="mt-5">
         <div className="container">
-          <img className="img-fluid" src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerFullWidth("ar_4:1,")}/v1731286967/Fnmilove%20Academy/books_emlaby.jpg`} alt="" />
+          <img className="img-fluid" src={`https://res.cloudinary.com/${cloudname}/image/upload/${setContainerFullWidth("ar_3:1,g_center,c_fill,")}/Fnmilove%20Academy/showcase_djvc2y`} alt="" />
           <div className="row justify-content-between mt-5">
-            <div className="col-6">
-              <img className="img-fluid" src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerHalfWidth("ar_16:9,")}/v1731994991/Fnmilove%20Academy/image-placeholder_pve8bj.png`} alt="" />
+            <div className="col-md-6">
+              <img className="img-fluid" src={`https://res.cloudinary.com/${cloudname}/image/upload/${setContainerHalfWidth("ar_4:3,c_fill,g_face,")}/v1731994991/Fnmilove%20Academy/fashion_mgoum2`} alt="" />
             </div>
-            <div className="col-6">
-              <img className="img-fluid" src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerHalfWidth("ar_16:9,")}/v1731994991/Fnmilove%20Academy/image-placeholder_pve8bj.png`} alt="" />
+            <div className="col-md-6">
+              <img className="img-fluid" src={`https://res.cloudinary.com/${cloudname}/image/upload/${setContainerHalfWidth("ar_4:3,c_fill,g_center,")}/v1731994991/Fnmilove%20Academy/boy-display_mmnaux`} alt="" />
             </div>
           </div>
         </div>

@@ -2,10 +2,13 @@ import { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 // import "./TextEditor.scss"
 
+export let getEditorContent;
+
 const TextEditor = () => {
     const editorRef = useRef(null);
-    const log = () => {
+    getEditorContent = () => {
         if (editorRef.current) {
+            // return editorRef.current.getContent();
             console.log(editorRef.current.getContent());
         }
     };
@@ -19,7 +22,8 @@ const TextEditor = () => {
                 initialValue='<p>This is the initial content of the editor.</p>'
                 init={{
                     height: 500,
-                    menubar: false,
+                    // menubar: false,
+                    promotion: false,
                     skin: "tinymce-5-dark",
                     plugins: [
                         'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',

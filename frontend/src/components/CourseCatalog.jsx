@@ -17,7 +17,7 @@ const CourseCatalog = () => {
                 </div>
                 <div className="col-md-3">
                     <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731024142/Fnmilove%20Academy/makeup31_n8e2we.png`} className="img-fluid" alt="Makeup Set" />
-                    <div className="text-center fw-bold my-2">Make-up</div>
+                    <div className="text-center fw-bold my-2">Skincare & Cosmetics</div>
                 </div>
                 <div className="col-md-3">
                     <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731024141/Fnmilove%20Academy/Content81_utsreb.png`} className="img-fluid" alt="Content Creation" />
@@ -28,12 +28,12 @@ const CourseCatalog = () => {
                     <div className="text-center fw-bold my-2">Fashion Design</div>
                 </div>
                 <div className="col-md-3">
-                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731026124/Fnmilove%20Academy/photography_moek2w.png`} className="img-fluid" alt="Photography" />
-                    <div className="text-center fw-bold my-2">Photography</div>
+                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731026126/Fnmilove%20Academy/salon_rrtwxr`} className="img-fluid" alt="Web Development" />
+                    <div className="text-center fw-bold my-2">Hairdressing & Styling</div>
                 </div>
                 <div className="col-md-3">
-                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731026126/Fnmilove%20Academy/web-design_gsjbwg.png`} className="img-fluid" alt="Web Development" />
-                    <div className="text-center fw-bold my-2">Web Development</div>
+                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731026124/Fnmilove%20Academy/photography_moek2w.png`} className="img-fluid" alt="Photography" />
+                    <div className="text-center fw-bold my-2">Photography</div>
                 </div>
                 <div className="col-md-3">
                     <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth()}/v1731026124/Fnmilove%20Academy/graphic-designer1_i5uhsw.png`} className="img-fluid" alt="Graphics Design" />

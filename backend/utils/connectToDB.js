@@ -3,8 +3,7 @@ import { CustomError } from "./customError.js";
 
 let db;
 export let courseCollection;
-export let articleCollection;
-export let jobCollection;
+export let postCollection;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.DB_CONNECT_STRING, {
@@ -25,8 +24,7 @@ export async function connectToDB() {
         await db.command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
         courseCollection = db.collection("courses")
-        articleCollection = db.collection("articles")
-        jobCollection = db.collection("jobs")
+        postCollection = db.collection("posts")
     } catch {
         throw new Error("Database connection/network fail")
     }
@@ -45,9 +43,38 @@ let validate = (input, name)=>{
 export class ArticleSchema{
     constructor({title, featuredImg, content}){
         this.title = validate(title, "title")
+        this.featuredImg = featuredImg|| ""
+        this.content = validate(content, "content")
+        this.type = "article"
+        this.slug = title.toLowerCase().replace(/\s/g, "-");
+        this.updatedAt = new Date()
+    }
+}
+export class JobSchema{
+    constructor({featuredImg, content, companyCoverImg, companyLogo,logoAccent, jobTitle, companyName, jobType, jobLocation, applicationDeadline}){
+        this.companyCoverImg = companyCoverImg || "";
+        this.companyLogo = companyLogo || "";
+        this.logoAccent = logoAccent || "";
+        this.companyName = validate(companyName, "companyName")
+        this.jobTitle = validate(jobTitle, "jobTitle")
+        this.jobType = validate(jobType, "jobType")
+        this.jobLocation = validate(jobLocation, "jobLocation")
+        this.applicationDeadline = validate(applicationDeadline, "applicationDeadline")
         this.content = validate(content, "content")
         this.featuredImg = featuredImg|| ""
-        this.createdAt = new Date()
+        this.type = "job"
+        this.slug = title.toLowerCase().replace(/\s/g, "-");
+        this.updatedAt = new Date()
+    }
+}
+export class CourseSchema{
+    constructor({title, tutors, featuredImg, content, price}){
+        this.title = validate(title, "title")
+        this.tutors = validate(tutors, "tutors")
+        this.content = validate(content, "content")
+        this.featuredImg = featuredImg|| ""
+        this.price = validate(price, "price")
+        this.slug = title.toLowerCase().replace(/\s/g, "-");
         this.updatedAt = new Date()
     }
 }
