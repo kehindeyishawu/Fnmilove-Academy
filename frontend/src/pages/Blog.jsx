@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { FaSearch } from "react-icons/fa"
 import { useState } from "react"
 import { FaCalendarAlt } from "react-icons/fa"
-import CreateButton from "../components/createButton"
+import CreateButton from "../components/CreateButton"
 
 
 const Blog = () => {
