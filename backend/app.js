@@ -2,14 +2,17 @@ import "dotenv/config"
 import express from "express"
 import {resolve} from "path"
 import expressEjsLayouts from "express-ejs-layouts"
+import cors from "cors"
 import { CustomError } from "./utils/customError.js"
 import { connectToDB, postCollection } from "./utils/connectToDB.js"
 import {articleRouter} from "./routes/article.js"
 import { jobRouter } from "./routes/job.js"
 import { courseRouter } from "./routes/course.js"
+import { draftRouter } from "./routes/draft.js"
 
 let app = express()
-
+// set up CORS
+app.use(cors())
 // set public folder
 app.use(express.static(resolve("./public")))
 app.use(express.static(resolve("../frontend", "./public",)))
@@ -20,7 +23,12 @@ app.set("layout", "layout")
 // parse incoming form data and json
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-
+// passing variables to all views
+app.use((req, res, next)=>{
+    res.locals.fadingNotification = ""
+    res.locals.staticNotification = ""
+    next()
+})
 // Routes
 app.get("/post", async (req, res)=>{
     let allPosts = await postCollection.find().toArray()
@@ -32,6 +40,7 @@ app.get("/post", async (req, res)=>{
 app.use("/articles", articleRouter)
 app.use("/jobs", jobRouter)
 app.use("/courses", courseRouter)
+app.use("/draft", draftRouter)
 app.get("/page", (req, res)=>{
     res.render("pages/course")
 })

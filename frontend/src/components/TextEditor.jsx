@@ -8,8 +8,7 @@ const TextEditor = () => {
     const editorRef = useRef(null);
     getEditorContent = () => {
         if (editorRef.current) {
-            // return editorRef.current.getContent();
-            console.log(editorRef.current.getContent());
+            return editorRef.current.getContent();
         }
     };
 

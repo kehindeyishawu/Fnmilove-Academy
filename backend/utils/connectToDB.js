@@ -4,6 +4,7 @@ import { CustomError } from "./customError.js";
 let db;
 export let courseCollection;
 export let postCollection;
+export let userCollection;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.DB_CONNECT_STRING, {
@@ -25,6 +26,7 @@ export async function connectToDB() {
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
         courseCollection = db.collection("courses")
         postCollection = db.collection("posts")
+        userCollection = db.collection("users")
     } catch {
         throw new Error("Database connection/network fail")
     }
@@ -45,13 +47,13 @@ export class ArticleSchema{
         this.title = validate(title, "title")
         this.featuredImg = featuredImg|| ""
         this.content = validate(content, "content")
-        this.type = "article"
+        this.postType = "article"
         this.slug = title.toLowerCase().replace(/\s/g, "-");
         this.updatedAt = new Date()
     }
 }
 export class JobSchema{
-    constructor({featuredImg, content, companyCoverImg, companyLogo,logoAccent, jobTitle, companyName, jobType, jobLocation, applicationDeadline}){
+    constructor({content, companyCoverImg, companyLogo,logoAccent, jobTitle, companyName, jobType, jobLocation, applicationDeadline}){
         this.companyCoverImg = companyCoverImg || "";
         this.companyLogo = companyLogo || "";
         this.logoAccent = logoAccent || "";
@@ -61,8 +63,7 @@ export class JobSchema{
         this.jobLocation = validate(jobLocation, "jobLocation")
         this.applicationDeadline = validate(applicationDeadline, "applicationDeadline")
         this.content = validate(content, "content")
-        this.featuredImg = featuredImg|| ""
-        this.type = "job"
+        this.postType = "job"
         this.slug = title.toLowerCase().replace(/\s/g, "-");
         this.updatedAt = new Date()
     }

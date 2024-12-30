@@ -1,7 +1,7 @@
 #post-edit{
     background-color: #f5f5f5;
     padding: 6rem 0;
-    #title-input{
+    #title-input:not(.is-invalid){
         box-shadow: none;
         border-color: currentColor;
     }

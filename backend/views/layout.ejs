@@ -13,6 +13,20 @@
     <%- body %>
     <%- include("./partials/contactDialog") %>
     <%- include("./partials/footer") %>
+    <%- include("./partials/notification") %>
     <script src="bootstrap.min.js"></script>
+    <script>
+        // toast function
+        <% if(fadingNotification){ %>
+            const fadingToast = document.getElementById('fadingToast')
+            const toastFadeBootstrap = bootstrap.Toast.getOrCreateInstance(fadingToast)
+            toastFadeBootstrap.show();
+        <% } %>
+        <% if(staticNotification){ %>
+            const staticToast = document.getElementById('staticToast')
+            const toastStaticBootstrap = bootstrap.Toast.getOrCreateInstance(staticToast)
+            toastStaticBootstrap.show();
+        <% } %>
+    </script>
 </body>
 </html>
