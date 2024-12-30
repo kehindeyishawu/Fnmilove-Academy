@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { FaSearch } from "react-icons/fa"
 import CourseCard from "../components/CourseCard"
 import { useState } from "react"
-import CreateButton from "../components/createButton"
+import CreateButton from "../components/CreateButton"
 
 let courseDB = [
   {
