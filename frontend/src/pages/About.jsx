@@ -9,7 +9,7 @@ import Team from "../components/Team";
 const About = () => {
 
   let bannerStyles = {
-    backgroundImage: `url('https://res.cloudinary.com/${cloudname}/image/upload/${setFullWidth("4:1")}/Fnmilove%20Academy/about-banner')`,
+    backgroundImage: `url('https://res.cloudinary.com/${cloudname}/image/upload/${setFullWidth()}/Fnmilove%20Academy/about-banner')`,
     backgroundPosition: "center",
     backgroundSize: "cover"
   }
