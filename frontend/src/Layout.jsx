@@ -3,7 +3,7 @@ import Footer from "./components/Footer"
 import { useState } from 'react';
 import ContactDialog from "./components/ContactDialog";
 import Header from "./components/Header";
-import Notification from "./components/notification";
+import Notification from "./components/Notification";
 
 const Layout = () => {
     const [showModal, setShowModal] = useState(false);
