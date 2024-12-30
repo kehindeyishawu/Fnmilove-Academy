@@ -74,8 +74,8 @@ const About = () => {
       </section>
       <section className="mt-5">
         <div className="container">
-          <img className="img-fluid" src={`https://res.cloudinary.com/${cloudname}/image/upload/${setContainerFullWidth("ar_3:1,g_center,c_fill,")}/Fnmilove%20Academy/showcase_djvc2y`} alt="" />
-          <div className="row justify-content-between mt-5">
+          <img className="img-fluid" src={`https://res.cloudinary.com/${cloudname}/image/upload/${setContainerFullWidth("ar_2:1,g_center,c_fill,")}/Fnmilove%20Academy/showcase_djvc2y`} alt="" />
+          <div className="row justify-content-between g-0 mt-5">
             <div className="col-md-6">
               <img className="img-fluid" src={`https://res.cloudinary.com/${cloudname}/image/upload/${setContainerHalfWidth("ar_4:3,c_fill,g_face,")}/v1731994991/Fnmilove%20Academy/fashion_mgoum2`} alt="" />
             </div>

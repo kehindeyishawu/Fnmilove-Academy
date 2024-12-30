@@ -12,7 +12,7 @@ const CreateButton = ({postType = "others"}) => {
 
     return (
         <div id="create-button">
-            {postType === "course" ? <Link to="/" className="btn btn-dark btn-lg create-post"><FaPlus /></Link> : <button onClick={toggleDropdown} className="btn btn-dark btn-lg create-post"><FaPlus /></button>}
+            {postType === "course" ? <Link title="Create new course" to="/" className="btn btn-dark btn-lg create-post"><FaPlus /></Link> : <button title="Create new post" onClick={toggleDropdown} className="btn btn-dark btn-lg create-post"><FaPlus /></button>}
             <div hidden={dropdown} class="list-group text-start rounded-0 mt-1 fw-bold">
                 <Link href="#" class="list-group-item list-group-item-action">Article</Link>
                 <Link href="#" class="list-group-item list-group-item-action">Job</Link>
