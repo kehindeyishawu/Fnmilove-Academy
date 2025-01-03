@@ -1,14 +1,16 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import EditNav from '../components/EditNav'
 import { FaArrowLeftLong } from 'react-icons/fa6'
-import { Link } from 'react-router-dom'
+import { Link, useOutletContext, useLocation } from 'react-router-dom'
 import "./PostEdit.scss"
-import TextEditor, { getEditorContent } from '../components/TextEditor'
+import TextEditor from '../components/TextEditor'
 import { cloudname } from '../utils/cloudinary'
+import Spinner from 'react-bootstrap/Spinner';
 
 const PostEdit = () => {
   let [featuredImg1, setFeaturedImg1] = useState("")
   let [featuredImg2, setFeaturedImg2] = useState("")
+  const { setShowLoading, setStaticNotification } = useOutletContext()
   let logoAccent = useRef(null);
   let companyName = useRef(null);
   let jobTitle = useRef(null);
@@ -16,7 +18,15 @@ const PostEdit = () => {
   let jobLocation = useRef(null);
   let applicationDeadline = useRef(null);
   let drafted = false;
-  let host = `http://localhost:4000`
+  let editorRef = useRef(null)
+  let imgSrc = useRef(null)
+  let imgSrc2 = useRef(null)
+  let { pathname } = useLocation()
+
+  useEffect(() => {
+    // check if the user has a draft. If yes, load the draft by equating the drafted variable to the createdAt date
+    // then fill the form with the draft data by setting their values with the useRef.current.value
+  })
 
   let validate = (input)=>{
     if(input.current.value && typeof input.current.value === "string"){
@@ -27,9 +37,43 @@ const PostEdit = () => {
       throw new Error(`${input.current.id} field is empty`)
     }
   }
-
+  
   let save = async()=>{
+    if(pathname.includes("/edit")){
+      console.log("Auto Save is Off")
+      return
+    }
+    console.log("Saving")
+    drafted = drafted || (new Date()).getTime();
+    let payload = {
+      companyCoverImg: featuredImg1,
+      companyLogo: featuredImg2,
+      logoAccent: logoAccent.current.value,
+      jobTitle: jobTitle.current.value,
+      jobType: jobType.current.value,
+      jobLocation: jobLocation.current.value,
+      companyName: companyName.current.value,
+      applicationDeadline: applicationDeadline.current.value,
+      postType: "course",
+      content: editorRef.current.getContent(),
+      assetFolder: drafted
+    }
+    let req = await fetch(`/draft`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    })
+    if(!req.ok){
+      setStaticNotification({ message: "An error occured while trying to save this job", time: (new Date()).toString() })
+    }
+    let res = await req.json()
+    console.log(res)
+  }
+  let publish = async()=>{
     console.log("Publishing")
+    drafted = drafted || (new Date()).getTime();
     let payload = {
       companyCoverImg: featuredImg1,
       companyLogo: featuredImg2,
@@ -40,9 +84,10 @@ const PostEdit = () => {
       companyName: validate(companyName),
       applicationDeadline: validate(applicationDeadline),
       postType: "course",
-      content: getEditorContent(),
+      content: editorRef.current.getContent(),
+      assetFolder: drafted
     }
-    let req = await fetch(`${host}/draft`, {
+    let req = await fetch(`/jobs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -50,57 +95,107 @@ const PostEdit = () => {
       body: JSON.stringify(payload)
     })
     if(!req.ok){
-      alert("An error occured while trying to publish this job")
+      setStaticNotification({message: "An error occured while trying to publish this job", time: (new Date()).toString()})
     }
     let res = await req.json()
     console.log(res)
   }
+
+  // Text Editor Image Upload Function
+  let imageUploadFunction = async (blobInfo, progress) => {
+    drafted = drafted || (new Date()).getTime();
+    const formData = new FormData();
+    formData.append('file', blobInfo.blob());
+    formData.append('folder', `job/${drafted}`);
+    formData.append('upload_preset', 'fnmi-academy');
+    try {
+      const req = await fetch(`https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      if (!req.ok) {
+        throw new Error('An error occured while trying to upload the image');
+      }
+      const res = await req.json();
+      return res.secure_url;
+    } catch (error) {
+      console.log(error);
+      error.remove = true;
+      throw error;
+      // setStaticNotification({ message: error.message, time: (new Date()).toString() });
+    }
+  }
+
   // set featured Image preview
   let setPreview1 = async(e)=>{
+    let prevValue = imgSrc.current.src
+    prevValue === "http://localhost:5173/job/765765/edit" && (prevValue = "")
+    drafted = drafted || (new Date()).getTime();
     try {
+      setFeaturedImg1(null)
+      e.target.setAttribute("disabled", true)
       let imgUpload = e.target.files[0]
       let formData = new FormData()
       formData.append("file", imgUpload)
       formData.append("upload_preset", "fnmi-academy")
-      formData.append("folder", "job")
+      formData.append("folder", `job/${drafted}`)
       let req = await fetch(`https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, {
         method: "POST",
         body: formData
       })
+      if(!req.ok){
+        throw new Error("An error occured while trying to upload the image")
+      }
       let res = await req.json()
-      // console.log(res)
       setFeaturedImg1(res.secure_url)
+      e.target.removeAttribute("disabled")
       e.target.value = ""
     } catch (error) {
+      e.target.removeAttribute("disabled")
+      let time = new Date()
+      setStaticNotification({message: error.message, time: time.toString()})
+      setFeaturedImg1(prevValue)
       console.log(error)
     }
   }
   // set featured2 Image preview
   let setPreview2 = async(e)=>{
+    let prevValue = imgSrc2.current.src
+    prevValue === "http://localhost:5173/job/765765/edit" && (prevValue = "")
+    drafted = drafted || (new Date()).getTime();
     try {
+      setFeaturedImg2(null)
+      e.target.setAttribute("disabled", true)
       let imgUpload = e.target.files[0]
       let formData = new FormData()
       formData.append("file", imgUpload)
       formData.append("upload_preset", "fnmi-academy")
-      formData.append("folder", "job")
+      formData.append("folder", `job/${drafted}`)
       let req = await fetch(`https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, {
         method: "POST",
         body: formData
       })
+      if (!req.ok) {
+        throw new Error("An error occured while trying to upload the image")
+      }
       let res = await req.json()
-      // console.log(res)
       setFeaturedImg2(res.secure_url)
+      e.target.removeAttribute("disabled")
       e.target.value = ""
     } catch (error) {
+      e.target.removeAttribute("disabled")
+      let time = new Date()
+      setStaticNotification({ message: error.message, time: time.toString() })
+      setFeaturedImg2(prevValue)
       console.log(error)
     }
   }
 
   return (
     <>
-      <div className='fixed-top'>
-        <EditNav publishButton={save}/>
-      </div>
+      <header className='fixed-top'>
+        <EditNav publishButton={publish} saveButton={save}/>
+      </header>
       <main id='post-edit'>
         <div className="container">
           {/* back arrow link */}
@@ -119,7 +214,7 @@ const PostEdit = () => {
                 {/* content input */}
                 <div>
                   <label htmlFor="content" className='form-label'>Content</label>
-                  <TextEditor/>
+                  <TextEditor editorRef= {editorRef} imageUploadFunction={imageUploadFunction}/>
                 </div>
               </form>
               {/* Job type select */}
@@ -167,10 +262,11 @@ const PostEdit = () => {
                     <div>
                       <input onChange={setPreview1} type="file" id='featuredImg1-input' hidden={true}/>
                       <label htmlFor="featuredImg1-input" className='featuredImg-label' style={{display: featuredImg1? "none": "block"}}>
-                        <small>Upload Banner-Image</small>
-                        <div className='form-text'>Max File Size: 4MB</div>
+                        <small>
+                          {featuredImg1 === null? <div><Spinner animation="border" size='sm' /> <span>Loading</span></div> : "Upload Banner Image"}
+                        </small>
                       </label>
-                      <img src={featuredImg1} style={{ display: featuredImg1 ? "inline" : "none" }} className='img-fluid' alt="" />
+                      <img ref={imgSrc} src={featuredImg1} style={{ display: featuredImg1 ? "inline" : "none" }} className='img-fluid' alt="" />
                     </div>
                     <div className='img-mod mt-2' hidden={!featuredImg1}>
                       <label htmlFor='featuredImg1-input'>Update</label>
@@ -182,10 +278,12 @@ const PostEdit = () => {
                     <div>
                       <input onChange={setPreview2} type="file" id='featuredImg2-input' hidden={true}/>
                       <label htmlFor="featuredImg2-input" className='featuredImg-label' style={{display: featuredImg2? "none": "block"}}>
-                        <small>Upload Logo</small>
-                        <div className='form-text'>Max File Size:</div>
+                        <small>
+                          {featuredImg2 === null ? <div><Spinner animation="border" size='sm' /> <span>Loading</span></div> : "Upload Logo"}
+                        </small>
+                        <div className='form-text'>Formats: png, webp</div>
                       </label>
-                      <img src={featuredImg2} style={{ display: featuredImg2 ? "inline" : "none" }} className='img-fluid' alt="" />
+                      <img ref={imgSrc2} src={featuredImg2} style={{ display: featuredImg2 ? "inline" : "none" }} className='img-fluid' alt="" />
                     </div>
                     <div className='img-mod mt-2' hidden={!featuredImg2}>
                       <label htmlFor='featuredImg2-input'>Update</label>

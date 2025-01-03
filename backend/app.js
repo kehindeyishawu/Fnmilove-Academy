@@ -2,7 +2,6 @@ import "dotenv/config"
 import express from "express"
 import {resolve} from "path"
 import expressEjsLayouts from "express-ejs-layouts"
-import cors from "cors"
 import { CustomError } from "./utils/customError.js"
 import { connectToDB, postCollection } from "./utils/connectToDB.js"
 import {articleRouter} from "./routes/article.js"
@@ -11,8 +10,7 @@ import { courseRouter } from "./routes/course.js"
 import { draftRouter } from "./routes/draft.js"
 
 let app = express()
-// set up CORS
-app.use(cors())
+
 // set public folder
 app.use(express.static(resolve("./public")))
 app.use(express.static(resolve("../frontend", "./public",)))
@@ -53,8 +51,10 @@ app.get("/test", (req, res)=>{
 app.use((err, req, res, next)=>{
     if (err.statusCode) {
         res.status(err.statusCode).send(err.message)
+        console.log(err.message)
     } else {
-        res.status(500).send(`Server Error: ${err.message}`)
+        res.status(500).json(`Server Error: ${err.message}`)
+        console.log(err.message)
     }
 })
 

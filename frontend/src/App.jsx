@@ -50,6 +50,10 @@ function App() {
           element: <Signup />
         },
         {
+          path: "/job/new",
+          element: <JobUpdate/>
+        },
+        {
           path: "/job/:id/edit",
           element: <JobUpdate/>
         },

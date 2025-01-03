@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 const ContactDialog = ({showModal, setShowModal}) => {
     const handleClose = () => setShowModal(false);
-    const handleShow = () => setShowModal(true);
 
     const [formFields, setFormFields] = useState({ fullname: "", email: "", phone: "", issue: "", message: "" })
     const formSubmit = (e) => {

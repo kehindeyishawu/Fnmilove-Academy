@@ -43,17 +43,18 @@ let validate = (input, name)=>{
 
 // Schemas
 export class ArticleSchema{
-    constructor({title, featuredImg, content}){
+    constructor({title, featuredImg, content, assetFolder}){
         this.title = validate(title, "title")
         this.featuredImg = featuredImg|| ""
         this.content = validate(content, "content")
         this.postType = "article"
+        this.assetFolder = assetFolder
         this.slug = title.toLowerCase().replace(/\s/g, "-");
         this.updatedAt = new Date()
     }
 }
 export class JobSchema{
-    constructor({content, companyCoverImg, companyLogo,logoAccent, jobTitle, companyName, jobType, jobLocation, applicationDeadline}){
+    constructor({ content, companyCoverImg, companyLogo, logoAccent, jobTitle, companyName, jobType, jobLocation, applicationDeadline, assetFolder }){
         this.companyCoverImg = companyCoverImg || "";
         this.companyLogo = companyLogo || "";
         this.logoAccent = logoAccent || "";
@@ -64,17 +65,19 @@ export class JobSchema{
         this.applicationDeadline = validate(applicationDeadline, "applicationDeadline")
         this.content = validate(content, "content")
         this.postType = "job"
+        this.assetFolder = assetFolder
         this.slug = title.toLowerCase().replace(/\s/g, "-");
         this.updatedAt = new Date()
     }
 }
 export class CourseSchema{
-    constructor({title, tutors, featuredImg, content, price}){
+    constructor({ title, tutors, featuredImg, content, price, assetFolder }){
         this.title = validate(title, "title")
         this.tutors = validate(tutors, "tutors")
         this.content = validate(content, "content")
         this.featuredImg = featuredImg|| ""
         this.price = validate(price, "price")
+        this.assetFolder = assetFolder
         this.slug = title.toLowerCase().replace(/\s/g, "-");
         this.updatedAt = new Date()
     }

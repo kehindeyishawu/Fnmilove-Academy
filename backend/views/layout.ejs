@@ -10,12 +10,35 @@
 </head>
 <body>
     <%- include("./partials/header") %>
+    <%- include("./partials/editNav.ejs") %>
     <%- body %>
     <%- include("./partials/contactDialog") %>
     <%- include("./partials/footer") %>
     <%- include("./partials/notification") %>
+    <%- include("./partials/deleteDialog") %>
+    <%- include("./partials/loadingDialog") %>
     <script src="bootstrap.min.js"></script>
     <script>
+
+        // delete dialog function ------ User must be signedIn to delete a post
+            let deleteModal = new bootstrap.Modal(document.getElementById('deletePostModal'), {
+                keyboard: false
+            })
+            const deleteInput = document.getElementById("delete-input");
+            const deleteButton = document.getElementById("delete-dialog-confirmation-button");
+            deleteInput.addEventListener("input", (e) => {
+                if (deleteInput.validity.patternMismatch || e.target.value.length < 1) {
+                    deleteButton.setAttribute("disabled", "true");
+                } else {
+                    deleteButton.removeAttribute("disabled");
+                }
+            })
+            deleteButton.addEventListener("click", () => {
+                // redirect to post page with notification. remember to add invalidate notification above 11 minutes
+                
+            })
+
+
         // toast function
         <% if(fadingNotification){ %>
             const fadingToast = document.getElementById('fadingToast')
