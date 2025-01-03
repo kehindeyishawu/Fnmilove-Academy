@@ -30,7 +30,7 @@ const home = () => {
                     <Testimonial/>
                 </section>
                 <section className='top-spacing'>
-                    <IframeVideo url="https://www.youtube.com/embed/U9Do9Wi10yM?si=GUDhtpSlax4j85oj?rel=0" />
+                    <IframeVideo url="https://www.youtube.com/embed/xdzM0lc4Nxw?si=ZSvJWOOBmP4kcYuU?rel=0" />
                 </section>
                 <section className='top-spacing'>
                     <Posts/>

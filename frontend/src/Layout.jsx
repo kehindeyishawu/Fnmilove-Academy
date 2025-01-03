@@ -13,7 +13,7 @@ const Layout = () => {
     const [showLoading, setShowLoading] = useState(false);
     const [fadeNotification, setFadeNotification] = useState(false);
     const [staticNotification, setStaticNotification] = useState(false);
-    let {pathname} = useLocation()
+    let {pathname} = useLocation();
     let postUpdate = pathname.includes("/edit") || pathname.includes("/new")
     return (
         <>

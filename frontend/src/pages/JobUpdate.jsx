@@ -58,7 +58,7 @@ const PostEdit = () => {
       content: editorRef.current.getContent(),
       assetFolder: drafted
     }
-    let req = await fetch(`/draft`, {
+    let req = await fetch(`/api/draft`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -87,18 +87,25 @@ const PostEdit = () => {
       content: editorRef.current.getContent(),
       assetFolder: drafted
     }
-    let req = await fetch(`/jobs`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    })
-    if(!req.ok){
-      setStaticNotification({message: "An error occured while trying to publish this job", time: (new Date()).toString()})
+    setShowLoading(true)
+    try {
+      let req = await fetch(`/api/jobs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+      if (!req.ok) {
+        throw new Error("An error occured while trying to publish this job")
+      }
+      let res = await req.json()
+      setShowLoading(false)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+      setStaticNotification({ message: error.message, time: (new Date()).toString() })
     }
-    let res = await req.json()
-    console.log(res)
   }
 
   // Text Editor Image Upload Function
@@ -116,6 +123,7 @@ const PostEdit = () => {
       if (!req.ok) {
         throw new Error('An error occured while trying to upload the image');
       }
+      await save();
       const res = await req.json();
       return res.secure_url;
     } catch (error) {
@@ -147,6 +155,7 @@ const PostEdit = () => {
         throw new Error("An error occured while trying to upload the image")
       }
       let res = await req.json()
+      await save()
       setFeaturedImg1(res.secure_url)
       e.target.removeAttribute("disabled")
       e.target.value = ""
@@ -179,6 +188,7 @@ const PostEdit = () => {
         throw new Error("An error occured while trying to upload the image")
       }
       let res = await req.json()
+      await save()
       setFeaturedImg2(res.secure_url)
       e.target.removeAttribute("disabled")
       e.target.value = ""

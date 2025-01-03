@@ -14,7 +14,7 @@ function Notification({fadeNotification, setFadeNotification, staticNotification
             className="position-fixed bottom-0 start-0 p-3"
         >
             <Toast show={fadeNotification} onClose={closeFadeNotification} delay={5000} autohide={true}>
-                <Toast.Header>
+                <Toast.Header closeButton={false}>
                     <img src="/logo.png" width={30} className="rounded me-2" alt="" />
                     <strong className="me-auto">Fnmilove</strong>
                     <small>{fadeNotification && timeAgo(fadeNotification.time)}</small>

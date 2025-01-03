@@ -28,17 +28,17 @@ app.use((req, res, next)=>{
     next()
 })
 // Routes
-app.get("/post", async (req, res)=>{
+app.get("/api/post", async (req, res)=>{
     let allPosts = await postCollection.find().toArray()
     if (allPosts.length === 0) {
         throw new CustomError("No post found", 404)
     }
     res.json(allPosts)
 })
-app.use("/articles", articleRouter)
-app.use("/jobs", jobRouter)
-app.use("/courses", courseRouter)
-app.use("/draft", draftRouter)
+app.use("/api/articles", articleRouter)
+app.use("/api/jobs", jobRouter)
+app.use("/api/courses", courseRouter)
+app.use("/api/draft", draftRouter)
 app.get("/page", (req, res)=>{
     res.render("pages/course")
 })

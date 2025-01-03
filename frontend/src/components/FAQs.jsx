@@ -16,7 +16,7 @@ const FAQs = () => {
                     <Accordion.Item eventKey="1">
                         <Accordion.Header>How long do the programs take to complete?</Accordion.Header>
                         <Accordion.Body>
-                            Course duration varies depending on the specialization. Most programs are designed to be completed in a few months, with options for full-time and part-time schedules to accommodate your lifestyle. Detailed information about the duration of each course can be found on our course descriptions page.
+                            Course duration varies depending on the specialization. Most programs are designed to be completed in a few months, with options for full-time and part-time schedules to accommodate your lifestyle. Crash Courses are 3 months; Full Courses are 1-3 years(divided into 3 sessions per year). Detailed information about the duration of each course can be found on our course descriptions page.
                         </Accordion.Body>
                     </Accordion.Item>
                     <Accordion.Item eventKey="2">

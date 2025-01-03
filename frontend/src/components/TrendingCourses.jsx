@@ -7,7 +7,7 @@ let courseDB = [
         img: "cosmetics-makeup_yckopj",
         trend: "Top Rated",
         tipColor: "primary",
-        title: "Advanced Bridal Makeup: Creating Stunning Wedding Looks",
+        title: "Diploma in Creative Makeup and Hairstyling",
         tutors: "Fnmilove Academy, Mr. Adams and ...",
         url: "",
         price: "350,000"
@@ -16,7 +16,7 @@ let courseDB = [
         img: "content-marketing_ajukbi",
         trend: "Expert Recommended",
         tipColor: "secondary",
-        title: "Content Creation 101: Building Your Brand on Social Media",
+        title: "Diploma in Creative Marketing (Photography/Content Creation etc)",
         tutors: "Fnmilove Academy, Miss Kunle and Vincent",
         url: "",
         price: "159,000"
@@ -25,7 +25,7 @@ let courseDB = [
         img: "group_ijbkzs",
         trend: "Most Popular",
         tipColor: "info",
-        title: "Introduction to Fashion Design: From Concept to Creation",
+        title: "Diploma in Fashion and Lifestyle",
         tutors: "Fnmilove Academy, Mr Ajaiye and Mrs. Ron...",
         url: "",
         price: "199,000"

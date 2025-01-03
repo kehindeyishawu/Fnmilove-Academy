@@ -66,7 +66,7 @@ export class JobSchema{
         this.content = validate(content, "content")
         this.postType = "job"
         this.assetFolder = assetFolder
-        this.slug = title.toLowerCase().replace(/\s/g, "-");
+        this.slug = jobTitle.toLowerCase().replace(/\s/g, "-");
         this.updatedAt = new Date()
     }
 }
