@@ -18,7 +18,7 @@ let createNewArticle = async (req, res, next)=>{
     }
 }
 let findAllArticles = async (req, res) => {
-    let allArticle = await postCollection.find().toArray()
+    let allArticle = await postCollection.find({postType: "article"}).toArray()
     res.json(allArticle)
 }
 let findOneArticle = async (req, res, next) => {

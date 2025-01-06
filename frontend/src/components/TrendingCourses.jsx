@@ -22,7 +22,7 @@ let courseDB = [
         price: "159,000"
     },
     {
-        img: "group_ijbkzs",
+        img: "fashion_mgoum2",
         trend: "Most Popular",
         tipColor: "info",
         title: "Diploma in Fashion and Lifestyle",

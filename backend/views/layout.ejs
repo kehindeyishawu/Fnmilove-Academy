@@ -2,11 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="logo.png" />
+    <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <meta name="description" content="">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Article Title">
+    <meta property="og:description" content="A brief description of the article.">
+    <meta property="og:image" content="https://example.com/path/to/thumbnail.jpg">
+    <meta property="og:url" content="https://example.com/article">
+    <meta property="og:type" content="article">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Article Title">
+    <meta name="twitter:description" content="A brief description of the article.">
+    <meta name="twitter:image" content="https://example.com/path/to/thumbnail.jpg">
+    <meta name="twitter:url" content="https://example.com/article">
+    
+    <!-- General Meta Tags -->
+    <meta name="description" content="A brief description of the article.">
+    <link rel="canonical" href="https://example.com/article">
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <title>Title</title>
-    <link rel="stylesheet" href="app.min.css">
+    <link rel="stylesheet" href="/app.min.css">
 </head>
 <body>
     <%- include("./partials/header") %>
@@ -17,7 +36,7 @@
     <%- include("./partials/notification") %>
     <%- include("./partials/deleteDialog") %>
     <%- include("./partials/loadingDialog") %>
-    <script src="bootstrap.min.js"></script>
+    <script src="/bootstrap.min.js"></script>
     <script>
 
         // delete dialog function ------ User must be signedIn to delete a post

@@ -7,13 +7,13 @@ import TextEditor from '../components/TextEditor'
 import { cloudname } from '../utils/cloudinary'
 import Spinner from 'react-bootstrap/Spinner';
 
-const PostEdit = () => {
+const JobUpdate = () => {
   let [featuredImg1, setFeaturedImg1] = useState("")
   let [featuredImg2, setFeaturedImg2] = useState("")
   const { setShowLoading, setStaticNotification } = useOutletContext()
   let logoAccent = useRef(null);
   let companyName = useRef(null);
-  let jobTitle = useRef(null);
+  let title = useRef(null);
   let jobType = useRef(null);
   let jobLocation = useRef(null);
   let applicationDeadline = useRef(null);
@@ -22,6 +22,7 @@ const PostEdit = () => {
   let imgSrc = useRef(null)
   let imgSrc2 = useRef(null)
   let { pathname } = useLocation()
+  let onEditPage = pathname.includes("/edit")
 
   useEffect(() => {
     // check if the user has a draft. If yes, load the draft by equating the drafted variable to the createdAt date
@@ -34,12 +35,13 @@ const PostEdit = () => {
     }else{
       input.current.classList.add("is-invalid")
       input.current.scrollIntoView({block: "center"})
+      input.current.focus();
       throw new Error(`${input.current.id} field is empty`)
     }
   }
   
   let save = async()=>{
-    if(pathname.includes("/edit")){
+    if(onEditPage){
       console.log("Auto Save is Off")
       return
     }
@@ -49,12 +51,12 @@ const PostEdit = () => {
       companyCoverImg: featuredImg1,
       companyLogo: featuredImg2,
       logoAccent: logoAccent.current.value,
-      jobTitle: jobTitle.current.value,
+      title: title.current.value,
       jobType: jobType.current.value,
       jobLocation: jobLocation.current.value,
       companyName: companyName.current.value,
       applicationDeadline: applicationDeadline.current.value,
-      postType: "course",
+      postType: "job",
       content: editorRef.current.getContent(),
       assetFolder: drafted
     }
@@ -78,12 +80,12 @@ const PostEdit = () => {
       companyCoverImg: featuredImg1,
       companyLogo: featuredImg2,
       logoAccent: logoAccent.current.value,
-      jobTitle: validate(jobTitle),
+      title: validate(title),
       jobType: validate(jobType),
       jobLocation: validate(jobLocation),
       companyName: validate(companyName),
       applicationDeadline: validate(applicationDeadline),
-      postType: "course",
+      postType: "job",
       content: editorRef.current.getContent(),
       assetFolder: drafted
     }
@@ -137,7 +139,6 @@ const PostEdit = () => {
   // set featured Image preview
   let setPreview1 = async(e)=>{
     let prevValue = imgSrc.current.src
-    prevValue === "http://localhost:5173/job/765765/edit" && (prevValue = "")
     drafted = drafted || (new Date()).getTime();
     try {
       setFeaturedImg1(null)
@@ -156,7 +157,7 @@ const PostEdit = () => {
       }
       let res = await req.json()
       await save()
-      setFeaturedImg1(res.secure_url)
+      setFeaturedImg1(res.public_id)
       e.target.removeAttribute("disabled")
       e.target.value = ""
     } catch (error) {
@@ -170,7 +171,6 @@ const PostEdit = () => {
   // set featured2 Image preview
   let setPreview2 = async(e)=>{
     let prevValue = imgSrc2.current.src
-    prevValue === "http://localhost:5173/job/765765/edit" && (prevValue = "")
     drafted = drafted || (new Date()).getTime();
     try {
       setFeaturedImg2(null)
@@ -189,7 +189,7 @@ const PostEdit = () => {
       }
       let res = await req.json()
       await save()
-      setFeaturedImg2(res.secure_url)
+      setFeaturedImg2(res.public_id)
       e.target.removeAttribute("disabled")
       e.target.value = ""
     } catch (error) {
@@ -218,8 +218,8 @@ const PostEdit = () => {
                 {/* Title input */}
                 <div>
                   <label htmlFor="title-input" className='form-label'>Title</label>
-                  <input ref={jobTitle} type="text" id="title-input" className='form-control rounded-0' />
-                  <div className="invalid-feedback">Title Field is empty</div>
+                  <input ref={title} type="text" id="title-input" className='form-control rounded-0' />
+                  <div className="invalid-feedback">Job Title Field is empty</div>
                 </div>
                 {/* content input */}
                 <div>
@@ -232,10 +232,10 @@ const PostEdit = () => {
                 <label htmlFor='job-type' className='fw-bold form-label'>Type</label>
                 <select ref={jobType} id="job-type" className="form-select rounded-0">
                   <option value="">Select Job Type</option>
-                  <option value="full-time">Full Time</option>
-                  <option value="part-time">Part Time</option>
-                  <option value="contract">Contract</option>
-                  <option value="internship">Internship</option>
+                  <option value="Full-time">Full Time</option>
+                  <option value="Part-time">Part Time</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Internship">Internship</option>
                 </select>
                 <div className="invalid-feedback">Please select a valid Job type</div>
               </div>
@@ -244,9 +244,9 @@ const PostEdit = () => {
                 <label htmlFor='job-location' className='fw-bold form-label'>Location</label>
                 <select ref={jobLocation} id="job-location" className="form-select rounded-0">
                   <option value="">Select Job Location</option>
-                  <option value="remote">Remote</option>
-                  <option value="onsite">Onsite</option>
-                  <option value="hybrid">Hybrid</option>
+                  <option value="Remote">Remote</option>
+                  <option value="Onsite">Onsite</option>
+                  <option value="Hybrid">Hybrid</option>
                 </select>
                 <div className="invalid-feedback">Please select a valid Job Location</div>
               </div>
@@ -270,13 +270,13 @@ const PostEdit = () => {
                   <span className='fw-bold'>Featured Image</span>
                   <div className='mt-3' id='feature-img1'>
                     <div>
-                      <input onChange={setPreview1} type="file" id='featuredImg1-input' hidden={true}/>
+                      <input accept='image/*' onChange={setPreview1} type="file" id='featuredImg1-input' hidden={true}/>
                       <label htmlFor="featuredImg1-input" className='featuredImg-label' style={{display: featuredImg1? "none": "block"}}>
                         <small>
                           {featuredImg1 === null? <div><Spinner animation="border" size='sm' /> <span>Loading</span></div> : "Upload Banner Image"}
                         </small>
                       </label>
-                      <img ref={imgSrc} src={featuredImg1} style={{ display: featuredImg1 ? "inline" : "none" }} className='img-fluid' alt="" />
+                      <img ref={imgSrc} src={featuredImg1 ? `https://res.cloudinary.com/kkenny/image/upload/w_1000,c_limit,dpr_${devicePixelRatio}/${featuredImg1}` : null} style={{ display: featuredImg1 ? "inline" : "none" }} className='img-fluid' alt="" />
                     </div>
                     <div className='img-mod mt-2' hidden={!featuredImg1}>
                       <label htmlFor='featuredImg1-input'>Update</label>
@@ -286,14 +286,14 @@ const PostEdit = () => {
                   {/* feature image 2 for job and logo image */}
                   <div className='mt-3' id='feature-img2'>
                     <div>
-                      <input onChange={setPreview2} type="file" id='featuredImg2-input' hidden={true}/>
+                      <input accept='image/*' onChange={setPreview2} type="file" id='featuredImg2-input' hidden={true}/>
                       <label htmlFor="featuredImg2-input" className='featuredImg-label' style={{display: featuredImg2? "none": "block"}}>
                         <small>
                           {featuredImg2 === null ? <div><Spinner animation="border" size='sm' /> <span>Loading</span></div> : "Upload Logo"}
                         </small>
                         <div className='form-text'>Formats: png, webp</div>
                       </label>
-                      <img ref={imgSrc2} src={featuredImg2} style={{ display: featuredImg2 ? "inline" : "none" }} className='img-fluid' alt="" />
+                      <img ref={imgSrc2} src={featuredImg2 ? `https://res.cloudinary.com/kkenny/image/upload/w_1000,c_limit,dpr_${devicePixelRatio}/${featuredImg2}` : null} style={{ display: featuredImg2 ? "inline" : "none" }} className='img-fluid' alt="" />
                     </div>
                     <div className='img-mod mt-2' hidden={!featuredImg2}>
                       <label htmlFor='featuredImg2-input'>Update</label>
@@ -314,4 +314,4 @@ const PostEdit = () => {
   )
 }
 
-export default PostEdit
+export default JobUpdate

@@ -18,7 +18,7 @@ let createNewJob = async (req, res, next)=>{
     }
 }
 let findAllJobs = async (req, res) => {
-    let allJob = await postCollection.find().toArray()
+    let allJob = await postCollection.find({postType: "job"}).toArray()
     res.json(allJob)
 }
 let findOneJob = async (req, res, next) => {

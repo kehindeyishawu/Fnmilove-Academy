@@ -42,7 +42,7 @@ const Blog = () => {
                                     <div className="card">
                                         <div className="row g-0">
                                             <div className="col-4">
-                                                <img src={`https://res.cloudinary.com/kkenny/image/upload/c_fill,f_auto,q_auto,ar_1:1,dpr_${devicePixelRatio}/v1731400547/Fnmilove%20Academy/Posts/man.jpg`} className="img-fluid rounded-start" alt="..." />
+                                                <img src={`https://res.cloudinary.com/kkenny/image/upload/c_fill,f_auto,q_auto,ar_103:238,dpr_${devicePixelRatio}/v1731400547/Fnmilove%20Academy/Posts/man.jpg`} className="img-fluid rounded-start" alt="..." />
                                             </div>
                                             <div className="col-8">
                                                 <div className="card-body">

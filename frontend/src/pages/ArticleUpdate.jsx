@@ -1,0 +1,210 @@
+import { useEffect, useRef, useState } from 'react'
+import EditNav from '../components/EditNav'
+import { FaArrowLeftLong } from 'react-icons/fa6'
+import { Link, useOutletContext, useLocation } from 'react-router-dom'
+import "./PostEdit.scss"
+import TextEditor from '../components/TextEditor'
+import { cloudname } from '../utils/cloudinary'
+import Spinner from 'react-bootstrap/Spinner';
+
+const ArticleUpdate = () => {
+    let [featuredImg1, setFeaturedImg1] = useState("")
+    const { setShowLoading, setStaticNotification } = useOutletContext()
+    let title = useRef(null);
+    let drafted = false;
+    let editorRef = useRef(null)
+    let imgSrc = useRef(null)
+    let { pathname } = useLocation()
+    let onEditPage = pathname.includes("/edit")
+
+    useEffect(() => {
+        // check if the user has a draft. If yes, load the draft by equating the drafted variable to the createdAt date
+        // then fill the form with the draft data by setting their values with the useRef.current.value
+    })
+
+    let validate = (input) => {
+        if (input.current.value && typeof input.current.value === "string") {
+            return input.current.value
+        } else {
+            input.current.classList.add("is-invalid")
+            input.current.scrollIntoView({ block: "center" })
+            input.current.focus();
+            throw new Error(`${input.current.id} field is empty`)
+        }
+    }
+
+    let save = async () => {
+        if (onEditPage) {
+            console.log("Auto Save is Off")
+            return
+        }
+        console.log("Saving")
+        drafted = drafted || (new Date()).getTime();
+        let payload = {
+            featuredImg: featuredImg1,
+            title: title.current.value,
+            postType: "article",
+            content: editorRef.current.getContent(),
+            assetFolder: drafted
+        }
+        let req = await fetch(`/api/draft`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        })
+        if (!req.ok) {
+            setStaticNotification({ message: "An error occured while trying to save this article", time: (new Date()).toString() })
+        }
+        let res = await req.json()
+        console.log(res)
+    }
+    let publish = async () => {
+        console.log("Publishing")
+        drafted = drafted || (new Date()).getTime();
+        let payload = {
+            featuredImg: featuredImg1,
+            title: validate(title),
+            postType: "article",
+            content: editorRef.current.getContent(),
+            assetFolder: drafted
+        }
+        setShowLoading(true)
+        try {
+            let req = await fetch(`/api/articles`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            if (!req.ok) {
+                throw new Error("An error occured while trying to publish this article")
+            }
+            let res = await req.json()
+            setShowLoading(false)
+            console.log(res)
+        } catch (error) {
+            console.log(error)
+            setStaticNotification({ message: error.message, time: (new Date()).toString() })
+        }
+    }
+
+    // Text Editor Image Upload Function
+    let imageUploadFunction = async (blobInfo, progress) => {
+        drafted = drafted || (new Date()).getTime();
+        const formData = new FormData();
+        formData.append('file', blobInfo.blob());
+        formData.append('folder', `article/${drafted}`);
+        formData.append('upload_preset', 'fnmi-academy');
+        try {
+            const req = await fetch(`https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, {
+                method: 'POST',
+                body: formData
+            });
+            if (!req.ok) {
+                throw new Error('An error occured while trying to upload the image');
+            }
+            await save();
+            const res = await req.json();
+            return res.secure_url;
+        } catch (error) {
+            console.log(error);
+            error.remove = true;
+            throw error;
+            // setStaticNotification({ message: error.message, time: (new Date()).toString() });
+        }
+    }
+
+    // set featured Image preview
+    let setPreview1 = async (e) => {
+        let prevValue = imgSrc.current.src
+        drafted = drafted || (new Date()).getTime();
+        try {
+            setFeaturedImg1(null)
+            e.target.setAttribute("disabled", true)
+            let imgUpload = e.target.files[0]
+            let formData = new FormData()
+            formData.append("file", imgUpload)
+            formData.append("upload_preset", "fnmi-academy")
+            formData.append("folder", `article/${drafted}`)
+            let req = await fetch(`https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, {
+                method: "POST",
+                body: formData
+            })
+            if (!req.ok) {
+                throw new Error("An error occured while trying to upload the image")
+            }
+            let res = await req.json()
+            await save()
+            setFeaturedImg1(res.public_id)
+            e.target.removeAttribute("disabled")
+            e.target.value = ""
+        } catch (error) {
+            e.target.removeAttribute("disabled")
+            let time = new Date()
+            setStaticNotification({ message: error.message, time: time.toString() })
+            setFeaturedImg1(prevValue)
+            console.log(error)
+        }
+    }
+
+    return (
+        <>
+            <header className='fixed-top'>
+                <EditNav publishButton={publish} saveButton={save} />
+            </header>
+            <main id='post-edit'>
+                <div className="container">
+                    {/* back arrow link */}
+                    <Link to={"/blog"} className='text-decoration-none link-dark fs-5 fw-bold'>
+                        <span className='me-1'><FaArrowLeftLong /></span> Back
+                    </Link>
+                    <div className='row mt-3 gy-4'>
+                        <div className="col-lg-8">
+                            <form className='border vstack gap-3 p-3 bg-white shadow-sm'>
+                                {/* Title input */}
+                                <div>
+                                    <label htmlFor="title-input" className='form-label'>Title</label>
+                                    <input ref={title} type="text" id="title-input" className='form-control rounded-0' />
+                                    <div className="invalid-feedback">Title Field is empty</div>
+                                </div>
+                                {/* content input */}
+                                <div>
+                                    <label htmlFor="content" className='form-label'>Content</label>
+                                    <TextEditor editorRef={editorRef} imageUploadFunction={imageUploadFunction} />
+                                </div>
+                            </form>
+                        </div>
+                        <div className="col-lg-4">
+                            <div className='vstack gap-3'>
+                                {/* first feature image */}
+                                <div className='border p-3 bg-white shadow-sm'>
+                                    <span className='fw-bold'>Featured Image</span>
+                                    <div className='mt-3' id='feature-img1'>
+                                        <div>
+                                            <input accept='image/*' onChange={setPreview1} type="file" id='featuredImg1-input' hidden={true} />
+                                            <label htmlFor="featuredImg1-input" className='featuredImg-label' style={{ display: featuredImg1 ? "none" : "block" }}>
+                                                <small>
+                                                    {featuredImg1 === null ? <div><Spinner animation="border" size='sm' /> <span>Loading</span></div> : "Upload Feature Image"}
+                                                </small>
+                                            </label>
+                                            <img ref={imgSrc} src={featuredImg1 ? `https://res.cloudinary.com/kkenny/image/upload/w_1000,c_limit,dpr_${devicePixelRatio}/${featuredImg1}` : null} style={{ display: featuredImg1 ? "inline" : "none" }} className='img-fluid' alt="" />
+                                        </div>
+                                        <div className='img-mod mt-2' hidden={!featuredImg1}>
+                                            <label htmlFor='featuredImg1-input'>Update</label>
+                                            <span onClick={() => { setFeaturedImg1("") }}>Remove</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </>
+    )
+}
+
+export default ArticleUpdate

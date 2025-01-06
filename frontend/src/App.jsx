@@ -10,6 +10,8 @@ import Signup from './pages/Signup.jsx'
 import Privacy from './pages/Privacy.jsx'
 import Terms from './pages/Terms.jsx'
 import JobUpdate from './pages/JobUpdate.jsx'
+import ArticleUpdate from './pages/ArticleUpdate.jsx'
+import CourseUpdate from './pages/CourseUpdate.jsx'
 
 function App() {
   const router = createBrowserRouter([
@@ -57,14 +59,22 @@ function App() {
           path: "/job/:id/edit",
           element: <JobUpdate/>
         },
-        // {
-        //   path: "/artcle/:id/edit",
-        //   element: <PostEdit/>
-        // },
-        // {
-        //   path: "/course/id/edit",
-        //   element: <PostEdit/>
-        // },
+        {
+          path: "/article/new",
+          element: <ArticleUpdate/>
+        },
+        {
+          path: "/article/:id/edit",
+          element: <ArticleUpdate/>
+        },
+        {
+          path: "/course/new",
+          element: <CourseUpdate/>
+        },
+        {
+          path: "/course/id/edit",
+          element: <CourseUpdate/>
+        },
       ]
     },
   ])

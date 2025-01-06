@@ -3,11 +3,14 @@ import express from "express"
 import {resolve} from "path"
 import expressEjsLayouts from "express-ejs-layouts"
 import { CustomError } from "./utils/customError.js"
-import { connectToDB, postCollection } from "./utils/connectToDB.js"
+import { connectToDB, courseCollection, postCollection } from "./utils/connectToDB.js"
 import {articleRouter} from "./routes/article.js"
 import { jobRouter } from "./routes/job.js"
 import { courseRouter } from "./routes/course.js"
 import { draftRouter } from "./routes/draft.js"
+import { ObjectId } from "mongodb"
+import { timeAgo } from "./utils/timeAgo.js"
+import generateDescription from "./utils/generateDescription.js"
 
 let app = express()
 
@@ -25,26 +28,51 @@ app.use(express.urlencoded({extended: true}))
 app.use((req, res, next)=>{
     res.locals.fadingNotification = ""
     res.locals.staticNotification = ""
+    res.locals.domain = "https://fnmiloveacademy.com"
+    res.locals.path = req.path
     next()
 })
 // Routes
+app.get("/test", (req, res) => {
+    res.render("pages/article");
+    throw new CustomError("Go away", 500);
+})
 app.get("/api/post", async (req, res)=>{
-    let allPosts = await postCollection.find().toArray()
+    let allPosts = await postCollection.find(req.query).toArray()
     if (allPosts.length === 0) {
         throw new CustomError("No post found", 404)
     }
     res.json(allPosts)
+    // console.log(req.path);
 })
+app.get("/:postType/:id/:slug", async(req, res, next)=>{
+    if (!ObjectId.isValid(req.params.id)){
+        throw new CustomError("404: Page not found", 400);
+    }
+    // let {fadeNotification} = req.query
+    let post;
+    if(req.params.postType=== "course"){
+        let id = ObjectId.createFromHexString(req.params.id)
+        post = await courseCollection.findOne({ _id: id, slug: req.params.slug })
+    }else{
+        let id = ObjectId.createFromHexString(req.params.id);
+        post = await postCollection.findOne({ _id: id, slug: req.params.slug })
+        res.locals.blogUpdate = timeAgo(post.updatedAt.toString());
+    }
+    if (post === null){
+        next( new CustomError("Post not found", 400))
+    }
+    console.log(post)
+    console.log(timeAgo(post.updatedAt.toString()));
+    res.render(`pages/${req.params.postType}`, { post: post, desc: generateDescription(post.content) });
+})
+
 app.use("/api/articles", articleRouter)
 app.use("/api/jobs", jobRouter)
 app.use("/api/courses", courseRouter)
 app.use("/api/draft", draftRouter)
-app.get("/page", (req, res)=>{
-    res.render("pages/course")
-})
-app.get("/test", (req, res)=>{
-    throw new CustomError("Go away", 500)
-    // res.render("pages/article");
+app.get("/:page", (req, res)=>{
+    res.render(`pages/${req.params.page}`)
 })
 
 // Error Handling
