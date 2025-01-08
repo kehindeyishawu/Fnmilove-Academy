@@ -11,6 +11,8 @@ import { draftRouter } from "./routes/draft.js"
 import { ObjectId } from "mongodb"
 import { timeAgo } from "./utils/timeAgo.js"
 import generateDescription from "./utils/generateDescription.js"
+import { mailRouter } from "./routes/mail.js"
+import { currencyFormatter } from "./utils/currencyFormatter.js"
 
 let app = express()
 
@@ -54,6 +56,7 @@ app.get("/:postType/:id/:slug", async(req, res, next)=>{
     if(req.params.postType=== "course"){
         let id = ObjectId.createFromHexString(req.params.id)
         post = await courseCollection.findOne({ _id: id, slug: req.params.slug })
+        res.locals.price = currencyFormatter(post.price);
     }else{
         let id = ObjectId.createFromHexString(req.params.id);
         post = await postCollection.findOne({ _id: id, slug: req.params.slug })
@@ -64,13 +67,14 @@ app.get("/:postType/:id/:slug", async(req, res, next)=>{
     }
     console.log(post)
     console.log(timeAgo(post.updatedAt.toString()));
-    res.render(`pages/${req.params.postType}`, { post: post, desc: generateDescription(post.content) });
+    res.render(`pages/${req.params.postType}`, { post });
 })
 
 app.use("/api/articles", articleRouter)
 app.use("/api/jobs", jobRouter)
 app.use("/api/courses", courseRouter)
 app.use("/api/draft", draftRouter)
+app.use("/api", mailRouter)
 app.get("/:page", (req, res)=>{
     res.render(`pages/${req.params.page}`)
 })

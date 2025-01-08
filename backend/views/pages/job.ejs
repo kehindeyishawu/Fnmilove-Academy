@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="col-lg-5">
-                        <form class='border p-4 row gy-3'>
+                        <form id="job-form" class='border p-4 row gy-3'>
                             <div class="col-12">
                                 <h2 class='fw-bold fs-5'>Application</h2>
                             </div>
@@ -82,7 +82,7 @@
                             </div>
                             <div class='col-lg-6'>
                                 <label htmlFor="email" class='form-label'>Email <span class='text-danger'>*</span></label>
-                                <input type="text" class='form-control rounded-0' id='email' placeholder='Email' required />
+                                <input type="email" class='form-control rounded-0' id='email' placeholder='Email' required />
                             </div>
                             <div class='col-lg-6'>
                                 <label htmlFor="phone" class='form-label'>Phone number</label>
@@ -91,39 +91,38 @@
                             </div>
                             <div class='col-12'>
                                 <label for="message" class="form-label">What would you like us to know about you</label>
-                                <textarea class='form-control rounded-0' name="message" id="message" placeholder='Your message' rows="4"></textarea>
+                                <textarea class='form-control rounded-0' name="message" id="message" placeholder='Your message' required rows="4"></textarea>
                             </div>
                             <div class='col-12'>
                                 <Label class="form-label" for="resume">Resume</Label>
-                                <label for="resume" class="resume-label">
-                                    Drop your resume here or <span class="text-info">browse</span>
+                                <!-- <label for="resume" class="resume-label">
+                                    <div class="upload-resume">
+                                        Drop your resume here or <span class="text-info">browse</span>
+                                    </div>
                                     <div class="form-text">Max. file size: 4MB (pdf, doc, docx)</div>
-                                </label>
-                                <input hidden type="file" name="resume" id="resume">
-                                <div class='img-mod mt-2'>
-                                    <label htmlFor='featuredImg1-input'>Update</label>
-                                    <span onClick=>Remove</span>
-                                </div>
+                                </label> -->
+                                <input accept=".pdf, .doc, .docx" type="file" class="form-control rounded-0" name="resume" id="resume" required>
+                                <div class="form-text">Max. file size: 4MB (pdf, doc, docx)</div>
                             </div>
                             <div class='col-12'>
                                 <div class="my-3">
                                     How much experience do you have?
                                 </div>
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="experience" value="0-2 years" id="novice">
+                                    <input required type="radio" class="form-check-input" name="experience" value="0-2 years" id="novice">
                                     <label for="novice" class="form-check-label">0-2 years</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="experience" value="3-5 years" id="intermediate">
+                                    <input required type="radio" class="form-check-input" name="experience" value="3-5 years" id="intermediate">
                                     <label for="intermediate" class="form-check-label">3-5 years</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="experience" value="+5 years" id="Expert">
+                                    <input required type="radio" class="form-check-input" name="experience" value="+5 years" id="Expert">
                                     <label for="Expert" class="form-check-label">+5 years</label>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-lg btn-dark rounded-0 w-100 mt-3">Submit Application</button>
+                                <button class="btn btn-lg btn-dark rounded-0 w-100 mt-3 job-form-submit-btn">Submit Application</button>
                             </div>
                         </form>
                     </div>

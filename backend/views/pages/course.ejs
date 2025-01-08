@@ -1,26 +1,106 @@
 <main id="course">
     <article>
-        <section class="vertical-padding text-center banner bg-dark">
+        <!-- show only on md and sm screens -->
+        <section class="d-lg-none">
+            <nav class="container pt-5 pb-4 fs-5 fw-bold">
+                <a class="text-decoration-none" href="/">Home</a> >>
+                <a class="text-decoration-none" href="/">Courses</a>
+            </nav>
+            <div class="container-md px-0 px-md-3">
+                <img src="https://res.cloudinary.com/kkenny/image/upload/q_auto,q_auto,w_1200,c_limit/<%=post.featuredImg%>" class="card-img-top rounded-0" alt="" />
+            </div>
+            <div class="container mt-3">
+                <h1 class="fw-bold">
+                    <%=post.title%>
+                </h1>
+                <div class="mt-4">
+                    <%=post.tutors%>
+                </div>
+                <h5 class="card-title h6 fw-bold text-secondary my-3">This Course Include</h5>
+                <ul class="list-unstyled text-primary vstack gap-2">
+                    <li class="d-flex gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" width="1.2em" fill="currentColor" stroke="currentColor"
+                            viewBox="0 -960 960 960">
+                            <path
+                                d="M754-81q-8 0-15-2.5T726-92L522-296q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l85-85q6-6 13-8.5t15-2.5q8 0 15 2.5t13 8.5l204 204q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13l-85 85q-6 6-13 8.5T754-81Zm0-95 29-29-147-147-29 29 147 147ZM205-80q-8 0-15.5-3T176-92l-84-84q-6-6-9-13.5T80-205q0-8 3-15t9-13l212-212h85l34-34-165-165h-57L80-765l113-113 121 121v57l165 165 116-116-43-43 56-56H495l-28-28 142-142 28 28v113l56-56 142 142q17 17 26 38.5t9 45.5q0 24-9 46t-26 39l-85-85-56 56-42-42-207 207v84L233-92q-6 6-13 9t-15 3Zm0-96 170-170v-29h-29L176-205l29 29Zm0 0-29-29 15 14 14 15Zm549 0 29-29-29 29Z" />
+                        </svg>
+                        <small class="text-dark">
+                            Practical Job-Ready Skills
+                        </small>
+                    </li>
+                    <li class="d-flex gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" width="1.2em" fill="currentColor" stroke="currentColor"
+                            viewBox="0 -960 960 960">
+                            <path d="M0-160v-80h80v-600h800v600h80v80H0Zm400-80h160v-40H400v40ZM160-360h640v-400H160v400Zm320-200Z" />
+                        </svg>
+                        <small class="text-dark">
+                            Up-to-Date Curriculum with Modern Standards
+                        </small>
+                    </li>
+                    <li class="d-flex gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" width="1.2em" fill="currentColor" stroke="currentColor"
+                            viewBox="0 -960 960 960">
+                            <path
+                                d="M160-200v-440 440-15 15Zm0 80q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v171q-18-13-38-22.5T800-508v-132H160v440h283q3 21 9 41t15 39H160Zm240-600h160v-80H400v80ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Zm20-208v-112h-40v128l86 86 28-28-74-74Z" />
+                        </svg>
+                        <small class="text-dark">
+                            Career Support and Placement Opportunities
+                        </small>
+                    </li>
+                    <li class="d-flex gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" width="1.2em" fill="currentColor" stroke="currentColor"
+                            viewBox="0 -960 960 960">
+                            <path
+                                d="M160-440v80h640v-80H160Zm0-440h640q33 0 56.5 23.5T880-800v440q0 33-23.5 56.5T800-280H640v200l-160-80-160 80v-200H160q-33 0-56.5-23.5T80-360v-440q0-33 23.5-56.5T160-880Zm0 320h640v-240H160v240Zm0 200v-440 440Z" />
+                        </svg>
+                        <small class="text-dark">
+                            Certificate of Completion
+                        </small>
+                    </li>
+                </ul>
+                <div class="fs-2 fw-bold mb-2 mt-5">
+                    <%=price%>
+                </div>
+                <a href="#" class="btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
+            </div>
+            <!-- show only on small screens fixed to the bottom -->
+            <div class="container-fluid d-md-none fixed-bottom bg-white shadow py-2 d-md-none">
+                <div class="hstack gap-2 justify-content-around">
+                    <div class="fs-5 fw-bold">
+                        <%=price%>
+                    </div>
+                    <a href="#" class="rounded-2 flex-grow-1 btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
+                </div>
+            </div>
+        </section>
+        <!-- show only from lg screens -->
+        <section class="d-none d-lg-block vertical-padding pt-0 text-center banner bg-dark">
             <div class="container">
-                <h1 class="text-white fw-bold">Content Creation 101: Building Your Brand on Social Media</h1>
-                <nav class="text-white mt-4">
+                <nav class="text-white pt-5 pb-4 fw-bold">
                     <a class="text-decoration-none" href="/">Home</a> >>
-                    <a class="text-decoration-none" href="/">Courses</a> >> Content Creation 101: Building Your Brand on Social Media
+                    <a class="text-decoration-none" href="/">Courses</a>
                 </nav>
+                <h1 class="text-white fw-bold"><%=post.title%></h1>
+                <div class="text-white mt-4">
+                    <%=post.tutors%>
+                </div>
             </div>
         </section>
         <section class="top-spacing container">
             <div class="row">
+                <!-- show always -->
                 <div class="col-md-8">
                     <h2 class="fw-bold">About This Course</h2>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo nam magni iste dolore quos qui ab voluptas, ut fugit accusamus delectus incidunt error cupiditate iusto, eaque tenetur facilis expedita ipsam minima? Error, odio maxime? Eaque deleniti odio ipsa ipsam obcaecati beatae, in corporis debitis numquam mollitia eos quae minima accusamus laborum nesciunt dolorem. Quo quidem reiciendis cupiditate repellendus, doloremque suscipit iste nihil, eaque veniam aut non alias. Voluptates, error minima!</p>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo nam magni iste dolore quos qui ab voluptas, ut fugit accusamus delectus incidunt error cupiditate iusto, eaque tenetur facilis expedita ipsam minima? Error, odio maxime? Eaque deleniti odio ipsa ipsam obcaecati beatae, in corporis debitis numquam mollitia eos quae minima accusamus laborum nesciunt dolorem. Quo quidem reiciendis cupiditate repellendus, doloremque suscipit iste nihil, eaque veniam aut non alias. Voluptates, error minima!</p>
+                    <%-post.content%>
                 </div>
-                <div class="col-md-4">
-                    <div class="card rounded-0 shadow-sm">
-                        <img src="https://res.cloudinary.com/kkenny/image/upload/v1731167976/Fnmilove%20Academy/content-marketing_ajukbi.jpg" class="card-img-top rounded-0" alt="" />
+                <div class="col-lg-4">
+                    <!-- show only from lg screens -->
+                    <div class="d-none d-lg-block card rounded-0 shadow-sm">
+                        <%if(post.featuredImg){%>
+                            <img src="https://res.cloudinary.com/kkenny/image/upload/q_auto,q_auto,w_1100,c_limit/<%=post.featuredImg%>" class="card-img-top rounded-0" alt="" />
+                        <%}%>
                         <div class="card-body">
-                            <div class="fs-3 fw-bold mb-2">₦159,000</div>
+                            <div class="fs-3 fw-bold mb-2"><%=price%></div>
                             <a href="#" class="btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
                             <h5 class="card-title h6 fw-bold text-secondary my-3">This Course Include</h5>
                             <ul class="list-unstyled text-primary vstack gap-2">

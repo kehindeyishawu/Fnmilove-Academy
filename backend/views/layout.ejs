@@ -4,26 +4,24 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Article Title">
-    <meta property="og:description" content="A brief description of the article.">
-    <meta property="og:image" content="https://example.com/path/to/thumbnail.jpg">
-    <meta property="og:url" content="https://example.com/article">
-    <meta property="og:type" content="article">
+    <meta property="og:title" content="<%=post.title%>">
+    <meta property="og:description" content="<%=post.description%>">
+    <meta property="og:image" content="https://res.cloudinary.com/kkenny/image/upload/q_auto,ar_1.91:1,q_auto,w_1200,g_auto,c_lfill/<%=post.featuredImg%>">
+    <meta property="og:url" content="<%=domain+path%>">
+    <meta property="og:type" content="<%=post.postType || 'course'%>">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Article Title">
-    <meta name="twitter:description" content="A brief description of the article.">
-    <meta name="twitter:image" content="https://example.com/path/to/thumbnail.jpg">
-    <meta name="twitter:url" content="https://example.com/article">
+    <meta name="twitter:title" content="<%=post.title%>">
+    <meta name="twitter:description" content="<%=post.description%>">
+    <meta name="twitter:image" content="https://res.cloudinary.com/kkenny/image/upload/q_auto,ar_2:1,q_auto,g_auto,w_1200,c_lfill/<%=post.featuredImg%>">
+    <meta name="twitter:url" content="<%=domain+path%>">
     
     <!-- General Meta Tags -->
-    <meta name="description" content="A brief description of the article.">
-    <link rel="canonical" href="https://example.com/article">
+    <meta name="description" content="<%=post.description%>">
+    <link rel="canonical" href="<%=domain+path%>">
 
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <title>Title</title>
     <link rel="stylesheet" href="/app.min.css">
 </head>
@@ -57,7 +55,6 @@
                 
             })
 
-
         // toast function
         <% if(fadingNotification){ %>
             const fadingToast = document.getElementById('fadingToast')
@@ -69,6 +66,24 @@
             const toastStaticBootstrap = bootstrap.Toast.getOrCreateInstance(staticToast)
             toastStaticBootstrap.show();
         <% } %>
+
+        <%if(path.includes("job")){%>
+            let jobForm = document.getElementById("job-form");
+            let jobFormSubmitButton = document.querySelector(".job-form-submit-btn")
+            jobForm.addEventListener("submit", (e)=>{
+                e.preventDefault();
+
+                // Disable the form elements
+                Array.from(jobForm.elements).forEach(element => {
+                    element.disabled = true;
+                });
+
+                jobFormSubmitButton.innerHTML=`
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span role="status">Sending...</span>
+                `
+            })
+        <%}%>
     </script>
 </body>
 </html>

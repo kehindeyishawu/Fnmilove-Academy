@@ -1,5 +1,7 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 import { CustomError } from "./customError.js";
+import generateDescription from "./generateDescription.js";
+import generateTipColor from "./generateTipColor.js";
 
 let db;
 export let courseCollection;
@@ -47,6 +49,7 @@ export class ArticleSchema{
         this.title = validate(title, "title")
         this.featuredImg = featuredImg|| ""
         this.content = validate(content, "content")
+        this.description = generateDescription(content);
         this.postType = "article"
         this.assetFolder = assetFolder
         this.slug = title.toLowerCase().replace(/\s/g, "-");
@@ -64,6 +67,7 @@ export class JobSchema{
         this.jobLocation = validate(jobLocation, "jobLocation")
         this.applicationDeadline = validate(applicationDeadline, "applicationDeadline")
         this.content = validate(content, "content")
+        this.description = generateDescription(content)
         this.postType = "job"
         this.assetFolder = assetFolder
         this.slug = jobTitle.toLowerCase().replace(/\s/g, "-");
@@ -71,12 +75,15 @@ export class JobSchema{
     }
 }
 export class CourseSchema{
-    constructor({ title, tutors, featuredImg, content, price, assetFolder }){
+    constructor({ title, tutors, featuredImg, content, price, assetFolder, tag }){
         this.title = validate(title, "title")
         this.tutors = validate(tutors, "tutors")
         this.content = validate(content, "content")
         this.featuredImg = featuredImg|| ""
         this.price = validate(price, "price")
+        this.tag = tag || ""
+        this.description = generateDescription(content)
+        this.tipColor = generateTipColor();
         this.assetFolder = assetFolder
         this.slug = title.toLowerCase().replace(/\s/g, "-");
         this.updatedAt = new Date()

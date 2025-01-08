@@ -16,6 +16,7 @@ const CourseUpdate = () => {
     let drafted = false;
     let editorRef = useRef(null)
     let imgSrc = useRef(null)
+    let tag = useRef(null)
     let { pathname } = useLocation()
     let onEditPage = pathname.includes("/edit")
 
@@ -47,6 +48,7 @@ const CourseUpdate = () => {
             title: title.current.value,
             tutors: tutors.current.value,
             price: price.current.value,
+            tag: tag.current.value,
             postType: "course",
             content: editorRef.current.getContent(),
             assetFolder: drafted
@@ -72,6 +74,7 @@ const CourseUpdate = () => {
             title: validate(title),
             tutors: validate(tutors),
             price: validate(price),
+            tag: tag.current.value,
             postType: "course",
             content: editorRef.current.getContent(),
             assetFolder: drafted
@@ -88,12 +91,15 @@ const CourseUpdate = () => {
             if (!req.ok) {
                 throw new Error("An error occured while trying to publish this course")
             }
-            let res = await req.json()
-            setShowLoading(false)
-            console.log(res)
+            setStaticNotification({ message: "New Course Created", time: (new Date()).toString() })
+            setTimeout(() => {
+                setShowLoading(false)
+                
+            }, 1000);
         } catch (error) {
             console.log(error)
             setStaticNotification({ message: error.message, time: (new Date()).toString() })
+            setShowLoading(false)
         }
     }
 
@@ -219,6 +225,12 @@ const CourseUpdate = () => {
                                             <span onClick={() => { setFeaturedImg1("") }}>Remove</span>
                                         </div>
                                     </div>
+                                </div>
+                                {/* course tag inputs */}
+                                <div className='border p-3 bg-white shadow-sm'>
+                                    <label htmlFor='course-tag' className='fw-bold form-label'>Tag</label>
+                                    <input ref={tag} type="text" id='course-tag' className='form-control rounded-0' />
+                                    <div className="form-text">e.g Top Rated, Expert Recommended, Most Popular etc</div>
                                 </div>
                             </div>
                         </div>

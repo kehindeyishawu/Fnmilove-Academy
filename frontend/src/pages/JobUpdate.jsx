@@ -101,9 +101,11 @@ const JobUpdate = () => {
       if (!req.ok) {
         throw new Error("An error occured while trying to publish this job")
       }
-      let res = await req.json()
-      setShowLoading(false)
-      console.log(res)
+      setStaticNotification({ message: "New Job Created", time: (new Date()).toString() })
+      setTimeout(() => {
+        setShowLoading(false)
+        
+      }, 1000);
     } catch (error) {
       console.log(error)
       setStaticNotification({ message: error.message, time: (new Date()).toString() })

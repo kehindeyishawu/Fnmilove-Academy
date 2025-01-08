@@ -145,16 +145,6 @@ h6 {
         border: 5px dotted var(--dark-color);
         cursor: pointer;
     }
-    .img-mod{
-        display: flex;
-        justify-content: space-around;
-        color: var(--info-color);
-        text-decoration: underline;
-        font-size: .9rem;
-        span, label{
-            cursor: pointer;
-        }
-    }
 }
 
 
