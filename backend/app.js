@@ -17,8 +17,11 @@ let app = express()
 const __dirname = import.meta.dirname;
 // set public folder
 app.use(express.static(join(__dirname, "./public")))
-app.use(express.static(join(__dirname, "../frontend", "./public")))
-app.use(express.static(join(__dirname, "../frontend", "./dist")))
+if(process.env.NODE_EV){
+    app.use(express.static(join(__dirname, "../frontend", "./public")))
+}else{
+    app.use(express.static(join(__dirname, "../frontend", "./dist")))
+}
 // set view engine
 app.set("view engine", "ejs")
 app.set("views", join(__dirname, "./views"));
@@ -95,7 +98,7 @@ app.use((err, req, res, next)=>{
 })
 
 // Running Server
-app.listen(4000, async ()=>{
-    console.log("Server running on port 4000. Waiting for Database to connect...")
+app.listen(process.env.PORT || 4000, async ()=>{
+    console.log(`Server running on ${process.env.PORT || 4000}. Waiting for Database to connect...`)
     await connectToDB()
 })
