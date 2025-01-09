@@ -12,6 +12,7 @@ import Terms from './pages/Terms.jsx'
 import JobUpdate from './pages/JobUpdate.jsx'
 import ArticleUpdate from './pages/ArticleUpdate.jsx'
 import CourseUpdate from './pages/CourseUpdate.jsx'
+import NotFound from './pages/NotFound.jsx'
 
 function App() {
   const router = createBrowserRouter([
@@ -77,6 +78,10 @@ function App() {
         },
       ]
     },
+    {
+      path: "*",
+      element: <NotFound/>
+    }
   ])
 
   return (

@@ -1,6 +1,6 @@
 import "dotenv/config"
 import express from "express"
-import {resolve} from "path"
+import {join} from "path"
 import expressEjsLayouts from "express-ejs-layouts"
 import { CustomError } from "./utils/customError.js"
 import { connectToDB, courseCollection, postCollection } from "./utils/connectToDB.js"
@@ -10,17 +10,18 @@ import { courseRouter } from "./routes/course.js"
 import { draftRouter } from "./routes/draft.js"
 import { ObjectId } from "mongodb"
 import { timeAgo } from "./utils/timeAgo.js"
-import generateDescription from "./utils/generateDescription.js"
 import { mailRouter } from "./routes/mail.js"
 import { currencyFormatter } from "./utils/currencyFormatter.js"
 
 let app = express()
-
+const __dirname = import.meta.dirname;
 // set public folder
-app.use(express.static(resolve("./public")))
-app.use(express.static(resolve("../frontend", "./public",)))
+app.use(express.static(join(__dirname, "./public")))
+app.use(express.static(join(__dirname, "../frontend", "./public")))
+app.use(express.static(join(__dirname, "../frontend", "./dist")))
 // set view engine
 app.set("view engine", "ejs")
+app.set("views", join(__dirname, "./views"));
 app.use(expressEjsLayouts)
 app.set("layout", "layout")
 // parse incoming form data and json
@@ -75,8 +76,11 @@ app.use("/api/jobs", jobRouter)
 app.use("/api/courses", courseRouter)
 app.use("/api/draft", draftRouter)
 app.use("/api", mailRouter)
-app.get("/:page", (req, res)=>{
-    res.render(`pages/${req.params.page}`)
+// app.get("/:page", (req, res)=>{
+//     res.render(`pages/${req.params.page}`)
+// })
+app.get("*", (req, res)=>{
+    res.sendFile(join(__dirname, "../frontend", "dist", "index.html"))
 })
 
 // Error Handling
