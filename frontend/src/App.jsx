@@ -57,7 +57,7 @@ function App() {
           element: <JobUpdate/>
         },
         {
-          path: "/job/:id/edit",
+          path: "/edit/job/:id",
           element: <JobUpdate/>
         },
         {
@@ -65,7 +65,7 @@ function App() {
           element: <ArticleUpdate/>
         },
         {
-          path: "/article/:id/edit",
+          path: "/edit/article/:id",
           element: <ArticleUpdate/>
         },
         {
@@ -73,7 +73,7 @@ function App() {
           element: <CourseUpdate/>
         },
         {
-          path: "/course/:id/edit",
+          path: "/edit/course/:id",
           element: <CourseUpdate/>
         },
       ]
