@@ -73,7 +73,7 @@ function App() {
           element: <CourseUpdate/>
         },
         {
-          path: "/course/id/edit",
+          path: "/course/:id/edit",
           element: <CourseUpdate/>
         },
       ]

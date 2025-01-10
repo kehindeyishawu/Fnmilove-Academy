@@ -17,7 +17,7 @@ const __dirname = import.meta.dirname;
 app.use(express.static(join(__dirname, "./public")))
 if (process.env.NODE_ENV === "development"){
     app.use(express.static(join(__dirname, "../frontend", "./public")))
-} else if (process.env.NODE_ENV === "production"){
+} else{
     app.use(express.static(join(__dirname, "../frontend", "./dist")))
 }
 // set view engine
