@@ -15,7 +15,7 @@ let app = express()
 const __dirname = import.meta.dirname;
 // set public folder
 app.use(express.static(join(__dirname, "./public")))
-if(process.env.NODE_EV="development"){
+if (process.env.NODE_ENV = "development"){
     app.use(express.static(join(__dirname, "../frontend", "./public")))
 }else{
     app.use(express.static(join(__dirname, "../frontend", "./dist")))
