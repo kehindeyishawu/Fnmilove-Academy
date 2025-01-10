@@ -8,16 +8,14 @@ import {articleRouter} from "./routes/article.js"
 import { jobRouter } from "./routes/job.js"
 import { courseRouter } from "./routes/course.js"
 import { draftRouter } from "./routes/draft.js"
-import { ObjectId } from "mongodb"
-import { timeAgo } from "./utils/timeAgo.js"
 import { mailRouter } from "./routes/mail.js"
-import { currencyFormatter } from "./utils/currencyFormatter.js"
+import { showPostRouter } from "./routes/showPost.js"
 
 let app = express()
 const __dirname = import.meta.dirname;
 // set public folder
 app.use(express.static(join(__dirname, "./public")))
-if(process.env.NODE_EV){
+if(process.env.NODE_EV="development"){
     app.use(express.static(join(__dirname, "../frontend", "./public")))
 }else{
     app.use(express.static(join(__dirname, "../frontend", "./dist")))
@@ -39,10 +37,6 @@ app.use((req, res, next)=>{
     next()
 })
 // Routes
-app.get("/test", (req, res) => {
-    res.render("pages/article");
-    throw new CustomError("Go away", 500);
-})
 app.get("/api/post", async (req, res)=>{
     let allPosts = await postCollection.find(req.query).toArray()
     if (allPosts.length === 0) {
@@ -51,37 +45,12 @@ app.get("/api/post", async (req, res)=>{
     res.json(allPosts)
     // console.log(req.path);
 })
-app.get("/:postType/:id/:slug", async(req, res, next)=>{
-    if (!ObjectId.isValid(req.params.id)){
-        throw new CustomError("404: Page not found", 400);
-    }
-    // let {fadeNotification} = req.query
-    let post;
-    if(req.params.postType=== "course"){
-        let id = ObjectId.createFromHexString(req.params.id)
-        post = await courseCollection.findOne({ _id: id, slug: req.params.slug })
-        res.locals.price = currencyFormatter(post.price);
-    }else{
-        let id = ObjectId.createFromHexString(req.params.id);
-        post = await postCollection.findOne({ _id: id, slug: req.params.slug })
-        res.locals.blogUpdate = timeAgo(post.updatedAt.toString());
-    }
-    if (post === null){
-        next( new CustomError("Post not found", 400))
-    }
-    console.log(post)
-    console.log(timeAgo(post.updatedAt.toString()));
-    res.render(`pages/${req.params.postType}`, { post });
-})
-
+app.use(showPostRouter)
 app.use("/api/articles", articleRouter)
 app.use("/api/jobs", jobRouter)
 app.use("/api/courses", courseRouter)
 app.use("/api/draft", draftRouter)
 app.use("/api", mailRouter)
-// app.get("/:page", (req, res)=>{
-//     res.render(`pages/${req.params.page}`)
-// })
 app.get("*", (req, res)=>{
     res.sendFile(join(__dirname, "../frontend", "dist", "index.html"))
 })

@@ -1,12 +1,12 @@
-<!-- <header class="fixed-top">
+<header class="fixed-top">
     <nav class='border-bottom shadow-sm py-2 bg-white'>
         <div class="hstack justify-content-between head-nav container">
-            <a href="/">
+            <a class="text-decoration-none" href="/">
                 <img src="/fnmi-logo.png" class="fnmi-logo" alt="Fnmilove Generic Logo" />
                 <img src="/logo.png" class="academy-logo" alt="Fnmilove Academy Logo" />
             </a>
-            <a href="" class="btn btn-dark rounded-0 ms-auto me-3 fw-bold">Edit</a>
+            <a href="/<%=post.postType || 'course'%>/<%=post._id%>/edit" class="btn btn-dark rounded-0 ms-auto me-3 fw-bold">Edit</a>
             <button data-bs-toggle="modal" data-bs-target="#deletePostModal" class="btn btn-danger rounded-0 fw-bold">Delete</button>
         </div>
     </nav>
-</header> -->
+</header>
