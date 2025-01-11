@@ -6,11 +6,11 @@
                 <button type="button" id="delete-dialog-close-button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                All resources for <b class="fw-bold"> post.title </b> will be removed from the database. This action cannot be undone.
+                All resources for <b class="fw-bold"> <%=post.title%> </b> will be removed from the database. This action cannot be undone.
                 <div class="my-3">
                     Are you sure you want to delete this Blog Post?
                 </div>
-                Please type the ID <b class="text-primary"> post.id </b> in the text box below to confirm
+                Please type the ID <b class="text-primary"> <%post._id%> </b> in the text box below to confirm
                 <input type="text" class="form-control my-3 rounded-0" id="delete-input" pattern="post.id" required>
             </div>
             <div class="modal-footer">

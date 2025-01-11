@@ -6,3 +6,4 @@ Remember to change cloudinary cloudname
 - create new post notification on show post pages(course, job & article)
 -integrate email for sending job application, resume etc
 - Remember to implement delete code for past featured image upload
+- Remember to work on ejs layout for optimization/Performance. Make only code that are needed in the script tag are shown. Eliminated unneeded ones from rendering using ejs
