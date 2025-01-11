@@ -12,7 +12,7 @@ let createNewJob = async (req, res, next)=>{
         let input = new JobSchema (req.body)
         input.createdAt = new Date()
         let newJob = await postCollection.insertOne(input)
-        res.json(newJob)
+        res.json({ id: newJob.insertedId, slug: input.slug })
     } catch (error) {
         next(error)
     }
@@ -37,10 +37,10 @@ let findOneJob = async (req, res, next) => {
 let updateJob = async (req, res, next) => {
     try {
         if (ObjectId.isValid(req.params.id)) {
-            let id = req.params.id
+            let id = ObjectId.createFromHexString(req.params.id)
             let input = new JobSchema(req.body)
-            let updatedJob = await postCollection.findOneAndUpdate({ _id: id }, { $set: input })
-            res.json(updatedJob)
+            await postCollection.updateOne({ _id: id }, { $set: input })
+            res.json({ id: id, slug: input.slug })
         } else {
             throw new CustomError("404: Page not found", 400)
         }
@@ -51,7 +51,7 @@ let updateJob = async (req, res, next) => {
 let deleteJob = async (req, res, next) => {
     try {
         if (ObjectId.isValid(req.params.id)) {
-            let id = req.params.id
+            let id = ObjectId.createFromHexString(req.params.id)
             let deletedJob = await postCollection.deleteOne({ _id: id })
             res.json(deletedJob)
         } else {

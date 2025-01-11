@@ -4,7 +4,7 @@ import { Editor } from '@tinymce/tinymce-react';
 export let editorRef;
 
 
-const TextEditor = ({editorRef, imageUploadFunction}) => {
+const TextEditor = ({ editorRef, imageUploadFunction, editerInitialValue = ""}) => {
     // editorRef = useRef(null);
     // getEditorContent = () => {
     //     if (editorRef.current) {
@@ -18,7 +18,7 @@ const TextEditor = ({editorRef, imageUploadFunction}) => {
                 tinymceScriptSrc='/tinymce/tinymce.min.js'
                 licenseKey='gpl'
                 onInit={(_evt, editor) => editorRef.current = editor}
-                initialValue='<p>This is the initial content of the editor.</p>'
+                initialValue={editerInitialValue}
                 init={{
                     height: 500,
                     // menubar: false,

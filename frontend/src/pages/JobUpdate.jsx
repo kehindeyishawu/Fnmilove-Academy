@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import EditNav from '../components/EditNav'
 import { FaArrowLeftLong } from 'react-icons/fa6'
-import { Link, useOutletContext, useLocation } from 'react-router-dom'
+import { Link, useOutletContext, useLocation, useParams, useNavigate } from 'react-router-dom'
 import "./PostEdit.scss"
 import TextEditor from '../components/TextEditor'
 import { cloudname } from '../utils/cloudinary'
@@ -23,11 +23,42 @@ const JobUpdate = () => {
   let imgSrc2 = useRef(null)
   let { pathname } = useLocation()
   let onEditPage = pathname.includes("/edit")
+  let { id } = useParams();
+  let navigate = useNavigate();
+  const [editerInitialValue, setEditorInitialvalue] = useState("<p> Start putting your ideas here.</p>")
 
   useEffect(() => {
-    // check if the user has a draft. If yes, load the draft by equating the drafted variable to the createdAt date
-    // then fill the form with the draft data by setting their values with the useRef.current.value
-  })
+    let sideEffect = async () => {
+      // check if the user has a draft. If yes, load the draft by equating the drafted variable to the createdAt date
+      // then fill the form with the draft data by setting their values with the useRef.current.value
+      if (onEditPage) {
+        try {
+          setShowLoading(true)
+          let req = await fetch(`/api/jobs/${id}`)
+          if (!req.ok) {
+            throw new Error("Couldn't load data for editing");
+          } else {
+            let res = await req.json()
+            title.current.value = res.title
+            setEditorInitialvalue(res.content)
+            jobType.current.value = res.jobType;
+            jobLocation.current.value = res.jobLocation;
+            companyName.current.value = res.companyName;
+            applicationDeadline.current.value = res.applicationDeadline;
+            setFeaturedImg1(res.companyCoverImg)
+            setFeaturedImg2(res.companyLogo)
+            logoAccent.current.value = res.logoAccent
+          }
+        } catch (error) {
+          setStaticNotification({ message: error.message, time: (new Date()).toString() })
+          navigate("/blog");
+        } finally {
+          setShowLoading(false)
+        }
+      }
+    }
+    sideEffect()
+  }, [])
 
   let validate = (input)=>{
     if(input.current.value && typeof input.current.value === "string"){
@@ -85,14 +116,13 @@ const JobUpdate = () => {
       jobLocation: validate(jobLocation),
       companyName: validate(companyName),
       applicationDeadline: validate(applicationDeadline),
-      postType: "job",
       content: editorRef.current.getContent(),
       assetFolder: drafted
     }
     setShowLoading(true)
     try {
-      let req = await fetch(`/api/jobs`, {
-        method: "POST",
+      let req = await fetch(`/api/jobs/${id || ""}`, {
+        method: !id ? "POST" : "PATCH",
         headers: {
           "Content-Type": "application/json"
         },
@@ -101,10 +131,11 @@ const JobUpdate = () => {
       if (!req.ok) {
         throw new Error("An error occured while trying to publish this job")
       }
-      setStaticNotification({ message: "New Job Created", time: (new Date()).toString() })
+      setStaticNotification({ message: !id ? "New Job Created" : "Job Updated", time: (new Date()).toString() })
+      let res = await req.json();
       setTimeout(() => {
         setShowLoading(false)
-        
+        window.location.href = `/job/${res.id}/${res.slug}`
       }, 1000);
     } catch (error) {
       console.log(error)
@@ -134,7 +165,6 @@ const JobUpdate = () => {
       console.log(error);
       error.remove = true;
       throw error;
-      // setStaticNotification({ message: error.message, time: (new Date()).toString() });
     }
   }
 
@@ -196,8 +226,7 @@ const JobUpdate = () => {
       e.target.value = ""
     } catch (error) {
       e.target.removeAttribute("disabled")
-      let time = new Date()
-      setStaticNotification({ message: error.message, time: time.toString() })
+      setStaticNotification({ message: error.message, time: (new Date()).toString() })
       setFeaturedImg2(prevValue)
       console.log(error)
     }
@@ -226,7 +255,7 @@ const JobUpdate = () => {
                 {/* content input */}
                 <div>
                   <label htmlFor="content" className='form-label'>Content</label>
-                  <TextEditor editorRef= {editorRef} imageUploadFunction={imageUploadFunction}/>
+                  <TextEditor editorRef= {editorRef} imageUploadFunction={imageUploadFunction} editerInitialValue={editerInitialValue}/>
                 </div>
               </form>
               {/* Job type select */}

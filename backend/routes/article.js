@@ -12,7 +12,7 @@ let createNewArticle = async (req, res, next)=>{
         let input = new ArticleSchema (req.body)
         input.createdAt = new Date()
         let newArticle = await postCollection.insertOne(input)
-        res.json(newArticle)
+        res.json({ id: newArticle.insertedId, slug: input.slug })
     } catch (error) {
         next(error)
     }
@@ -37,10 +37,10 @@ let findOneArticle = async (req, res, next) => {
 let updateArticle = async (req, res, next) => {
     try {
         if (ObjectId.isValid(req.params.id)) {
-            let id = req.params.id
+            let id = ObjectId.createFromHexString(req.params.id)
             let input = new ArticleSchema(req.body)
-            let updatedArticle = await postCollection.findOneAndUpdate({ _id: id }, { $set: input })
-            res.json(updatedArticle)
+            await postCollection.updateOne({ _id: id }, { $set: input })
+            res.json({ id: id, slug: input.slug })
         } else {
             throw new CustomError("404: Page not found", 400)
         }
@@ -51,7 +51,7 @@ let updateArticle = async (req, res, next) => {
 let deleteArticle = async (req, res, next) => {
     try {
         if (ObjectId.isValid(req.params.id)) {
-            let id = req.params.id
+            let id = ObjectId.createFromHexString(req.params.id);
             let deletedArticle = await postCollection.deleteOne({ _id: id })
             res.json(deletedArticle)
         } else {

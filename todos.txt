@@ -1,6 +1,8 @@
-Remember to change API or setup proxy
+
 Remember to change cloudinary cloudname
 // change the id to the user id when the user authentication is implemented
+- Remember to implement Draft saving 
 - Add logic to clear user draft whenever a post is created
 - create new post notification on show post pages(course, job & article)
 -integrate email for sending job application, resume etc
+- Remember to implement delete code for past featured image upload

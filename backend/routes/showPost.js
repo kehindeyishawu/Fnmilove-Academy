@@ -30,7 +30,7 @@ showPostRouter.get("/job/:id/:slug", async(req, res, next)=>{
             throw (new CustomError("404: Page not found", 404));
         }
         let id = ObjectId.createFromHexString(req.params.id);
-        post = await postCollection.findOne({ _id: id, slug: req.params.slug })
+        let post = await postCollection.findOne({ _id: id, slug: req.params.slug })
         if (!post) {
             throw (new CustomError("Job not found", 404))
         }
@@ -45,7 +45,7 @@ showPostRouter.get("/article/:id/:slug", async(req, res, next)=>{
             throw (new CustomError("404: Page not found", 404));
         }
         let id = ObjectId.createFromHexString(req.params.id);
-        post = await postCollection.findOne({ _id: id, slug: req.params.slug })
+        let post = await postCollection.findOne({ _id: id, slug: req.params.slug })
         if (!post) {
             throw (new CustomError("Article not found", 404))
         }

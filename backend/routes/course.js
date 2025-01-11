@@ -11,7 +11,7 @@ let createNewCourse = async (req, res, next)=>{
         let input = new CourseSchema (req.body)
         input.createdAt = new Date()
         let newCourse = await courseCollection.insertOne(input)
-        res.json(newCourse)
+        res.json({ id: newCourse.insertedId, slug: input.slug })
     } catch (error) {
         next(error)
     }
@@ -36,10 +36,10 @@ let findOneCourse = async (req, res, next) => {
 let updateCourse = async (req, res, next) => {
     try {
         if (ObjectId.isValid(req.params.id)) {
-            let id = req.params.id
+            let id = ObjectId.createFromHexString(req.params.id)
             let input = new CourseSchema(req.body)
-            let updatedCourse = await courseCollection.findOneAndUpdate({ _id: id }, { $set: input })
-            res.json(updatedCourse)
+            await courseCollection.updateOne({ _id: id }, { $set: input })
+            res.json({id: id, slug: input.slug})
         } else {
             throw new CustomError("404: Page not found", 400)
         }
@@ -50,7 +50,7 @@ let updateCourse = async (req, res, next) => {
 let deleteCourse = async (req, res, next) => {
     try {
         if (ObjectId.isValid(req.params.id)) {
-            let id = req.params.id
+            let id = ObjectId.createFromHexString(req.params.id)
             let deletedCourse = await courseCollection.deleteOne({ _id: id })
             res.json(deletedCourse)
         } else {

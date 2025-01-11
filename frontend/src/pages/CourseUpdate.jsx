@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import EditNav from '../components/EditNav'
 import { FaArrowLeftLong } from 'react-icons/fa6'
-import { Link, useOutletContext, useLocation } from 'react-router-dom'
+import { Link, useOutletContext, useLocation, useParams, useNavigate } from 'react-router-dom'
 import "./PostEdit.scss"
 import TextEditor from '../components/TextEditor'
 import { cloudname } from '../utils/cloudinary'
@@ -19,11 +19,39 @@ const CourseUpdate = () => {
     let tag = useRef(null)
     let { pathname } = useLocation()
     let onEditPage = pathname.includes("/edit")
+    let {id} = useParams();
+    let navigate = useNavigate()
+    const [editerInitialValue, setEditorInitialvalue] = useState("<p> Start putting your ideas here.</p>")
 
     useEffect(() => {
-        // check if the user has a draft. If yes, load the draft by equating the drafted variable to the createdAt date
-        // then fill the form with the draft data by setting their values with the useRef.current.value
-    })
+        let sideEffect = async()=>{
+            // check if the user has a draft. If yes, load the draft by equating the drafted variable to the createdAt date
+            // then fill the form with the draft data by setting their values with the useRef.current.value
+            if(onEditPage){
+                try {
+                    setShowLoading(true)
+                    let req = await fetch(`/api/courses/${id}`)
+                    if(!req.ok){
+                        throw new Error("Couldn't load data for editing");
+                    }else{
+                        let res = await req.json()
+                        title.current.value = res.title
+                        setEditorInitialvalue(res.content)
+                        tutors.current.value = res.tutors;
+                        price.current.value = res.price;
+                        setFeaturedImg1(res.featuredImg)
+                        tag.current.value = res.tag
+                    }
+                } catch (error) {
+                    setStaticNotification({ message: error.message, time: (new Date()).toString() })
+                    navigate("/courses");
+                }finally{
+                    setShowLoading(false)
+                }
+            }
+        }
+        sideEffect()
+    }, [])
 
     let validate = (input) => {
         if (input.current.value && typeof input.current.value === "string") {
@@ -75,14 +103,13 @@ const CourseUpdate = () => {
             tutors: validate(tutors),
             price: validate(price),
             tag: tag.current.value,
-            postType: "course",
             content: editorRef.current.getContent(),
             assetFolder: drafted
         }
         setShowLoading(true)
         try {
-            let req = await fetch(`/api/courses`, {
-                method: "POST",
+            let req = await fetch(`/api/courses/${id || ""}`, {
+                method: !id ? "POST" : "PATCH",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -91,10 +118,11 @@ const CourseUpdate = () => {
             if (!req.ok) {
                 throw new Error("An error occured while trying to publish this course")
             }
-            setStaticNotification({ message: "New Course Created", time: (new Date()).toString() })
+            setStaticNotification({ message: !id ? "New Course Created" : "Course Updated", time: (new Date()).toString() })
+            let res = await req.json();
             setTimeout(() => {
                 setShowLoading(false)
-                
+                window.location.href = `/course/${res.id}/${res.slug}`
             }, 1000);
         } catch (error) {
             console.log(error)
@@ -125,7 +153,6 @@ const CourseUpdate = () => {
             console.log(error);
             error.remove = true;
             throw error;
-            // setStaticNotification({ message: error.message, time: (new Date()).toString() });
         }
     }
 
@@ -155,8 +182,7 @@ const CourseUpdate = () => {
             e.target.value = ""
         } catch (error) {
             e.target.removeAttribute("disabled")
-            let time = new Date()
-            setStaticNotification({ message: error.message, time: time.toString() })
+            setStaticNotification({ message: error.message, time: (new Date()).toString() })
             setFeaturedImg1(prevValue)
             console.log(error)
         }
@@ -185,7 +211,7 @@ const CourseUpdate = () => {
                                 {/* content input */}
                                 <div>
                                     <label htmlFor="content" className='form-label'>Content</label>
-                                    <TextEditor editorRef={editorRef} imageUploadFunction={imageUploadFunction} />
+                                    <TextEditor editorRef={editorRef} imageUploadFunction={imageUploadFunction} editerInitialValue={editerInitialValue}/>
                                 </div>
                             </form>
                             {/* Tutors inputs */}
@@ -202,7 +228,7 @@ const CourseUpdate = () => {
                                 <div className='border p-3 bg-white shadow-sm'>
                                     <label htmlFor='course-name' className='fw-bold form-label'>Price</label>
                                     <div className="input-group">
-                                        <span class="input-group-text rounded-0" id="currency-addon">₦</span>
+                                        <span className="input-group-text rounded-0" id="currency-addon">₦</span>
                                         <input ref={price} type="number" id='course-name' className='form-control rounded-0' aria-describedby="currency-addon"/>
                                     </div>
                                     <div className="invalid-feedback">Price Field is empty</div>
