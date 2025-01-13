@@ -17,7 +17,6 @@ const Blog = () => {
     const [postLimit, setPostLimit] = useState(2);
     const [postSkip, setPostSkip] = useState(0);
     const [buttonLoad, setButtonLoad] = useState(false);
-    const [filter, setFilter] = useState("")
     const [hideLoadButton, setHideLoadButton] = useState(false);
 
     useEffect(() => {
@@ -25,10 +24,9 @@ const Blog = () => {
             let morePost = await fetchPosts(postLimit, postSkip, postQuery);
             if(morePost.length !== 0){
                 setPosts(prevState => [...prevState, ...morePost])
-            } else if (posts.length % postLimit !== 0) {
-                setHideLoadButton(true)
-            } else {
                 setHideLoadButton(false)
+            } else {
+                setHideLoadButton(true)
             }
             setButtonLoad(false)
             setShowSpinner(false)
@@ -37,33 +35,22 @@ const Blog = () => {
         sideEffect()
     }, [postQuery])
 
-    // useEffect(() => {
-    //     const sideEffect = async () => {
-    //         setShowSpinner(true)
-    //         let allpost = await fetchPosts(postLimit, postSkip, postQuery);
-    //         setPosts(prevState => [...prevState, ...allpost])
-    //         setShowSpinner(false)
-    //     }
-    //     sideEffect()
-    // }, [postQuery])
-
     const resetLimits = ()=>{
-
-    }
-    const handleFilter = (e) =>{
-        setPostQuery(prevState => ({...prevState, postType: e.target.value}))
-        // setFilter(e.target.value)
         setPostLimit(defaultLimit);
         setPostSkip(defaultSkip)
+    }
+    const handleFilter = (e) =>{
+        setShowSpinner(true)
+        setPostQuery(prevState => ({...prevState, postType: e.target.value}))
+        setPosts([])
+        resetLimits()
     }
     const formSubmit = (e) => {
         e.preventDefault()
         setShowSpinner(true)
         setPostQuery(prevState => ({...prevState, search: searchQuery}))
         setPosts([])
-        // console.log()
-        setPostLimit(defaultLimit);
-        setPostSkip(defaultSkip)
+        resetLimits()
     }
     const handleSearchInput = (e) => {
         setSearchQuery(e.target.value)
@@ -74,10 +61,9 @@ const Blog = () => {
         let morePost = await fetchPosts(postLimit, postSkip, postQuery);
         if (morePost.length !==0) {
             setPosts(prevState => [...prevState, ...morePost])
-        } else if (posts.length % postLimit !== 0) {
-            setHideLoadButton(true)
-        }else{
             setHideLoadButton(false)
+        } else {
+            setHideLoadButton(true)
         }
         setButtonLoad(false)
         setPostSkip(prevState => prevState + postLimit)
@@ -124,9 +110,9 @@ const Blog = () => {
                                             )
                                 }
                                 <div className="col-12 text-center" style={{display: showSpinner || posts.length === 0 ? "none" : "block"}}>
-                                    <p style={{ display: hideLoadButton && posts.length % postLimit !== 0 ? "block":"none" }}>No more Posts!!!</p>
+                                    <p style={{ display: hideLoadButton? "block":"none" }}>No more Posts!!!</p>
                                     <button 
-                                    hidden={hideLoadButton && posts.length % postLimit !== 0}
+                                    hidden={hideLoadButton}
                                     disabled={buttonLoad} 
                                     onClick={handleLoadMore} 
                                     className="btn btn-outline-primary btn-lg rounded-0 fw-bold">
