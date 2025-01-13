@@ -83,3 +83,20 @@ h1,h2,h3,h4,h5,h6{
     font-family: "Montserrat", sans-serif;
     color: bs.$secondary;
 }
+
+.truncate-line-1{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    // width: 100%;
+}
+.truncate-line-2{
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    // width: 100%;
+}

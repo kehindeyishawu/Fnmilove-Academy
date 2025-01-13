@@ -7,7 +7,7 @@ let members = [
         img: "face1_rl3dax",
         name: "Vincent Henry",
         position: "Cinematographer",
-        socialMedia: {
+        social: {
             fb: "",
             ig: "",
             in: "",
@@ -18,7 +18,7 @@ let members = [
         img: "face2_tpasfv",
         name: "Princess Okafor",
         position: "Hair Stylist",
-        socialMedia: {
+        social: {
             fb: "",
             ig: "",
             in: "",
@@ -29,7 +29,7 @@ let members = [
         img: "face3_af6epz",
         name: "Fatima Abdullahi",
         position: "Fashion Designer",
-        socialMedia: {
+        social: {
             fb: "",
             ig: "",
             in: "",
@@ -40,7 +40,7 @@ let members = [
         img: "face4_z4aeir",
         name: "Emeka Nwosu",
         position: "Photographer",
-        socialMedia: {
+        social: {
             fb: "",
             ig: "",
             in: "",
@@ -51,7 +51,7 @@ let members = [
         img: "face1_rl3dax",
         name: "John Elliot",
         position: "Choregrapher",
-        socialMedia: {
+        social: {
             fb: "",
             ig: "",
             in: "",
@@ -62,7 +62,7 @@ let members = [
         img: "face1_rl3dax",
         name: "Elizabeth Ade",
         position: "Junior Makeup Artist",
-        socialMedia: {
+        social: {
             fb: "",
             ig: "",
             in: "",
@@ -73,7 +73,7 @@ let members = [
         img: "face1_rl3dax",
         name: "Levi Johnson",
         position: "Visual Artist",
-        socialMedia: {
+        social: {
             fb: "",
             ig: "",
             in: "",
@@ -95,7 +95,7 @@ const Team = ({present=4}) => {
                 <div className="row gy-3 justify-content-center row-cols-1 row-cols-md-2 row-cols-lg-4">
                     {members.map((e, i)=>{
                         if (i >= present) {return null}
-                        return <TeamCard img={e.img} name={e.name} position={e.position} />
+                        return <TeamCard img={e.img} name={e.name} position={e.position} social={e.social} />
                     })}
                 </div>
             </div>

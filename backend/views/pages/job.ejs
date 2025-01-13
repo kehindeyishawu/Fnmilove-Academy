@@ -1,9 +1,9 @@
 <main id="job">
     <article>
-        <div class="vertical-padding bg-dark position-relative" style="background-size: cover; background-position: center; background-image: url(https://res.cloudinary.com/kkenny/image/upload/q_auto,f_auto/<%=post.featuredImg%>);">
+        <div class="vertical-padding bg-dark position-relative" style="background-size: cover; background-position: center; background-image: url(<%=cloudname%>/q_auto,f_auto/<%=post.featuredImg%>);">
             <%if(post.companyLogo){%>
                 <span class="company-logo" style="background-color: <%=post.logoAccent%>;">
-                    <img src="https://res.cloudinary.com/kkenny/image/upload/w_180,c_fill,q_auto,f_auto/<%=post.companyLogo%>" width="90" alt="" />
+                    <img src="<%=cloudname%>/w_180,c_fill,q_auto,f_auto/<%=post.companyLogo%>" width="90" alt="" />
                 </span>
             <%}%>
         </div>

@@ -6,8 +6,8 @@ const Card = ({ title, imgSrc, text, url = "#", imgAlt = "", }) => {
             <div className="card rounded-top-0">
                     <img src={imgSrc} className="card-img-top rounded-0" alt={imgAlt}/>
                     <div className="card-body">
-                    <h5 className="card-title h6 fw-bold text-secondary">{title}</h5>
-                        <p className="card-text">{text}</p>
+                    <h5 className="card-title h6 fw-bold text-secondary truncate-line-2">{title}</h5>
+                        <p className="card-text truncate-line-2">{text}</p>
                         <a href={url} className="btn fw-bold btn-primary rounded-0">Read More...</a>
                     </div>
             </div>

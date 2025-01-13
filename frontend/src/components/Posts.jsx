@@ -2,28 +2,29 @@ import { BiSolidSchool } from "react-icons/bi"
 import Card from "./Card"
 import { setContainer3rdWidth } from "../utils/cloudinary"
 import { FaRegArrowAltCircleRight } from "react-icons/fa"
+import { cloudname } from "../utils/cloudinary"
 
 
 let postDB = [
     {
         title:  "Top 5 In-demand Vocational Skills in 2024",
         text:   "Discover the Top Vocational skills for 2024 and why they are in demand...",
-        imgSrc: `https://res.cloudinary.com/kkenny/image/upload/${setContainer3rdWidth("ar_16:9,")}/v1731400547/Fnmilove%20Academy/Posts/man.jpg`
+        imgSrc: `${cloudname}/${setContainer3rdWidth("ar_16:9,")}/v1731400547/Fnmilove%20Academy/Posts/man.jpg`
     },
     {
         title:  "How to Choose the Right Vocational Course for Your Career",
         text:   "Learn how to pick the perfect vocation course for your career path...",
-        imgSrc: `https://res.cloudinary.com/kkenny/image/upload/${setContainer3rdWidth("ar_16:9,")}/v1731400547/Fnmilove%20Academy/Posts/laptop3.jpg`
+        imgSrc: `${cloudname}/${setContainer3rdWidth("ar_16:9,")}/v1731400547/Fnmilove%20Academy/Posts/laptop3.jpg`
     },
     {
         title:  "Success Stories: Graduates Who Excelled in Their Vocational Careers",
         text:   "Read about our graduates who turned their training into successful careers...",
-        imgSrc: `https://res.cloudinary.com/kkenny/image/upload/${setContainer3rdWidth("ar_16:9,")}/v1731146323/Fnmilove%20Academy/Posts/student6.jpg`
+        imgSrc: `${cloudname}/${setContainer3rdWidth("ar_16:9,")}/v1731146323/Fnmilove%20Academy/Posts/student6.jpg`
     },
     {
         title:  "The Future of vocational Education: Trends to Watch",
         text:   "Explore the latest trends shaping the future of vocational education...",
-        imgSrc: `https://res.cloudinary.com/kkenny/image/upload/${setContainer3rdWidth("ar_16:9,")}/v1731400548/Fnmilove%20Academy/Posts/skills.jpg`
+        imgSrc: `${cloudname}/${setContainer3rdWidth("ar_16:9,")}/v1731400548/Fnmilove%20Academy/Posts/skills.jpg`
     }
 ]
 

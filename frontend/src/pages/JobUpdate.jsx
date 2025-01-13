@@ -4,7 +4,7 @@ import { FaArrowLeftLong } from 'react-icons/fa6'
 import { Link, useOutletContext, useLocation, useParams, useNavigate } from 'react-router-dom'
 import "./PostEdit.scss"
 import TextEditor from '../components/TextEditor'
-import { cloudname } from '../utils/cloudinary'
+import { cloudname, cloudAPI } from '../utils/cloudinary'
 import Spinner from 'react-bootstrap/Spinner';
 
 const JobUpdate = () => {
@@ -140,6 +140,7 @@ const JobUpdate = () => {
     } catch (error) {
       console.log(error)
       setStaticNotification({ message: error.message, time: (new Date()).toString() })
+      setShowLoading(false);
     }
   }
 
@@ -151,7 +152,7 @@ const JobUpdate = () => {
     formData.append('folder', `job/${drafted}`);
     formData.append('upload_preset', 'fnmi-academy');
     try {
-      const req = await fetch(`https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, {
+      const req = await fetch(`${cloudAPI}`, {
         method: 'POST',
         body: formData
       });
@@ -180,7 +181,7 @@ const JobUpdate = () => {
       formData.append("file", imgUpload)
       formData.append("upload_preset", "fnmi-academy")
       formData.append("folder", `job/${drafted}`)
-      let req = await fetch(`https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, {
+      let req = await fetch(`${cloudAPI}`, {
         method: "POST",
         body: formData
       })
@@ -212,7 +213,7 @@ const JobUpdate = () => {
       formData.append("file", imgUpload)
       formData.append("upload_preset", "fnmi-academy")
       formData.append("folder", `job/${drafted}`)
-      let req = await fetch(`https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, {
+      let req = await fetch(`${cloudAPI}`, {
         method: "POST",
         body: formData
       })
@@ -307,7 +308,7 @@ const JobUpdate = () => {
                           {featuredImg1 === null? <div><Spinner animation="border" size='sm' /> <span>Loading</span></div> : "Upload Banner Image"}
                         </small>
                       </label>
-                      <img ref={imgSrc} src={featuredImg1 ? `https://res.cloudinary.com/kkenny/image/upload/w_1000,c_limit,dpr_${devicePixelRatio}/${featuredImg1}` : null} style={{ display: featuredImg1 ? "inline" : "none" }} className='img-fluid' alt="" />
+                      <img ref={imgSrc} src={featuredImg1 ? `${cloudname}/w_1000,c_limit,dpr_${devicePixelRatio}/${featuredImg1}` : null} style={{ display: featuredImg1 ? "inline" : "none" }} className='img-fluid' alt="" />
                     </div>
                     <div className='img-mod mt-2' hidden={!featuredImg1}>
                       <label htmlFor='featuredImg1-input'>Update</label>
@@ -324,7 +325,7 @@ const JobUpdate = () => {
                         </small>
                         <div className='form-text'>Formats: png, webp</div>
                       </label>
-                      <img ref={imgSrc2} src={featuredImg2 ? `https://res.cloudinary.com/kkenny/image/upload/w_1000,c_limit,dpr_${devicePixelRatio}/${featuredImg2}` : null} style={{ display: featuredImg2 ? "inline" : "none" }} className='img-fluid' alt="" />
+                      <img ref={imgSrc2} src={featuredImg2 ? `${cloudname}/w_1000,c_limit,dpr_${devicePixelRatio}/${featuredImg2}` : null} style={{ display: featuredImg2 ? "inline" : "none" }} className='img-fluid' alt="" />
                     </div>
                     <div className='img-mod mt-2' hidden={!featuredImg2}>
                       <label htmlFor='featuredImg2-input'>Update</label>

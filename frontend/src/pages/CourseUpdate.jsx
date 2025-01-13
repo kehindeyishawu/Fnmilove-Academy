@@ -4,7 +4,7 @@ import { FaArrowLeftLong } from 'react-icons/fa6'
 import { Link, useOutletContext, useLocation, useParams, useNavigate } from 'react-router-dom'
 import "./PostEdit.scss"
 import TextEditor from '../components/TextEditor'
-import { cloudname } from '../utils/cloudinary'
+import { cloudname, cloudAPI } from '../utils/cloudinary'
 import Spinner from 'react-bootstrap/Spinner';
 
 const CourseUpdate = () => {
@@ -139,7 +139,7 @@ const CourseUpdate = () => {
         formData.append('folder', `course/${drafted}`);
         formData.append('upload_preset', 'fnmi-academy');
         try {
-            const req = await fetch(`https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, {
+            const req = await fetch(`${cloudAPI}`, {
                 method: 'POST',
                 body: formData
             });
@@ -168,7 +168,7 @@ const CourseUpdate = () => {
             formData.append("file", imgUpload)
             formData.append("upload_preset", "fnmi-academy")
             formData.append("folder", `course/${drafted}`)
-            let req = await fetch(`https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, {
+            let req = await fetch(`${cloudAPI}`, {
                 method: "POST",
                 body: formData
             })
@@ -244,7 +244,7 @@ const CourseUpdate = () => {
                                                     {featuredImg1 === null ? <div><Spinner animation="border" size='sm' /> <span>Loading</span></div> : "Upload Featured Image"}
                                                 </small>
                                             </label>
-                                            <img ref={imgSrc} src={featuredImg1 ? `https://res.cloudinary.com/kkenny/image/upload/w_1000,c_limit,dpr_${devicePixelRatio}/${featuredImg1}` : null} style={{ display: featuredImg1 ? "inline" : "none" }} className='img-fluid' alt="" />
+                                            <img ref={imgSrc} src={featuredImg1 ? `${cloudname}/w_1000,c_limit,dpr_${devicePixelRatio}/${featuredImg1}` : null} style={{ display: featuredImg1 ? "inline" : "none" }} className='img-fluid' alt="" />
                                         </div>
                                         <div className='img-mod mt-2' hidden={!featuredImg1}>
                                             <label htmlFor='featuredImg1-input'>Update</label>

@@ -3,6 +3,7 @@ import { BiSolidSchool } from "react-icons/bi";
 import { FaRegCircleCheck, FaArrowRight } from "react-icons/fa6";
 // import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+import { cloudname } from "../utils/cloudinary";
 
 
 const WhyUs = () => {
@@ -17,7 +18,7 @@ const WhyUs = () => {
                         </small>
                         <h1 className="fw-bold mb-lg-3">Unlock Your Potential with Expert Coaching</h1>
                     </div>
-                    <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerHalfWidth()}/v1731030031/Fnmilove%20Academy/job-person_aypvcr.png`} className="img-fluid" alt="Man in Suit for Job Placement" />
+                    <img src={`${cloudname}/${setContainerHalfWidth()}/v1731030031/Fnmilove%20Academy/job-person_aypvcr.png`} className="img-fluid" alt="Man in Suit for Job Placement" />
                 </div>
                 <div className="col-md-6 align-self-center">
                     <div className="d-none d-md-block">

@@ -18,8 +18,15 @@ let createNewJob = async (req, res, next)=>{
     }
 }
 let findAllJobs = async (req, res) => {
-    let allJob = await postCollection.find({postType: "job"}).toArray()
-    res.json(allJob)
+    try {
+        let allJob = await postCollection.find({postType: "job"}).toArray()
+        if (allJob.length === 0) {
+            throw new CustomError("No post found", 404)
+        }
+        res.json(allJob)
+    } catch (error) {
+        next(error)
+    }
 }
 let findOneJob = async (req, res, next) => {
     try {

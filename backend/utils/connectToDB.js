@@ -12,7 +12,7 @@ export let userCollection;
 const client = new MongoClient(process.env.DB_CONNECT_STRING, {
     serverApi: {
         version: ServerApiVersion.v1,
-        strict: true,
+        strict: false,
         deprecationErrors: true,
     }
 });
@@ -29,8 +29,10 @@ export async function connectToDB() {
         courseCollection = db.collection("courses")
         postCollection = db.collection("posts")
         userCollection = db.collection("users")
-    } catch {
-        throw new Error("Database connection/network fail")
+        await courseCollection.createIndex({ title: "text", content: "text" });
+        await postCollection.createIndex({ title: "text", content: "text" });
+    } catch (error) {
+        throw new Error(error.message)
     }
 }
 
@@ -57,12 +59,12 @@ export class ArticleSchema{
     }
 }
 export class JobSchema{
-    constructor({ content, companyCoverImg, companyLogo, logoAccent, jobTitle, companyName, jobType, jobLocation, applicationDeadline, assetFolder }){
+    constructor({ content, companyCoverImg, companyLogo, logoAccent, title, companyName, jobType, jobLocation, applicationDeadline, assetFolder }){
         this.companyCoverImg = companyCoverImg || "";
         this.companyLogo = companyLogo || "";
         this.logoAccent = logoAccent || "";
         this.companyName = validate(companyName, "companyName")
-        this.jobTitle = validate(jobTitle, "jobTitle")
+        this.title = validate(title, "title")
         this.jobType = validate(jobType, "jobType")
         this.jobLocation = validate(jobLocation, "jobLocation")
         this.applicationDeadline = validate(applicationDeadline, "applicationDeadline")
@@ -70,7 +72,7 @@ export class JobSchema{
         this.description = generateDescription(content)
         this.postType = "job"
         this.assetFolder = assetFolder
-        this.slug = jobTitle.toLowerCase().replace(/\s/g, "-");
+        this.slug = title.toLowerCase().replace(/\s/g, "-");
         this.updatedAt = new Date()
     }
 }

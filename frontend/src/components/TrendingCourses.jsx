@@ -8,7 +8,7 @@ let courseDB = [
         trend: "Top Rated",
         tipColor: "primary",
         title: "Diploma in Creative Makeup and Hairstyling",
-        tutors: "Fnmilove Academy, Mr. Adams and ...",
+        tutors: "Fnmilove Academy, Mr. Adams",
         url: "",
         price: "350,000"
     },
@@ -26,7 +26,7 @@ let courseDB = [
         trend: "Most Popular",
         tipColor: "info",
         title: "Diploma in Fashion and Lifestyle",
-        tutors: "Fnmilove Academy, Mr Ajaiye and Mrs. Ron...",
+        tutors: "Fnmilove Academy, Mr Ajaiye and Mrs. Ronke, Dr. Adams & co.",
         url: "",
         price: "199,000"
     },

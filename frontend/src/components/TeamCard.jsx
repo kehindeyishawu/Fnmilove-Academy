@@ -1,22 +1,23 @@
 import { setContainerQuarterWidth } from "../utils/cloudinary"
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { cloudname } from "../utils/cloudinary";
 
-const TeamCard = ({img, name, position }) => {
+const TeamCard = ({img, name, position, social }) => {
     return (
         <div className="col">
             <div className='position-relative'>
-                <img src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerQuarterWidth("ar_3:4,")}/Fnmilove%20Academy/${img}`} alt="" className='img-fluid' />
+                <img src={`${cloudname}/${setContainerQuarterWidth("ar_3:4,")}/Fnmilove%20Academy/${img}`} alt="" className='img-fluid' />
                 <div className="gap-3 d-flex justify-content-center bg-white social-icons">
-                    <a href="" className="text-dark">
+                    <a href={social.fb} className="text-dark">
                         <FaFacebookF />
                     </a>
-                    <a href="" className="text-dark">
+                    <a href={social.ig} className="text-dark">
                         <FaInstagram />
                     </a>
-                    <a href="" className="text-dark">
+                    <a href={social.in} className="text-dark">
                         <FaLinkedinIn />
                     </a>
-                    <a href="" className="text-dark">
+                    <a href={social.x} className="text-dark">
                         <FaXTwitter />
                     </a>
                 </div>
@@ -27,4 +28,4 @@ const TeamCard = ({img, name, position }) => {
     )
 }
 
-export default TeamCard
+export default TeamCard;

@@ -4,7 +4,7 @@
         <div class="fw-bold text-center form-text fs-6 mt-2 mb-5"><time datetime="<%= post.updatedAt.toISOString() %>"><%=blogUpdate%></time> - By Admin</div>
         <figure>
             <%if(post.featuredImg){%>
-                <img class="img-fluid" src="https://res.cloudinary.com/kkenny/image/upload/q_auto,f_auto/<%=post.featuredImg%>" alt="<%=post.title%>">
+                <img class="img-fluid" src="<%=cloudname%>/q_auto,f_auto/<%=post.featuredImg%>" alt="<%=post.title%>">
             <%}%>
             <figcaption class="border-bottom border-2 w-75 text-center fw-bold form-text mx-auto py-2">Article Post Featured Image</figcaption>
         </figure>

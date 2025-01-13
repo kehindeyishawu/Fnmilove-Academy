@@ -18,8 +18,15 @@ let createNewArticle = async (req, res, next)=>{
     }
 }
 let findAllArticles = async (req, res) => {
-    let allArticle = await postCollection.find({postType: "article"}).toArray()
-    res.json(allArticle)
+    try {
+        let allArticle = await postCollection.find({postType: "article"}).toArray()
+        if (allArticle.length === 0) {
+            throw new CustomError("No post found", 404)
+        }
+        res.json(allArticle)
+    } catch (error) {
+        next(error)
+    }
 }
 let findOneArticle = async (req, res, next) => {
     try {
@@ -54,6 +61,7 @@ let deleteArticle = async (req, res, next) => {
             let id = ObjectId.createFromHexString(req.params.id);
             let deletedArticle = await postCollection.deleteOne({ _id: id })
             res.json(deletedArticle)
+            console.log(deletedArticle)
         } else {
             throw new CustomError("404: Page not found", 400)
         }

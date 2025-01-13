@@ -30,20 +30,28 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 // passing variables to all views
 app.use((req, res, next)=>{
-    res.locals.fadingNotification = ""
-    res.locals.staticNotification = ""
     res.locals.domain = "https://fnmiloveacademy.com"
-    res.locals.path = req.path
+    res.locals.path = req.path;
+    res.locals.cloudname = "https://res.cloudinary.com/kkenny/image/upload"
     next()
 })
 // Routes
-app.get("/api/post", async (req, res)=>{
-    let allPosts = await postCollection.find(req.query).toArray()
-    if (allPosts.length === 0) {
-        throw new CustomError("No post found", 404)
+app.get("/api/post", async (req, res, next)=>{
+    try {
+        let {limit, skip, postType, search} = req.query;
+        let postLimit = parseInt(limit);
+        let postSkip = parseInt(skip);
+        let postQuery = {}
+        postType && (postQuery.postType = postType);
+        search && (postQuery.$text = {$search: search});
+        
+        let cursor = await postCollection.find(postQuery);
+        search && await cursor.project({ score: { $meta: "textScore" } }).sort({ score: { $meta: "textScore" } });
+        let allPosts = await cursor.limit(postLimit).skip(postSkip).toArray();
+        res.json(allPosts)
+    } catch (error) {
+        next(error)
     }
-    res.json(allPosts)
-    // console.log(req.path);
 })
 app.use(showPostRouter)
 app.use("/api/articles", articleRouter)
@@ -58,8 +66,8 @@ app.get("*", (req, res)=>{
 // Error Handling
 app.use((err, req, res, next)=>{
     if (err.statusCode) {
-        res.status(err.statusCode).send(err.message)
-        console.log(err.message)
+        res.status(err.statusCode).send(err.message);
+        console.log(err.message);
     } else {
         res.status(500).json(`Server Error: ${err.message}`)
         console.log(err.message)

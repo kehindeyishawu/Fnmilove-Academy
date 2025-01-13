@@ -2,6 +2,7 @@ import { useState } from "react"
 import { setContainerHalfWidth } from "../utils/cloudinary"
 import { FaArrowRightLong } from "react-icons/fa6"
 import { Link } from "react-router-dom"
+import { cloudname } from "../utils/cloudinary"
 
 const Signup = () => {
     const [formFields, setFormFields] = useState({firstname:    "", lastname:   "", email: "", password: "", confirmPassword:   "" })
@@ -26,7 +27,7 @@ const Signup = () => {
             <div className="container-fluid px-0">
                 <div className="row g-0">
                     <div className="col-md-6 col-lg-4 d-none d-md-block">
-                        <img className="img-fluid" src={`https://res.cloudinary.com/kkenny/image/upload/${setContainerHalfWidth(`ar_${screen.width >= 1199 ? "1:2," : "1:3,"}`)}/Fnmilove%20Academy/cosmetics-1`} alt="" />
+                        <img className="img-fluid" src={`${cloudname}/${setContainerHalfWidth(`ar_${screen.width >= 1199 ? "1:2," : "1:3,"}`)}/Fnmilove%20Academy/cosmetics-1`} alt="" />
                     </div>
                     <div className="col-md-6 mx-auto">
                         <div className="container-fluid mt-4 mt-lg-3">

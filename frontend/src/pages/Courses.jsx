@@ -48,7 +48,7 @@ const Courses = () => {
     <main>
       <section className="vertical-padding rounded-bottom text-center banner bg-dark">
         <h1 className="text-white fw-bold">Courses</h1>
-        <nav className="text-white"> <Link className="text-decoration-none" to="/">Home</Link> {'>>'} Courses </nav>
+        <nav className="text-white fw-bold"> <Link className="text-decoration-none" to="/">Home</Link> {'>>'} Courses </nav>
       </section>
       <section className="container mt-5">
         <div className="row justify-content-end">

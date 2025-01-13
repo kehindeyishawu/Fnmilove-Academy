@@ -7,7 +7,7 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="<%=post.title%>">
     <meta property="og:description" content="<%=post.description%>">
-    <meta property="og:image" content="https://res.cloudinary.com/kkenny/image/upload/q_auto,ar_1.91:1,q_auto,w_1200,g_auto,c_lfill/<%=post.featuredImg%>">
+    <meta property="og:image" content="<%=cloudname%>/q_auto,ar_1.91:1,q_auto,w_1200,g_auto,c_lfill/<%=post.featuredImg%>">
     <meta property="og:url" content="<%=domain+path%>">
     <meta property="og:type" content="<%=post.postType || 'course'%>">
     
@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<%=post.title%>">
     <meta name="twitter:description" content="<%=post.description%>">
-    <meta name="twitter:image" content="https://res.cloudinary.com/kkenny/image/upload/q_auto,ar_2:1,q_auto,g_auto,w_1200,c_lfill/<%=post.featuredImg%>">
+    <meta name="twitter:image" content="<%=cloudname%>/q_auto,ar_2:1,q_auto,g_auto,w_1200,c_lfill/<%=post.featuredImg%>">
     <meta name="twitter:url" content="<%=domain+path%>">
     
     <!-- General Meta Tags -->
@@ -36,36 +36,17 @@
     <%- include("./partials/loadingDialog") %>
     <script src="/bootstrap.min.js"></script>
     <script>
-
-        // delete dialog function ------ User must be signedIn to delete a post
-            let deleteModal = new bootstrap.Modal(document.getElementById('deletePostModal'), {
-                keyboard: false
-            })
-            const deleteInput = document.getElementById("delete-input");
-            const deleteButton = document.getElementById("delete-dialog-confirmation-button");
-            deleteInput.addEventListener("input", (e) => {
-                if (deleteInput.validity.patternMismatch || e.target.value.length < 1) {
-                    deleteButton.setAttribute("disabled", "true");
-                } else {
-                    deleteButton.removeAttribute("disabled");
-                }
-            })
-            deleteButton.addEventListener("click", () => {
-                // redirect to post page with notification. remember to add invalidate notification above 11 minutes
-                
-            })
-
         // toast function
-        <% if(fadingNotification){ %>
-            const fadingToast = document.getElementById('fadingToast')
-            const toastFadeBootstrap = bootstrap.Toast.getOrCreateInstance(fadingToast)
-            toastFadeBootstrap.show();
-        <% } %>
-        <% if(staticNotification){ %>
-            const staticToast = document.getElementById('staticToast');
-            const toastStaticBootstrap = bootstrap.Toast.getOrCreateInstance(staticToast)
-            toastStaticBootstrap.show();
-        <% } %>
+        const fadingToast = document.getElementById('fadingToast')
+        const toastFadeBootstrap = bootstrap.Toast.getOrCreateInstance(fadingToast)
+        const fadeMessage = document.getElementById("fade-toast-msg")
+        const fadeTime = document.getElementById("fade-toast-time")
+        // toastFadeBootstrap.show();
+        const staticToast = document.getElementById('staticToast');
+        const toastStaticBootstrap = bootstrap.Toast.getOrCreateInstance(staticToast)
+        const staticMessage = document.getElementById("static-toast-msg")
+        const staticTime = document.getElementById("static-toast-time")
+        // toastStaticBootstrap.show();
 
         <%if(path.includes("job")){%>
             let jobForm = document.getElementById("job-form");
@@ -84,6 +65,35 @@
                 `
             })
         <%}%>
+
+        // delete dialog function ------ User must be signedIn to delete a post
+            let deleteModal = new bootstrap.Modal(document.getElementById('deletePostModal'), {
+                keyboard: false
+            })
+            const deleteInput = document.getElementById("delete-input");
+            const deleteButton = document.getElementById("delete-dialog-confirmation-button");
+            deleteInput.addEventListener("input", (e) => {
+                if (deleteInput.validity.patternMismatch || e.target.value.length < 1) {
+                    deleteButton.setAttribute("disabled", "true");
+                } else {
+                    deleteButton.removeAttribute("disabled");
+                }
+            })
+            deleteButton.addEventListener("click", async() => {
+                try {
+                    const req = await fetch("/api/<%=post.postType || 'course'%>s/<%=post._id%>", {
+                        method: "DELETE"
+                    })
+                    fadeMessage.textContent = "<%=post.postType || 'course'%> deleted"
+                    toastFadeBootstrap.show()
+                    setTimeout(() => {
+                        location.href = "/<%=post.postType ? 'blog' : 'courses' %>"
+                    }, 1000);
+                } catch (error) {
+                    fadeMessage.textContent = res
+                    toastStaticBootstrap.show()
+                }
+            })
     </script>
 </body>
 </html>

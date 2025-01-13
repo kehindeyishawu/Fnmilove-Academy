@@ -7,7 +7,7 @@
                 <a class="text-decoration-none" href="/">Courses</a>
             </nav>
             <div class="container-md px-0 px-md-3">
-                <img src="https://res.cloudinary.com/kkenny/image/upload/q_auto,q_auto,w_1200,c_limit/<%=post.featuredImg%>" class="card-img-top rounded-0" alt="" />
+                <img src="<%=cloudname%>/q_auto,q_auto,w_1200,c_limit/<%=post.featuredImg%>" class="card-img-top rounded-0" alt="" />
             </div>
             <div class="container mt-3">
                 <h1 class="fw-bold">
@@ -97,7 +97,7 @@
                     <!-- show only from lg screens -->
                     <div class="d-none d-lg-block card rounded-0 shadow-sm">
                         <%if(post.featuredImg){%>
-                            <img src="https://res.cloudinary.com/kkenny/image/upload/q_auto,q_auto,w_1100,c_limit/<%=post.featuredImg%>" class="card-img-top rounded-0" alt="" />
+                            <img src="<%=cloudname%>/q_auto,q_auto,w_1100,c_limit/<%=post.featuredImg%>" class="card-img-top rounded-0" alt="" />
                         <%}%>
                         <div class="card-body">
                             <div class="fs-3 fw-bold mb-2"><%=price%></div>

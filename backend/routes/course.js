@@ -17,8 +17,15 @@ let createNewCourse = async (req, res, next)=>{
     }
 }
 let findAllCourses = async (req, res) => {
-    let allCourse = await courseCollection.find().toArray()
-    res.json(allCourse)
+    try {
+        let allCourse = await courseCollection.find().toArray()
+        if (allCourse.length === 0) {
+            throw new CustomError("No Course found", 404)
+        }
+        res.json(allCourse)
+    } catch (error) {
+        next(error)
+    }
 }
 let findOneCourse = async (req, res, next) => {
     try {
