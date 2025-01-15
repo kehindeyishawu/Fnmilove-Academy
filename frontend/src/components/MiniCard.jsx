@@ -33,7 +33,7 @@ const MiniCard = ({imgPublicID, title, applicationDeadline, description, updated
                                 <small className="fw-bold text-info">
                                     {applicationDeadline && <> <FaCalendarAlt /> {applicationDeadline} </>}
                                 </small>
-                                <p className="card-text truncate-line-2 mt-3"><Link to={`/${applicationDeadline ? 'job' : 'article'}/${ID}/${slug}`} className="text-reset text-decoration-none">{description}</Link></p>
+                                <p className={`card-text ${applicationDeadline ? 'truncate-line-2' : 'truncate-line-3'} mt-3`}><Link to={`/${applicationDeadline ? 'job' : 'article'}/${ID}/${slug}`} className="text-reset text-decoration-none">{description}</Link></p>
                                 <p className="card-text"><small className="text-body-secondary">Last updated {timeAgo(updatedAt.toString())}</small></p>
                             </div>
                         </div>

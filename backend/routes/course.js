@@ -18,11 +18,16 @@ let createNewCourse = async (req, res, next)=>{
 }
 let findAllCourses = async (req, res) => {
     try {
-        let allCourse = await courseCollection.find().toArray()
-        if (allCourse.length === 0) {
-            throw new CustomError("No Course found", 404)
-        }
-        res.json(allCourse)
+        let { limit, skip, search } = req.query;
+        let postLimit = parseInt(limit);
+        let postSkip = parseInt(skip);
+        let postQuery = {}
+        search && (postQuery.$text = { $search: search });
+
+        let cursor = await courseCollection.find(postQuery);
+        search && await cursor.project({ score: { $meta: "textScore" } }).sort({ score: { $meta: "textScore" } });
+        let allCourse = await cursor.limit(postLimit).skip(postSkip).toArray();
+        res.json(allCourse);
     } catch (error) {
         next(error)
     }
@@ -31,7 +36,7 @@ let findOneCourse = async (req, res, next) => {
     try {
         if (ObjectId.isValid(req.params.id)) {
             let id = ObjectId.createFromHexString(req.params.id)
-            let course = await courseCollection.findOne({ _id: id })
+            let course = await courseCollection.findOne({ _id: id });
             res.json(course);
         } else {
             throw new CustomError("404: Page not found", 400)

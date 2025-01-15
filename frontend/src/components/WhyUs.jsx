@@ -1,8 +1,7 @@
 import { setContainerHalfWidth } from "../utils/cloudinary"
 import { BiSolidSchool } from "react-icons/bi";
 import { FaRegCircleCheck, FaArrowRight } from "react-icons/fa6";
-// import { Link } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
+import { Link } from "react-router-dom";
 import { cloudname } from "../utils/cloudinary";
 
 
@@ -78,7 +77,7 @@ const WhyUs = () => {
                             </div>
                         </div>
                     </div>
-                    <HashLink to="/blog#" className="btn btn-lg btn-dark rounded-0 d-block p-md-3 mt-4">Job Postings <FaArrowRight/></HashLink>
+                    <Link to="/blog?jobs" className="btn btn-lg btn-dark rounded-0 d-block p-md-3 mt-4">Job Postings <FaArrowRight/></Link>
                 </div>
             </div>
         </div>

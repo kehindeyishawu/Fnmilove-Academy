@@ -1,23 +1,38 @@
 import { FaPlay } from "react-icons/fa6"; 
 import { cloudname, setContainer3rdWidth } from "../utils/cloudinary"
 import { Link } from "react-router-dom"
+import { currencyFormatter } from "../utils/currencyFormatter";
 
-const CourseCard = ({ img, trend, tipColor, title, tutors, url="#", price }) => {
+
+export const fetchCourses = async(limit, skip, searchQuery)=>{
+    try {
+        let req = await fetch(`/api/courses?limit=${limit || 3}&skip=${skip || 0}&search=${searchQuery || ""}`)
+        if (!req.ok) {
+            throw new Error("Something went wrong or No post records found")
+        }
+        let res = await req.json()
+        return (res)
+    } catch (error) {
+        return error.message
+    }
+}
+
+const CourseCard = ({ title, tutors, imgPublicID, price, tag, tipColor, slug, ID }) => {
     return (
         <>
             <div className="col">
                 <div className="card rounded-top-0">
-                    <img src={`${cloudname}/${setContainer3rdWidth("ar_16:9,c_fill,g_face,")}/Fnmilove%20Academy/${img}`} className="card-img-top rounded-0" alt="..." />
+                    <img src={`${cloudname}/${setContainer3rdWidth("ar_16:9,c_fill,g_face,")}/${imgPublicID}`} className="card-img-top rounded-0" alt="..." />
                     <div className="card-body position-relative">
-                        {trend && <small className="fw-bold">{trend}</small>}
+                        {tag && <small className="fw-bold">{tag}</small>}
                         <span className={`card-play-icon text-bg-${tipColor}`}>
                             <FaPlay />
                         </span>
-                        <h2 className={`card-title h6 fw-bold text-secondary ${trend || " mt-3"} truncate-line-2`}>{title}</h2>
-                        <p className={`card-text mb-4 mt-3 ${trend ? 'truncate-line-1' : 'truncate-line-2' }`}>{tutors}</p>
+                        <h2 className={`card-title h6 fw-bold text-secondary ${tag || " mt-3"} truncate-line-2`}><a href={`course/${ID}/${slug}`} className="text-reset text-decoration-none">{title}</a></h2>
+                        <p className={`card-text mb-4 mt-3 ${tag ? 'truncate-line-1' : 'truncate-line-2' }`}>{tutors}</p>
                         <div className="hstack justify-content-between">
-                            <Link to={url} className="btn btn-primary rounded-0 fw-bold">ENROLL NOW</Link>
-                            <span className="fw-bold fs-4">₦{price}</span>
+                            <a className="btn btn-primary rounded-0 fw-bold">ENROLL NOW</a>
+                            <span className="fw-bold fs-4">{currencyFormatter(price)}</span>
                         </div>
                     </div>
                 </div>

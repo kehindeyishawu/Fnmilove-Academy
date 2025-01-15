@@ -2,6 +2,7 @@ import { BiSolidSchool } from "react-icons/bi";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { setContainerQuarterWidth } from "../utils/cloudinary";
 import { cloudname } from "../utils/cloudinary";
+import { Link } from "react-router-dom";
 
 const CourseCatalog = () => {
     return (
@@ -14,7 +15,7 @@ const CourseCatalog = () => {
                     </small>
                     <h1 className="fw-bold mb-lg-3">Explore Our Categories</h1>
                     <p className="mb-4 mb-lg-5">Discover a range of hands-on training programs designed to equip you with the skills needed for a successful career.</p>
-                    <a href="" className="btn btn-primary btn-lg fw-bold rounded-0">All Courses <FaArrowRightLong/></a>
+                    <Link to="/courses" className="btn btn-primary btn-lg fw-bold rounded-0">All Courses <FaArrowRightLong/></Link>
                 </div>
                 <div className="col-md-3">
                     <img src={`${cloudname}/${setContainerQuarterWidth()}/v1731024142/Fnmilove%20Academy/makeup31_n8e2we.png`} className="img-fluid" alt="Makeup Set" />

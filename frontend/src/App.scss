@@ -100,3 +100,12 @@ h1,h2,h3,h4,h5,h6{
     text-overflow: ellipsis;
     // width: 100%;
 }
+.truncate-line-3{
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    // width: 100%;
+}

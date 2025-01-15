@@ -1,34 +1,25 @@
 import { BiSolidSchool } from "react-icons/bi"
 import Card from "./Card"
-import { setContainer3rdWidth } from "../utils/cloudinary"
 import { FaRegArrowAltCircleRight } from "react-icons/fa"
-import { cloudname } from "../utils/cloudinary"
+import { useEffect, useState } from "react"
+import { fetchPosts } from "./MiniCard"
+import { Link } from "react-router-dom"
 
-
-let postDB = [
-    {
-        title:  "Top 5 In-demand Vocational Skills in 2024",
-        text:   "Discover the Top Vocational skills for 2024 and why they are in demand...",
-        imgSrc: `${cloudname}/${setContainer3rdWidth("ar_16:9,")}/v1731400547/Fnmilove%20Academy/Posts/man.jpg`
-    },
-    {
-        title:  "How to Choose the Right Vocational Course for Your Career",
-        text:   "Learn how to pick the perfect vocation course for your career path...",
-        imgSrc: `${cloudname}/${setContainer3rdWidth("ar_16:9,")}/v1731400547/Fnmilove%20Academy/Posts/laptop3.jpg`
-    },
-    {
-        title:  "Success Stories: Graduates Who Excelled in Their Vocational Careers",
-        text:   "Read about our graduates who turned their training into successful careers...",
-        imgSrc: `${cloudname}/${setContainer3rdWidth("ar_16:9,")}/v1731146323/Fnmilove%20Academy/Posts/student6.jpg`
-    },
-    {
-        title:  "The Future of vocational Education: Trends to Watch",
-        text:   "Explore the latest trends shaping the future of vocational education...",
-        imgSrc: `${cloudname}/${setContainer3rdWidth("ar_16:9,")}/v1731400548/Fnmilove%20Academy/Posts/skills.jpg`
-    }
-]
 
 const Posts = () => {
+    const [posts, setPosts] = useState([]);
+    const [showSpinner, setShowSpinner] = useState(true)
+
+    useEffect(()=>{
+        let sideEffect = async()=>{
+            let somePosts = await fetchPosts()
+            setPosts(somePosts)
+            setShowSpinner(false)
+        }
+        sideEffect()
+    })
+
+
     return (
         <div>
             <small className="fw-bold text-primary fs-6 d-block text-center">
@@ -39,13 +30,14 @@ const Posts = () => {
             <p className="mb-4 text-light text-center">Catch up on our latest articles, news and students achievements</p>
             <div className="container">
                 <div className="row gy-4 row-cols-1 row-cols-md-2 row-cols-lg-3">
-                    {postDB.map((e)=>(
-                        <div className="col">
-                            <Card title={e.title} imgSrc={e.imgSrc} text={e.text} />
-                        </div>
+                    {showSpinner ?  <div className="spinner-border text-primary p-5 fs-3" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div> : posts.length === 0 ? <p>No Posts Found</p> :
+                    posts.map((e)=>(
+                            <Card key={e._id} title={e.title} imgPublicID={e.featuredImg || e.companyCoverImg} applicationDeadline={e.applicationDeadline} description={e.description} updatedAt={e.updatedAt} createdAt={e.createdAt} ID={e._id} slug={e.slug} />
                     ))}
                     <div className="col text-center align-self-center">
-                        <a href="" className="btn btn-outline-primary btn-lg rounded-0 fw-bold">See More <FaRegArrowAltCircleRight /> </a>
+                        <Link to="/blog" className="btn btn-outline-primary btn-lg rounded-0 fw-bold">See More <FaRegArrowAltCircleRight /> </Link>
                     </div>
                 </div>
             </div>

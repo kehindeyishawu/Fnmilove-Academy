@@ -95,7 +95,7 @@ const Team = ({present=4}) => {
                 <div className="row gy-3 justify-content-center row-cols-1 row-cols-md-2 row-cols-lg-4">
                     {members.map((e, i)=>{
                         if (i >= present) {return null}
-                        return <TeamCard img={e.img} name={e.name} position={e.position} social={e.social} />
+                        return <TeamCard key={e.img} img={e.img} name={e.name} position={e.position} social={e.social} />
                     })}
                 </div>
             </div>

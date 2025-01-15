@@ -7,3 +7,4 @@ Remember to change cloudinary cloudname
 -integrate email for sending job application, resume etc
 - Remember to implement delete code for past featured image upload
 - Remember to work on ejs layout for optimization/Performance. Make only code that are needed in the script tag are shown. Eliminated unneeded ones from rendering using ejs
+- make sure to include react custom error handling with Error Element / Boundary. Especially on fetch posts

@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { FaSearch } from "react-icons/fa"
-import { useEffect, useState } from "react"
-import { FaCalendarAlt } from "react-icons/fa"
+import { useEffect, useRef, useState } from "react"
 import CreateButton from "../components/CreateButton"
 import { fetchPosts } from "../components/MiniCard"
 import MiniCard from "../components/MiniCard"
@@ -10,14 +9,21 @@ import MiniCard from "../components/MiniCard"
 const Blog = () => {
     const [searchQuery, setSearchQuery] = useState("")
     const [posts, setPosts] = useState([]);
-    const [postQuery, setPostQuery] = useState({})
+    const {search} = useLocation()
+    const [postQuery, setPostQuery] = useState({postType: search.includes("jobs") ? "job" : "", search:""})
     const [showSpinner, setShowSpinner] = useState(true)
-    const defaultLimit = 2;
-    const defaultSkip = 0;
-    const [postLimit, setPostLimit] = useState(2);
+    const postLimit = 12
     const [postSkip, setPostSkip] = useState(0);
     const [buttonLoad, setButtonLoad] = useState(false);
     const [hideLoadButton, setHideLoadButton] = useState(false);
+    const filteredJobs = useRef(null);
+
+    // Take caution useEffect(with passed dependency)in Strict Mode. You would have to disable React Strict mode when working with this function in development as strict will execute the function twice, doubling the expexted value
+    useEffect(() => {
+        if (search.includes("jobs")){
+            filteredJobs.current.value = "job"
+        }
+    }, [])
 
     useEffect(() => {
         const sideEffect = async () => {
@@ -35,28 +41,23 @@ const Blog = () => {
         sideEffect()
     }, [postQuery])
 
-    const resetLimits = ()=>{
-        setPostLimit(defaultLimit);
-        setPostSkip(defaultSkip)
-    }
     const handleFilter = (e) =>{
         setShowSpinner(true)
         setPostQuery(prevState => ({...prevState, postType: e.target.value}))
         setPosts([])
-        resetLimits()
+        setPostSkip(0)
     }
     const formSubmit = (e) => {
         e.preventDefault()
         setShowSpinner(true)
         setPostQuery(prevState => ({...prevState, search: searchQuery}))
         setPosts([])
-        resetLimits()
+        setPostSkip(0)
     }
     const handleSearchInput = (e) => {
         setSearchQuery(e.target.value)
     }
-    const handleLoadMore = async(e)=>{
-        // you would have to disable React Strict mode when working with this function in development as strict will execute the function twice, doubling the expexted value of skip post
+    const handleLoadMore = async()=>{
         setButtonLoad(true)
         let morePost = await fetchPosts(postLimit, postSkip, postQuery);
         if (morePost.length !==0) {
@@ -78,7 +79,7 @@ const Blog = () => {
             <section className="container mt-5">
                 <div className="row justify-content-between gy-3">
                     <div className="col-auto">
-                        <select onChange={handleFilter} className="form-select rounded-0" aria-label="Default select example">
+                        <select ref={filteredJobs} onChange={handleFilter} className="form-select rounded-0" aria-label="Default select example">
                             <option value="">Filter</option>
                             <option value="job">Jobs</option>
                             <option value="article">Articles</option>
@@ -109,13 +110,13 @@ const Blog = () => {
                                                 ID={e._id} />
                                             )
                                 }
-                                <div className="col-12 text-center" style={{display: showSpinner || posts.length === 0 ? "none" : "block"}}>
+                                <div className="col text-center" style={{display: showSpinner || posts.length === 0 ? "none" : "block"}}>
                                     <p style={{ display: hideLoadButton? "block":"none" }}>No more Posts!!!</p>
                                     <button 
-                                    hidden={hideLoadButton}
-                                    disabled={buttonLoad} 
-                                    onClick={handleLoadMore} 
-                                    className="btn btn-outline-primary btn-lg rounded-0 fw-bold">
+                                        hidden={hideLoadButton}
+                                        disabled={buttonLoad} 
+                                        onClick={handleLoadMore} 
+                                        className="btn btn-outline-primary btn-lg rounded-0 fw-bold">
                                         {buttonLoad ? <><div className="spinner-grow spinner-grow-sm" role="status"></div> Loading</> : 'Load More'}
                                     </button>
                                 </div>
