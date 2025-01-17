@@ -18,27 +18,27 @@ const CourseCatalog = () => {
                     <Link to="/courses" className="btn btn-primary btn-lg fw-bold rounded-0">All Courses <FaArrowRightLong/></Link>
                 </div>
                 <div className="col-md-3">
-                    <img src={`${cloudname}/${setContainerQuarterWidth()}/v1731024142/Fnmilove%20Academy/makeup31_n8e2we.png`} className="img-fluid" alt="Makeup Set" />
+                    <img src={`${cloudname}/${setContainerQuarterWidth()}/makeup31_n8e2we`} className="img-fluid" alt="Makeup Set" />
                     <div className="text-center fw-bold my-2">Skincare & Cosmetics</div>
                 </div>
                 <div className="col-md-3">
-                    <img src={`${cloudname}/${setContainerQuarterWidth()}/v1731024141/Fnmilove%20Academy/Content81_utsreb.png`} className="img-fluid" alt="Content Creation" />
+                    <img src={`${cloudname}/${setContainerQuarterWidth()}/Content81_utsreb`} className="img-fluid" alt="Content Creation" />
                     <div className="text-center fw-bold my-2">Content Creation</div>
                 </div>
                 <div className="col-md-3">
-                    <img src={`${cloudname}/${setContainerQuarterWidth()}/v1731026125/Fnmilove%20Academy/fashion_vyb2oi.png`} className="img-fluid" alt="Fashion Design" />
+                    <img src={`${cloudname}/${setContainerQuarterWidth()}/fashion_vyb2oi`} className="img-fluid" alt="Fashion Design" />
                     <div className="text-center fw-bold my-2">Fashion Design</div>
                 </div>
                 <div className="col-md-3">
-                    <img src={`${cloudname}/${setContainerQuarterWidth()}/v1731026126/Fnmilove%20Academy/salon_rrtwxr`} className="img-fluid" alt="Web Development" />
+                    <img src={`${cloudname}/${setContainerQuarterWidth()}/salon_rrtwxr`} className="img-fluid" alt="Web Development" />
                     <div className="text-center fw-bold my-2">Hairdressing & Styling</div>
                 </div>
                 <div className="col-md-3">
-                    <img src={`${cloudname}/${setContainerQuarterWidth()}/v1731026124/Fnmilove%20Academy/photography_moek2w.png`} className="img-fluid" alt="Photography" />
+                    <img src={`${cloudname}/${setContainerQuarterWidth()}/photography_moek2w`} className="img-fluid" alt="Photography" />
                     <div className="text-center fw-bold my-2">Photography</div>
                 </div>
                 <div className="col-md-3">
-                    <img src={`${cloudname}/${setContainerQuarterWidth()}/v1731026124/Fnmilove%20Academy/graphic-designer1_i5uhsw.png`} className="img-fluid" alt="Graphics Design" />
+                    <img src={`${cloudname}/${setContainerQuarterWidth()}/graphic-designer1_i5uhsw`} className="img-fluid" alt="Graphics Design" />
                     <div className="text-center fw-bold my-2">Graphics Design</div>
                 </div>
             </div>

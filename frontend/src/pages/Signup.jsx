@@ -27,7 +27,7 @@ const Signup = () => {
             <div className="container-fluid px-0">
                 <div className="row g-0">
                     <div className="col-md-6 col-lg-4 d-none d-md-block">
-                        <img className="img-fluid" src={`${cloudname}/${setContainerHalfWidth(`ar_${screen.width >= 1199 ? "1:2," : "1:3,"}`)}/Fnmilove%20Academy/cosmetics-1`} alt="" />
+                        <img className="img-fluid" src={`${cloudname}/${setContainerHalfWidth(`ar_${screen.width >= 1199 ? "1:2," : "1:3,"}`)}/cosmetics-1`} alt="" />
                     </div>
                     <div className="col-md-6 mx-auto">
                         <div className="container-fluid mt-4 mt-lg-3">
@@ -90,7 +90,7 @@ const Signup = () => {
                                 </div>
                             </div>
                             <div className="hstack justify-content-between mb-4">
-                                <div class="form-check">
+                                <div className="form-check">
                                     <input type="checkbox" className="form-check-input" id="exampleCheck1" />
                                     <label className="form-check-label" htmlFor="exampleCheck1">I accept the <Link className="link-dark" to="/privacy">Privacy Policy</Link> and <Link className="link-dark" to="/terms">Terms of Service</Link></label>
                                 </div>

@@ -13,7 +13,7 @@ const CourseUpdate = () => {
     let price = useRef(null);
     let title = useRef(null);
     let tutors = useRef(null);
-    let drafted = false;
+    const [drafted, setDrafted] = useState((new Date()).getTime());
     let editorRef = useRef(null)
     let imgSrc = useRef(null)
     let tag = useRef(null)
@@ -41,6 +41,7 @@ const CourseUpdate = () => {
                         price.current.value = res.price;
                         setFeaturedImg1(res.featuredImg)
                         tag.current.value = res.tag
+                        setDrafted(res.assetFolder);
                     }
                 } catch (error) {
                     setStaticNotification({ message: error.message, time: (new Date()).toString() })
@@ -70,7 +71,6 @@ const CourseUpdate = () => {
             return
         }
         console.log("Saving")
-        drafted = drafted || (new Date()).getTime();
         let payload = {
             featuredImg: featuredImg1,
             title: title.current.value,
@@ -96,7 +96,6 @@ const CourseUpdate = () => {
     }
     let publish = async () => {
         console.log("Publishing")
-        drafted = drafted || (new Date()).getTime();
         let payload = {
             featuredImg: featuredImg1,
             title: validate(title),
@@ -133,10 +132,9 @@ const CourseUpdate = () => {
 
     // Text Editor Image Upload Function
     let imageUploadFunction = async (blobInfo, progress) => {
-        drafted = drafted || (new Date()).getTime();
         const formData = new FormData();
         formData.append('file', blobInfo.blob());
-        formData.append('folder', `course/${drafted}`);
+        formData.append('asset_folder', `course/${drafted}`);
         formData.append('upload_preset', 'fnmi-academy');
         try {
             const req = await fetch(`${cloudAPI}`, {
@@ -159,7 +157,6 @@ const CourseUpdate = () => {
     // set featured Image preview
     let setPreview1 = async (e) => {
         let prevValue = imgSrc.current.src
-        drafted = drafted || (new Date()).getTime();
         try {
             setFeaturedImg1(null)
             e.target.setAttribute("disabled", true)
@@ -167,7 +164,7 @@ const CourseUpdate = () => {
             let formData = new FormData()
             formData.append("file", imgUpload)
             formData.append("upload_preset", "fnmi-academy")
-            formData.append("folder", `course/${drafted}`)
+            formData.append("asset_folder", `course/${drafted}`)
             let req = await fetch(`${cloudAPI}`, {
                 method: "POST",
                 body: formData

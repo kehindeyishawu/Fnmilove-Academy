@@ -6,7 +6,7 @@ const TeamCard = ({img, name, position, social }) => {
     return (
         <div className="col">
             <div className='position-relative'>
-                <img src={`${cloudname}/${setContainerQuarterWidth("ar_3:4,")}/Fnmilove%20Academy/${img}`} alt="" className='img-fluid' />
+                <img src={`${cloudname}/${setContainerQuarterWidth("ar_3:4,")}/${img}`} alt="" className='img-fluid' />
                 <div className="gap-3 d-flex justify-content-center bg-white social-icons">
                     <a href={social.fb} className="text-dark">
                         <FaFacebookF />

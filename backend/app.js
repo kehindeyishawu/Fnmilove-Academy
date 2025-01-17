@@ -30,9 +30,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 // passing variables to all views
 app.use((req, res, next)=>{
-    res.locals.domain = "https://fnmiloveacademy.com"
+    res.locals.domain = "https://fnmiloveacademy.com";
     res.locals.path = req.path;
-    res.locals.cloudname = "https://res.cloudinary.com/kkenny/image/upload"
+    res.locals.cloudname = "https://res.cloudinary.com/fnmilove/image/upload";
     next()
 })
 // Routes
@@ -46,7 +46,7 @@ app.get("/api/post", async (req, res, next)=>{
         search && (postQuery.$text = {$search: search});
         
         let cursor = await postCollection.find(postQuery);
-        search && await cursor.project({ score: { $meta: "textScore" } }).sort({ score: { $meta: "textScore" } });
+        search ? await cursor.project({ score: { $meta: "textScore" } }).sort({ score: { $meta: "textScore" } }) : cursor.sort({ updatedAt: -1 });
         let allPosts = await cursor.limit(postLimit).skip(postSkip).toArray();
         res.json(allPosts)
     } catch (error) {

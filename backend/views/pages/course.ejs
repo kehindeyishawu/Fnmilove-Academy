@@ -7,7 +7,7 @@
                 <a class="text-decoration-none" href="/">Courses</a>
             </nav>
             <div class="container-md px-0 px-md-3">
-                <img src="<%=cloudname%>/q_auto,q_auto,w_1200,c_limit/<%=post.featuredImg%>" class="card-img-top rounded-0" alt="" />
+                <img src="<%=cloudname%>/q_auto,f_auto,w_1200,c_limit/<%=post.featuredImg%>" class="card-img-top rounded-0" alt="" />
             </div>
             <div class="container mt-3">
                 <h1 class="fw-bold">
@@ -61,7 +61,7 @@
                 <div class="fs-2 fw-bold mb-2 mt-5">
                     <%=price%>
                 </div>
-                <a href="#" class="btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
+                <button class="btn btn-lg btn-primary fw-bold d-block rounded-0 course-payment-button">Enrol Now</button>
             </div>
             <!-- show only on small screens fixed to the bottom -->
             <div class="container-fluid d-md-none fixed-bottom bg-white shadow py-2 d-md-none">
@@ -69,7 +69,7 @@
                     <div class="fs-5 fw-bold">
                         <%=price%>
                     </div>
-                    <a href="#" class="rounded-2 flex-grow-1 btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
+                    <button class="rounded-2 flex-grow-1 btn btn-lg btn-primary fw-bold d-block rounded-0 course-payment-button">Enrol Now</button>
                 </div>
             </div>
         </section>
@@ -97,11 +97,11 @@
                     <!-- show only from lg screens -->
                     <div class="d-none d-lg-block card rounded-0 shadow-sm">
                         <%if(post.featuredImg){%>
-                            <img src="<%=cloudname%>/q_auto,q_auto,w_1100,c_limit/<%=post.featuredImg%>" class="card-img-top rounded-0" alt="" />
+                            <img src="<%=cloudname%>/q_auto,f_auto,w_1100,c_limit/<%=post.featuredImg%>" class="card-img-top rounded-0" alt="" />
                         <%}%>
                         <div class="card-body">
                             <div class="fs-3 fw-bold mb-2"><%=price%></div>
-                            <a href="#" class="btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
+                            <button class="btn btn-lg btn-primary fw-bold d-block rounded-0 course-payment-button">Enrol Now</button>
                             <h5 class="card-title h6 fw-bold text-secondary my-3">This Course Include</h5>
                             <ul class="list-unstyled text-primary vstack gap-2">
                                 <li class="d-flex gap-2">
@@ -142,7 +142,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="contact-card mt-4">
+                    <div class="contact-card mt-4" style="background-image: url('<%=cloudname%>/w_800,f_auto,q_auto/laptop3.jpg')">
                         <div class="py-5 px-4">
                             <h3 class="fs-5 fw-bold">Have Any Questions</h3>
                             <p>

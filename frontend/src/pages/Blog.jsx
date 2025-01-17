@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useOutletContext } from "react-router-dom"
 import { FaSearch } from "react-icons/fa"
 import { useEffect, useRef, useState } from "react"
 import CreateButton from "../components/CreateButton"
@@ -17,6 +17,7 @@ const Blog = () => {
     const [buttonLoad, setButtonLoad] = useState(false);
     const [hideLoadButton, setHideLoadButton] = useState(false);
     const filteredJobs = useRef(null);
+    const {setStaticNotification} = useOutletContext();
 
     // Take caution useEffect(with passed dependency)in Strict Mode. You would have to disable React Strict mode when working with this function in development as strict will execute the function twice, doubling the expexted value
     useEffect(() => {
@@ -27,16 +28,21 @@ const Blog = () => {
 
     useEffect(() => {
         const sideEffect = async () => {
-            let morePost = await fetchPosts(postLimit, postSkip, postQuery);
-            if(morePost.length !== 0){
-                setPosts(prevState => [...prevState, ...morePost])
-                setHideLoadButton(false)
-            } else {
-                setHideLoadButton(true)
+            try {
+                let morePost = await fetchPosts(postLimit, postSkip, postQuery);
+                if(morePost.length !== 0){
+                    setPosts(prevState => [...prevState, ...morePost])
+                    setHideLoadButton(false)
+                } else {
+                    setHideLoadButton(true)
+                }
+                setButtonLoad(false)
+                setShowSpinner(false)
+                setPostSkip(prevState => prevState + postLimit)
+            } catch (error) {
+                setStaticNotification({ message: error.message, time: (new Date()).toString() })
+                setShowSpinner(false)
             }
-            setButtonLoad(false)
-            setShowSpinner(false)
-            setPostSkip(prevState => prevState + postLimit)
         }
         sideEffect()
     }, [postQuery])

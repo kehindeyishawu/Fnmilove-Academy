@@ -8,12 +8,12 @@ export const fetchCourses = async(limit, skip, searchQuery)=>{
     try {
         let req = await fetch(`/api/courses?limit=${limit || 3}&skip=${skip || 0}&search=${searchQuery || ""}`)
         if (!req.ok) {
-            throw new Error("Something went wrong or No post records found")
+            throw new Error("Something went wrong. It might be network-related")
         }
         let res = await req.json()
         return (res)
     } catch (error) {
-        return error.message
+        throw error;
     }
 }
 

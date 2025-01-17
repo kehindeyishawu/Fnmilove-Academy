@@ -26,7 +26,7 @@ const TextEditor = ({ editorRef, imageUploadFunction, editerInitialValue = ""}) 
                     plugins: [
                         'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
                         'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                        'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
+                        'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount', 'accordion'
                     ],
                     toolbar: 'undo redo | blocks | ' +
                         'bold italic forecolor | alignleft aligncenter ' +

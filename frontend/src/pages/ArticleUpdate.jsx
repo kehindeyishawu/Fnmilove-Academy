@@ -11,7 +11,7 @@ const ArticleUpdate = () => {
     let [featuredImg1, setFeaturedImg1] = useState("")
     const { setShowLoading, setStaticNotification } = useOutletContext()
     let title = useRef(null);
-    let drafted = false;
+    const [drafted, setDrafted] = useState((new Date()).getTime());
     let editorRef = useRef(null)
     let imgSrc = useRef(null)
     let { pathname } = useLocation()
@@ -35,6 +35,7 @@ const ArticleUpdate = () => {
                         title.current.value = res.title
                         setEditorInitialvalue(res.content)
                         setFeaturedImg1(res.featuredImg)
+                        setDrafted(res.assetFolder)
                     }
                 } catch (error) {
                     setStaticNotification({ message: error.message, time: (new Date()).toString() })
@@ -64,7 +65,6 @@ const ArticleUpdate = () => {
             return
         }
         console.log("Saving")
-        drafted = drafted || (new Date()).getTime();
         let payload = {
             featuredImg: featuredImg1,
             title: title.current.value,
@@ -87,7 +87,6 @@ const ArticleUpdate = () => {
     }
     let publish = async () => {
         console.log("Publishing")
-        drafted = drafted || (new Date()).getTime();
         let payload = {
             featuredImg: featuredImg1,
             title: validate(title),
@@ -121,10 +120,9 @@ const ArticleUpdate = () => {
 
     // Text Editor Image Upload Function
     let imageUploadFunction = async (blobInfo, progress) => {
-        drafted = drafted || (new Date()).getTime();
         const formData = new FormData();
         formData.append('file', blobInfo.blob());
-        formData.append('folder', `article/${drafted}`);
+        formData.append('asset_folder', `article/${drafted}`);
         formData.append('upload_preset', 'fnmi-academy');
         try {
             const req = await fetch(`${cloudAPI}`, {
@@ -147,7 +145,6 @@ const ArticleUpdate = () => {
     // set featured Image preview
     let setPreview1 = async (e) => {
         let prevValue = imgSrc.current.src
-        drafted = drafted || (new Date()).getTime();
         try {
             setFeaturedImg1(null)
             e.target.setAttribute("disabled", true)
@@ -155,7 +152,7 @@ const ArticleUpdate = () => {
             let formData = new FormData()
             formData.append("file", imgUpload)
             formData.append("upload_preset", "fnmi-academy")
-            formData.append("folder", `article/${drafted}`)
+            formData.append("asset_folder", `article/${drafted}`)
             let req = await fetch(`${cloudAPI}`, {
                 method: "POST",
                 body: formData

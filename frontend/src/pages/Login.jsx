@@ -58,7 +58,7 @@ const Login = () => {
                                 <label htmlFor="floatingPassword">Password</label>
                             </div>
                             <div className="hstack justify-content-between mb-4">
-                                <div class="form-check">
+                                <div className="form-check">
                                     <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
                                     <label className="form-check-label" htmlFor="exampleCheck1">Keep me logged in</label>
                                 </div>
@@ -71,7 +71,7 @@ const Login = () => {
                         </form>
                     </div>
                     <div className="col-md-6 col-lg-8 d-none d-md-block">
-                        <img className="img-fluid" src={`${cloudname}/${setContainerFullWidth(`ar_${screen.width >= 1199? "4:3," : "1:2,"}g_face,c_fill,`)}/Fnmilove%20Academy/salon-sat`} alt="" />
+                        <img className="img-fluid" src={`${cloudname}/${setContainerFullWidth(`ar_${screen.width >= 1199? "4:3," : "1:2,"}g_face,c_fill,`)}/salon-sat`} alt="" />
                     </div>
                 </div>
             </div>

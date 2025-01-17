@@ -17,7 +17,7 @@ const JobUpdate = () => {
   let jobType = useRef(null);
   let jobLocation = useRef(null);
   let applicationDeadline = useRef(null);
-  let drafted = false;
+  const [drafted, setDrafted] = useState((new Date()).getTime());
   let editorRef = useRef(null)
   let imgSrc = useRef(null)
   let imgSrc2 = useRef(null)
@@ -29,7 +29,7 @@ const JobUpdate = () => {
 
   useEffect(() => {
     let sideEffect = async () => {
-      // check if the user has a draft. If yes, load the draft by equating the drafted variable to the createdAt date
+      // check if the user has a draft. If yes, load the draft by equating the drafted variable to the createdAt date or is it assetFolder
       // then fill the form with the draft data by setting their values with the useRef.current.value
       if (onEditPage) {
         try {
@@ -48,6 +48,7 @@ const JobUpdate = () => {
             setFeaturedImg1(res.companyCoverImg)
             setFeaturedImg2(res.companyLogo)
             logoAccent.current.value = res.logoAccent
+            setDrafted(res.assetFolder)
           }
         } catch (error) {
           setStaticNotification({ message: error.message, time: (new Date()).toString() })
@@ -77,7 +78,6 @@ const JobUpdate = () => {
       return
     }
     console.log("Saving")
-    drafted = drafted || (new Date()).getTime();
     let payload = {
       companyCoverImg: featuredImg1,
       companyLogo: featuredImg2,
@@ -106,7 +106,6 @@ const JobUpdate = () => {
   }
   let publish = async()=>{
     console.log("Publishing")
-    drafted = drafted || (new Date()).getTime();
     let payload = {
       companyCoverImg: featuredImg1,
       companyLogo: featuredImg2,
@@ -146,10 +145,9 @@ const JobUpdate = () => {
 
   // Text Editor Image Upload Function
   let imageUploadFunction = async (blobInfo, progress) => {
-    drafted = drafted || (new Date()).getTime();
     const formData = new FormData();
     formData.append('file', blobInfo.blob());
-    formData.append('folder', `job/${drafted}`);
+    formData.append('asset_folder', `job/${drafted}`);
     formData.append('upload_preset', 'fnmi-academy');
     try {
       const req = await fetch(`${cloudAPI}`, {
@@ -172,7 +170,6 @@ const JobUpdate = () => {
   // set featured Image preview
   let setPreview1 = async(e)=>{
     let prevValue = imgSrc.current.src
-    drafted = drafted || (new Date()).getTime();
     try {
       setFeaturedImg1(null)
       e.target.setAttribute("disabled", true)
@@ -180,7 +177,7 @@ const JobUpdate = () => {
       let formData = new FormData()
       formData.append("file", imgUpload)
       formData.append("upload_preset", "fnmi-academy")
-      formData.append("folder", `job/${drafted}`)
+      formData.append("asset_folder", `job/${drafted}`)
       let req = await fetch(`${cloudAPI}`, {
         method: "POST",
         body: formData
@@ -204,7 +201,6 @@ const JobUpdate = () => {
   // set featured2 Image preview
   let setPreview2 = async(e)=>{
     let prevValue = imgSrc2.current.src
-    drafted = drafted || (new Date()).getTime();
     try {
       setFeaturedImg2(null)
       e.target.setAttribute("disabled", true)
@@ -212,7 +208,7 @@ const JobUpdate = () => {
       let formData = new FormData()
       formData.append("file", imgUpload)
       formData.append("upload_preset", "fnmi-academy")
-      formData.append("folder", `job/${drafted}`)
+      formData.append("asset_folder", `job/${drafted}`)
       let req = await fetch(`${cloudAPI}`, {
         method: "POST",
         body: formData

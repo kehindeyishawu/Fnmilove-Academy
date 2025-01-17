@@ -27,7 +27,7 @@ const ContactDialog = ({showModal, setShowModal}) => {
                         <input type="email" name="email" onChange={handleFormInput} value={formFields.email} className="form-control rounded-0 mb-3" id="contact-email" required placeholder="Email*" />
                         <input type="number" name="phone" onChange={handleFormInput} value={formFields.phone} className="form-control rounded-0" id="contact-phone" required placeholder="Phone Number*" />
                         <div className="form-text">Kindly include country code e.g +234, +1</div>
-                        <select class="form-select rounded-0 mt-2" name='issue' onChange={handleFormInput} value={formFields.issue} aria-label="issues select">
+                        <select className="form-select rounded-0 mt-2" name='issue' onChange={handleFormInput} value={formFields.issue} aria-label="issues select">
                             <option selected>Help Us Understand What You Need Addressed</option>
                             <option value="1">Course-related</option>
                             <option value="2">Payment-related</option>

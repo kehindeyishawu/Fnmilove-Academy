@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useOutletContext } from "react-router-dom"
 import { FaSearch } from "react-icons/fa"
 import CourseCard from "../components/CourseCard"
 import { useEffect, useState } from "react"
@@ -14,18 +14,24 @@ const Courses = () => {
   const [courseSkip, setCourseSkip] = useState(0);
   const [buttonLoad, setButtonLoad] = useState(false);
   const [hideLoadButton, setHideLoadButton] = useState(false);
+  const {setStaticNotification} = useOutletContext()
 
   useEffect(()=>{
     const sideEffect = async () => {
-      let moreCourse = await fetchCourses(courseLimit, courseSkip, searchQuery);
-      if (moreCourse.length !== 0) {
-        setCourses(prevState => [...prevState, ...moreCourse])
-        setHideLoadButton(false)
-      } else {
-        setHideLoadButton(true)
+      try {
+        let moreCourse = await fetchCourses(courseLimit, courseSkip, searchQuery);
+        if (moreCourse.length !== 0) {
+          setCourses(prevState => [...prevState, ...moreCourse])
+          setHideLoadButton(false)
+        } else {
+          setHideLoadButton(true)
+        }
+        setButtonLoad(false)
+        setShowSpinner(false)
+      } catch (error) {
+        setStaticNotification({ message: error.message, time: (new Date()).toString() })
+        setShowSpinner(false)
       }
-      setButtonLoad(false)
-      setShowSpinner(false)
     }
     sideEffect()
   },[courseSkip])
@@ -65,8 +71,8 @@ const Courses = () => {
           <div className="row row-cols-1 row-cols-md-2 gy-4 row-cols-lg-3 justify-content-center">
             {showSpinner ? <div className="spinner-border text-primary p-5 fs-3" role="status">
                             <span className="visually-hidden">Loading...</span>
-                          </div> : courses.length === 0 ? <p>No Posts Found</p> : 
-                          courses.map((e) => <CourseCard key={e._id} img={e.featuredImg} tag={e.tag} tipColor={e.tipColor} title={e.title} tutors={e.tutors} price={e.price} />)
+                          </div> : courses.length === 0 ? <p>No Courses Found</p> : 
+                          courses.map((e) => <CourseCard key={e._id} title={e.title} tutors={e.tutors} imgPublicID={e.featuredImg} price={e.price} tag={e.tag} tipColor={e.tipColor} slug={e.slug} ID={e._id} />)
             }
             <div className="col text-center align-self-center" style={{ display: showSpinner || courses.length === 0 ? "none" : "block" }}>
               <p style={{ display: hideLoadButton ? "block" : "none" }}>No more Posts!!!</p>

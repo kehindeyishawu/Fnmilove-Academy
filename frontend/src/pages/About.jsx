@@ -9,7 +9,7 @@ import Team from "../components/Team";
 const About = () => {
 
   let bannerStyles = {
-    backgroundImage: `url('${cloudname}/${setFullWidth()}/Fnmilove%20Academy/about-banner')`,
+    backgroundImage: `url('${cloudname}/${setFullWidth()}/about-banner')`,
     backgroundPosition: "center",
     backgroundSize: "cover"
   }
@@ -74,13 +74,13 @@ const About = () => {
       </section>
       <section className="mt-5">
         <div className="container">
-          <img className="img-fluid" src={`${cloudname}/${setContainerFullWidth("ar_2:1,g_center,c_fill,")}/Fnmilove%20Academy/showcase_djvc2y`} alt="" />
+          <img className="img-fluid" src={`${cloudname}/${setContainerFullWidth("ar_2:1,g_center,c_fill,")}/showcase_djvc2y`} alt="" />
           <div className="row justify-content-between g-0 mt-5">
             <div className="col-md-6">
-              <img className="img-fluid" src={`${cloudname}/${setContainerHalfWidth("ar_4:3,c_fill,g_face,")}/v1731994991/Fnmilove%20Academy/fashion_mgoum2`} alt="" />
+              <img className="img-fluid" src={`${cloudname}/${setContainerHalfWidth("ar_4:3,c_fill,g_face,")}/fashion_mgoum2`} alt="" />
             </div>
             <div className="col-md-6">
-              <img className="img-fluid" src={`${cloudname}/${setContainerHalfWidth("ar_4:3,c_fill,g_center,")}/v1731994991/Fnmilove%20Academy/boy-display_mmnaux`} alt="" />
+              <img className="img-fluid" src={`${cloudname}/${setContainerHalfWidth("ar_4:3,c_fill,g_center,")}/boy-display_mmnaux`} alt="" />
             </div>
           </div>
         </div>

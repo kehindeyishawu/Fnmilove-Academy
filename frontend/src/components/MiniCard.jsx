@@ -8,12 +8,12 @@ export let fetchPosts = async(limit, skip, query)=>{
     try {
         let req = await fetch(`/api/post?limit=${limit || 4}&skip=${skip || 0}&${(new URLSearchParams(query)).toString()}`)
         if (!req.ok){
-            throw new Error("Something went wrong or No post records found")
+            throw new Error("Something went wrong. It might be network-related")
         }
         let res = await req.json()
         return(res)
     } catch (error) {
-        return error.message
+        throw error;
     }
 }
 

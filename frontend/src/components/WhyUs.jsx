@@ -17,7 +17,7 @@ const WhyUs = () => {
                         </small>
                         <h1 className="fw-bold mb-lg-3">Unlock Your Potential with Expert Coaching</h1>
                     </div>
-                    <img src={`${cloudname}/${setContainerHalfWidth()}/v1731030031/Fnmilove%20Academy/job-person_aypvcr.png`} className="img-fluid" alt="Man in Suit for Job Placement" />
+                    <img src={`${cloudname}/${setContainerHalfWidth()}/job-person_aypvcr`} className="img-fluid" alt="Man in Suit for Job Placement" />
                 </div>
                 <div className="col-md-6 align-self-center">
                     <div className="d-none d-md-block">
