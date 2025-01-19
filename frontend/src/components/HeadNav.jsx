@@ -19,16 +19,16 @@ function HeadNav({ setShowModal }) {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mx-auto fw-bold text-center">
-                            <Nav.Link as={NavLink} to="/" className="">Home</Nav.Link>
-                            <Nav.Link as={NavLink} to="/about">About</Nav.Link>
-                            <Nav.Link as={NavLink} to="/courses">Courses</Nav.Link>
-                            <Nav.Link as={NavLink} to="/blog">Blog</Nav.Link>
-                            <Nav.Link as={HashLink} to="/#FAQs">FAQs</Nav.Link>
-                            <Nav.Link onClick={()=> setShowModal(true)}>Contact</Nav.Link>
+                            <Nav.Link eventKey="1" as={NavLink} to="/" className="">Home</Nav.Link>
+                            <Nav.Link eventKey="2" as={NavLink} to="/about">About</Nav.Link>
+                            <Nav.Link eventKey="3" as={NavLink} to="/courses">Courses</Nav.Link>
+                            <Nav.Link eventKey="4" as={NavLink} to="/blog">Blog</Nav.Link>
+                            <Nav.Link eventKey="5" as={HashLink} to="/#FAQs">FAQs</Nav.Link>
+                            <Nav.Link eventKey="6" onClick={()=> setShowModal(true)}>Contact</Nav.Link>
                         </Nav>
                         <Nav>
-                            <NavLink to="/registration-form" className="btn btn-primary rounded-0 fw-bold px-4">Enroll</NavLink>
-                            {/* <NavDropdown title="Admin" id="basic-nav-dropdown">
+                            <NavLink eventKey="7" to="/registration-form" className="btn btn-primary rounded-0 fw-bold px-4">Enroll</NavLink>
+                            {/* <NavDropdown eventKey="8" title="Admin" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Create Course</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">
                                     Create Article
