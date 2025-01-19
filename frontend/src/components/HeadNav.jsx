@@ -9,7 +9,7 @@ import {HashLink} from "react-router-hash-link"
 function HeadNav({ setShowModal }) {
     return (
         <div className="head-nav">
-            <Navbar expand="lg" className="bg-body-white" data-bs-theme="light">
+            <Navbar collapseOnSelect expand="lg" className="bg-body-white border-bottom shadow-sm" data-bs-theme="light">
                 <Container>
                     <Navbar.Brand as={NavLink} to="/">
                         <img src="/fnmi-logo.png" className="fnmi-logo" alt="Fnmilove Generic Logo" />
