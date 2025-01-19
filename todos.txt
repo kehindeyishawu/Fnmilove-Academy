@@ -8,3 +8,7 @@ Remember to change cloudinary cloudname
 - Remember to implement delete code for past featured image upload
 - Remember to work on ejs layout for optimization/Performance. Make only code that are needed in the script tag are shown. Eliminated unneeded ones from rendering using ejs
 - make sure to include react custom error handling with Error Element / Boundary. Especially on fetch posts OR JUST WORK WITH THE NOTIFICATION SYSTEM YOU IMPLEMWNTED
+
+Please note that before making any course payment, you must complete a registration form, which incurs a fee of 20,000 naira.
+Please note that prior to making any course payment, completion of a registration form is required, which incurs a fee of 20,000 naira.
+Please note that before making any course payment, students must complete a registration form, which incurs a fee of 20,000 naira.

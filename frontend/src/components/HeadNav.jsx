@@ -27,16 +27,16 @@ function HeadNav({ setShowModal }) {
                             <Nav.Link onClick={()=> setShowModal(true)}>Contact</Nav.Link>
                         </Nav>
                         <Nav>
-                            <NavLink to="/login" className="btn btn-primary rounded-0 fw-bold px-4">Join Us</NavLink>
-                            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavLink to="/registration-form" className="btn btn-primary rounded-0 fw-bold px-4">Enroll</NavLink>
+                            {/* <NavDropdown title="Admin" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="#action/3.1">Create Course</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">
-                                    Another action
+                                    Create Article
                                 </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.3">Create Job</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="#action/3.4">
-                                    Separated link
+                                    Logout
                                 </NavDropdown.Item>
                             </NavDropdown> */}
                         </Nav>

@@ -13,6 +13,7 @@ import JobUpdate from './pages/JobUpdate.jsx'
 import ArticleUpdate from './pages/ArticleUpdate.jsx'
 import CourseUpdate from './pages/CourseUpdate.jsx'
 import NotFound from './pages/NotFound.jsx'
+import RegistrationForm from './pages/RegistrationForm.jsx'
 
 function App() {
   const router = createBrowserRouter([
@@ -75,6 +76,10 @@ function App() {
         {
           path: "/edit/course/:id",
           element: <CourseUpdate/>
+        },
+        {
+          path: "/registration-form",
+          element: <RegistrationForm/>
         },
       ]
     },

@@ -20,7 +20,7 @@
     
     <!-- General Meta Tags -->
     <meta name="description" content="<%=post.description%>">
-    <link rel="canonical" href="<%=domain+path%>">
+    <link rel="canonical" href="https://fnmiloveacademy.com">
 
     <title>Title</title>
     <link rel="stylesheet" href="/app.min.css">
@@ -36,7 +36,7 @@
     <%- include("./partials/loadingDialog") %>
     <script src="/bootstrap.min.js"></script>
     <%if(!post.postType){%>
-        return <script src="https://checkout.flutterwave.com/v3.js"></script>
+        <script src="https://checkout.flutterwave.com/v3.js"></script>
     <%}%>
     <script>
         // toast function

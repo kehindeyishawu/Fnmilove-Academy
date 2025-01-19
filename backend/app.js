@@ -2,8 +2,9 @@ import "dotenv/config"
 import express from "express"
 import {join} from "path"
 import expressEjsLayouts from "express-ejs-layouts"
-import { CustomError } from "./utils/customError.js"
-import { connectToDB, courseCollection, postCollection } from "./utils/connectToDB.js"
+import session from "express-session";
+import MongoDBStore from "connect-mongodb-session";
+import { connectToDB, postCollection } from "./utils/connectToDB.js"
 import {articleRouter} from "./routes/article.js"
 import { jobRouter } from "./routes/job.js"
 import { courseRouter } from "./routes/course.js"
@@ -26,8 +27,39 @@ app.set("views", join(__dirname, "./views"));
 app.use(expressEjsLayouts)
 app.set("layout", "layout")
 // parse incoming form data and json
-app.use(express.json())
+app.use(express.json());
 app.use(express.urlencoded({extended: true}))
+//Express Session config 
+let sessionStore = new MongoDBStore(session)(
+    {
+        uri: process.env.DB_CONNECT_STRING,
+        databaseName: "fnmilove",
+        collection: 'sessions',
+    },
+    function (error) {
+        // Should have gotten an error
+        if(error){
+            console.log(error)
+        }else{
+            console.log("Session store online")
+        }
+    }
+);
+
+sessionStore.on('error', function (error) {
+    // Also get an error here
+    console.log(error)
+});
+app.use(session({
+    secret: process.env.SESSION_SECRETS,
+    store: sessionStore,
+    cookie: {
+        secure: process.env.NODE_ENV === "development" ? false : true,
+        maxAge: 60000 * 60 * 24 * 2, //two day expiration
+    },
+    resave: false,
+    saveUninitialized: false,
+}))
 // passing variables to all views
 app.use((req, res, next)=>{
     res.locals.domain = "https://fnmiloveacademy.com";
