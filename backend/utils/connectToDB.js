@@ -7,6 +7,7 @@ let db;
 export let courseCollection;
 export let postCollection;
 export let userCollection;
+export let applicantCollection;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.DB_CONNECT_STRING, {
@@ -29,8 +30,10 @@ export async function connectToDB() {
         courseCollection = db.collection("courses")
         postCollection = db.collection("posts")
         userCollection = db.collection("users")
+        applicantCollection = db.collection("applicants");
         await courseCollection.createIndex({ title: "text", content: "text" });
         await postCollection.createIndex({ title: "text", content: "text" });
+        await applicantCollection.createIndex({ createdAt: 1}, { expireAfterSeconds: 3600 * 24 * 14 });
     } catch (error) {
         throw new Error(error.message)
     }
@@ -92,6 +95,27 @@ export class CourseSchema{
     }
 }
 
+export class ApplicantSchema{
+    constructor({ firstname, lastname, gender, dob, email, phone, street, postalCode, courseTitle, courseType, schoolName, graduationYear, highestEducation, emergencyFullname, emergencyRelationship, emergencyPhone }){
+        this.firstname = validate(firstname, "firstname")
+        this.lastname = validate(lastname, "lastname")
+        this.gender = validate(gender, "gender")
+        this.dob = validate(dob, "date of birth")
+        this.email = validate(email, "email")
+        this.phone = validate(phone, "phone")
+        this.street = validate(street, "street")
+        this.postalCode = validate(postalCode, "Postal Code")
+        this.courseTitle = validate(courseTitle, "Course title")
+        this.courseType = validate(courseType, "courseType")
+        this.schoolName = validate(schoolName, "schoolName")
+        this.graduationYear = validate(graduationYear, "graduationYear")
+        this.highestEducation = validate(highestEducation, "highestEducation")
+        this.emergencyFullname = validate(emergencyFullname, "emergencyFullname")
+        this.emergencyRelationship = validate(emergencyRelationship, "emergencyRelationship")
+        this.emergencyPhone = validate(emergencyPhone, "emergencyPhone")
+        this.createdAt = new Date()
+    }
+}
 
 // Graceful shutdown process
 let gracefulShutdown = async ()=>{

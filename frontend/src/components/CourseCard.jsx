@@ -4,9 +4,9 @@ import { Link } from "react-router-dom"
 import { currencyFormatter } from "../utils/currencyFormatter";
 
 
-export const fetchCourses = async(limit, skip, searchQuery)=>{
+export const fetchCourses = async(limit, skip, searchQuery, project)=>{
     try {
-        let req = await fetch(`/api/courses?limit=${limit || 3}&skip=${skip || 0}&search=${searchQuery || ""}`)
+        let req = await fetch(`/api/courses?limit=${limit || 3}&skip=${skip || 0}&search=${searchQuery || ""}&project=${project || ""}`)
         if (!req.ok) {
             throw new Error("Something went wrong. It might be network-related")
         }

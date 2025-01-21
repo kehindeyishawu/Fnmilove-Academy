@@ -12,3 +12,6 @@ Remember to change cloudinary cloudname
 Please note that before making any course payment, you must complete a registration form, which incurs a fee of 20,000 naira.
 Please note that prior to making any course payment, completion of a registration form is required, which incurs a fee of 20,000 naira.
 Please note that before making any course payment, students must complete a registration form, which incurs a fee of 20,000 naira.
+
+
+sass --watch --no-source-map --style=compressed app.scss:public/app.min.css --- from backend

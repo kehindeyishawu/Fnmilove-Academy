@@ -18,14 +18,15 @@ let createNewCourse = async (req, res, next)=>{
 }
 let findAllCourses = async (req, res, next) => {
     try {
-        let { limit, skip, search } = req.query;
+        let { limit, skip, search, project } = req.query;
         let postLimit = parseInt(limit);
         let postSkip = parseInt(skip);
         let postQuery = {}
         search && (postQuery.$text = { $search: search });
-
+        
         let cursor = await courseCollection.find(postQuery);
         search ? await cursor.project({ score: { $meta: "textScore" } }).sort({ score: { $meta: "textScore" } }) : cursor.sort({createdAt: -1});
+        project && await cursor.project({ [project]: 1 })
         let allCourse = await cursor.limit(postLimit).skip(postSkip).toArray();
         res.json(allCourse);
     } catch (error) {

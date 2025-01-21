@@ -68,6 +68,7 @@ const Courses = () => {
       </section>
       <section className="mt-4">
         <div className="container">
+          <p className="text-center" hidden={showSpinner || courses.length === 0}>Please note that before making any course payment, students must complete a registration form, which incurs a fee of ₦20,000.</p>
           <div className="row row-cols-1 row-cols-md-2 gy-4 row-cols-lg-3 justify-content-center">
             {showSpinner ? <div className="spinner-border text-primary p-5 fs-3" role="status">
                             <span className="visually-hidden">Loading...</span>

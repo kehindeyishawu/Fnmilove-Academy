@@ -23,7 +23,7 @@ const Posts = () => {
             }
         }
         sideEffect()
-    })
+    }, [])
 
 
     return (

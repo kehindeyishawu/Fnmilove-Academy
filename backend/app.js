@@ -11,6 +11,7 @@ import { courseRouter } from "./routes/course.js"
 import { draftRouter } from "./routes/draft.js"
 import { mailRouter } from "./routes/mail.js"
 import { showPostRouter } from "./routes/showPost.js"
+import { applicantRouter } from "./routes/applicant.js";
 
 let app = express()
 const __dirname = import.meta.dirname;
@@ -85,6 +86,7 @@ app.get("/api/post", async (req, res, next)=>{
         next(error)
     }
 })
+app.use(applicantRouter)
 app.use(showPostRouter)
 app.use("/api/articles", articleRouter)
 app.use("/api/jobs", jobRouter)

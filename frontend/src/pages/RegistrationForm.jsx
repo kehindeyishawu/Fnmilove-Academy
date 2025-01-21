@@ -1,31 +1,77 @@
-import { Link } from "react-router-dom"
-import { useState } from "react"
+import { Link, useNavigate, useOutletContext, useSearchParams } from "react-router-dom"
+import { useEffect, useRef, useState } from "react"
+import { fetchCourses } from "../components/CourseCard"
 
 
 const RegistrationForm = () => {
-    const [submiting, setSubmiting] = useState(false)
+    const [showSpinner, setShowspinner] = useState(true)
+    const [courses, setCourses] = useState([])
+    const navigate = useNavigate()
+    const {setStaticNotification, setShowLoading} = useOutletContext()
+    const [searchQuery, setSearchQuery] = useSearchParams();
+    const [selectedCourse, setSelectedCourse] = useState("")
+    const certRef = useRef(null);
+    const idRef = useRef(null)
+    
+
+
+    useEffect(()=>{
+        const sideEffect = async ()=>{
+            let redirectToCourseID = searchQuery.get('courseid');
+            let redirectToCourseSlug = searchQuery.get('courseslug');
+            try {
+                let allCourses = await fetchCourses('0',"","","title");
+                setCourses(allCourses)
+                let pickedCourse = allCourses.find(e => e._id === redirectToCourseID)
+                pickedCourse && setSelectedCourse(pickedCourse.title)
+                setShowspinner(false)
+            } catch (error) {
+                redirectToCourseID  ? location.href = `/course/${redirectToCourseID}/${redirectToCourseSlug}` : navigate("/")
+                setStaticNotification({ message: error.message, time: (new Date()).toString() })
+            }
+        }
+        sideEffect()
+    }, [])
+
+    const handleCourseSelect = (e)=>{
+        setSelectedCourse(e.target.value)
+    }
 
     let handleSubmit = async (e) => {
-        console.log("Saving")
-        e.preventDefault();
-        Array.from(e.target.elements).forEach(element => {
-            element.disabled = true;
-        });
-        setSubmiting(true)
+        try {
+            e.preventDefault();
+            setShowLoading(true)
+
+            // sending data
+            let formData = new FormData(e.target)
+            console.log(formData)
+            formData.delete("certificates[]")
+            formData.delete("ids[]")
+            fetch("/api/applicant", {
+                method: "POST",
+                body: formData
+            })
+        } catch (error) {
+            
+        }finally{
+            setShowLoading(false);
+            // setFadeNotification({ message: "Post saved successfully", time: (new Date()).getTime() })
+        }
         // await saveButton();
-        setSubmiting(false)
-        // setFadeNotification({ message: "Post saved successfully", time: (new Date()).getTime() })
     }
     return (
+        showSpinner ?   <div className="text-center top-spacing"><div className="spinner-border text-primary p-5" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div></div> :
         <main id="registration-form">
             <h1 className="text-center fw-bold mt-5">Registration Form</h1>
             <small className="d-block text-center mb-4 px-2">Please note that before making any course payment, students must complete a registration form, which incurs a fee of ₦20,000.</small>
-            <form onSubmit={handleSubmit} className="container" style={{maxWidth: 1000}}>
-                <section id="fullname">
+            <form onSubmit={handleSubmit} className="container" style={{maxWidth: 1000}} noValidate>
+                <section id="personal-details">
                     {/* head */}
                     <div className="row">
                         <div className="col"><hr /></div>
-                        <div className="col-auto"><h4 className="fw-bold">Full Name</h4></div>
+                        <div className="col-auto"><h4 className="fw-bold">Personal Details</h4></div>
                         <div className="col"><hr /></div>
                     </div>
                     {/* body */}
@@ -39,7 +85,24 @@ const RegistrationForm = () => {
                         <div className="col-md-6">
                             <div className="form-floating">
                                 <input type="text" className="form-control rounded-0" id="lastname" name="lastname" placeholder="Your last name" required/>
-                                <label htnlFor="lastname">Last Name<span className="text-danger">*</span></label>
+                                <label htmlFor="lastname">Last Name<span className="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="form-floating">
+                                <select className="form-select rounded-0" id="gender" name="gender" placeholder="Your Gender" required>
+                                    <option value="">--Please select--</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="N/A">N/A</option>
+                                </select>
+                                <label htmlFor="gender">Gender<span className="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="form-floating">
+                                <input type="date" className="form-control rounded-0" name="dob" id="birth-date" placeholder="Your DOB" required />
+                                <label htmlFor="birth-date">Date of Birth<span className="text-danger">*</span></label>
                             </div>
                         </div>
                     </div>
@@ -132,62 +195,8 @@ const RegistrationForm = () => {
                         </div>
                         <div className="col-md-4">
                             <div className="form-floating">
-                                <input type="number" className="form-control rounded-0" name="postal-code" id="postal-code" placeholder="Your postal code" />
+                                <input type="number" className="form-control rounded-0" name="postalCode" id="postal-code" placeholder="Your postal code" />
                                 <label htmlFor="postal-code">Postal Code</label>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section className="mt-5" id="DOB">
-                    {/* head */}
-                    <div className="row">
-                        <div className="col"><hr /></div>
-                        <div className="col-auto"><h4 className="fw-bold">Date of Birth</h4></div>
-                        <div className="col"><hr /></div>
-                    </div>
-                    {/* body */}
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="form-floating">
-                                <input type="date" className="form-control rounded-0" name="dob" id="birth-date" placeholder="Your DOB" required/>
-                                <label htmlFor="birth-date">Date of Birth<span className="text-danger">*</span></label>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section className="mt-5" id="education">
-                    {/* head */}
-                    <div className="row">
-                        <div className="col"><hr /></div>
-                        <div className="col-auto"><h4 className="fw-bold">Educational Background</h4></div>
-                        <div className="col"><hr /></div>
-                    </div>
-                    {/* body */}
-                    <div className="row gy-3">
-                        <div className="col-md-6">
-                            <div className="form-floating">
-                                <input type="text" className="form-control rounded-0" name="school-name" id="school-name" placeholder="Your last school" />
-                                <label htmlFor="school-name">Name of Last School Attended</label>
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="form-floating">
-                                <input type="text" className="form-control rounded-0" name="graduation_year" id="graduation_year" placeholder="Your graduation year" />
-                                <label htmlFor="school-name">Year of Graduation</label>
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="form-floating">
-                                <select className="form-select rounded-0" id="highest-education" name="highest-education" placeholder="Your highest education">
-                                    <option value="">--Please select--</option>
-                                    <option value="none">None</option>
-                                    <option value="primary">Primary School</option>
-                                    <option value="secondary">Secondary School</option>
-                                    <option value="vocational">Vocational Training</option>
-                                    <option value="undergraduate">Undergraduate Degree</option>
-                                    <option value="postgraduate">Postgraduate Degree</option>  
-                                </select>
-                                <label htmlFor="highest-education">Highest Level of Education</label>
                             </div>
                         </div>
                     </div>
@@ -203,22 +212,150 @@ const RegistrationForm = () => {
                     <div className="row gy-3">
                         <div className="col-md-6">
                             <div className="form-floating">
-                                <select type="text" className="form-select rounded-0" id="course-title" name="course-title" placeholder="Your course title" required>
+                                <select onChange={handleCourseSelect} value={selectedCourse} type="text" className="form-select rounded-0" id="course-title" name="courseTitle" placeholder="Your course title" required>
                                     <option value="">--Please select--</option>
+                                    {courses.map(e => <option key={e._id} value={e.title}>{e.title}</option>)}
                                 </select>
                                 <label htmlFor="course-title">Course Title<span className="text-danger">*</span></label>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="form-floating">
-                                <select type="text" className="form-select rounded-0" id="course-type" name="course-type" placeholder="Your course type" required>
+                                <select type="text" className="form-select rounded-0" id="course-type" name="courseType" placeholder="Your course type" required>
                                     <option value="">--Please select--</option>
                                     <option value="Crash Course">Crash Course</option>
                                     <option value="Full Course">Full Course</option>
-                                    <option value="Crash Course">Full Course with Accomodation</option>
+                                    <option value="Crash Course with Accomodation">Crash Course with Accomodation</option>
+                                    <option value="Full Course with Accomodation">Full Course with Accomodation</option>
                                 </select>
                                 <label htmlFor="course-type">Course Type<span className="text-danger">*</span></label>
                             </div>
+                        </div>
+                    </div>
+                </section>
+                <section className="mt-5" id="identification">
+                    {/* head */}
+                    <div className="row">
+                        <div className="col"><hr /></div>
+                        <div className="col-auto"><h4 className="fw-bold">Identification</h4></div>
+                        <div className="col"><hr /></div>
+                    </div>
+                    {/* body */}
+                    <div>
+                        <p>What Form of Identification document do you have? Select all that applies?<span className="text-danger">*</span></p>
+                        <div className="form-check">
+                            <input type="checkbox" className="form-check-input" name="idCard" value="NIN" id="nin" required/>
+                            <label className="form-check-label" htmlFor="nin">
+                                NIN
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input type="checkbox" className="form-check-input" name="idCard" value="International Passport" id="intl-passport" required/>
+                            <label className="form-check-label" htmlFor="intl-passport">
+                                International Passport
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input type="checkbox" className="form-check-input" name="idCard" value="Driver's License" id="drivers-license" required/>
+                            <label className="form-check-label" htmlFor="drivers-license">
+                                Driver's License
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input type="checkbox" className="form-check-input" name="idCard" value="Voter's Card" id="voters-card" required/>
+                            <label className="form-check-label" htmlFor="voters-card">
+                                Voter's Card
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input type="checkbox" className="form-check-input" name="idCard" value="others" id="other-cards" required/>
+                            <label className="form-check-label" htmlFor="other-cards">
+                                Others
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input type="checkbox" className="form-check-input" name="idCard" value="None" id="none-card" required/>
+                            <label className="form-check-label" htmlFor="none-card">
+                                None
+                            </label>
+                        </div>
+                        <div className="mt-3">
+                            <label htmlFor="id-files" className="form-label">Upload Your Identification document (.pdf and .png only)<span className="text-danger">*</span></label>
+                            <input ref={idRef} type="file" accept=".pdf, .png" className="form-control form-control-lg rounded-0" name="ids[]" id="id-files" multiple required/>
+                        </div>
+                    </div>
+                </section>
+                <section className="mt-5" id="consent">
+                    {/* head */}
+                    <div className="row">
+                        <div className="col"><hr /></div>
+                        <div className="col-auto"><h4 className="fw-bold">Parental Consent</h4></div>
+                        <div className="col"><hr /></div>
+                    </div>
+                    {/* body */}
+                    <div>
+                        <p>Will you need parental consent to travel within or outside the country? (If under 18 years)<span className="text-danger">*</span></p>
+                        <div className="form-check">
+                            <input type="radio" className="form-check-input" name="parentConsent" value="Yes" id="parent-consent1" required/>
+                            <label className="form-check-label" htmlFor="parent-consent1">
+                                Yes
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input type="radio" className="form-check-input" name="parentConsent" value="No" id="parent-consent2" required/>
+                            <label className="form-check-label" htmlFor="parent-consent2">
+                                No
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input type="radio" className="form-check-input" name="parentConsent" value="Maybe" id="parent-consent3" required/>
+                            <label className="form-check-label" htmlFor="parent-consent3">
+                                Maybe
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section className="mt-5" id="education">
+                    {/* head */}
+                    <div className="row">
+                        <div className="col"><hr /></div>
+                        <div className="col-auto"><h4 className="fw-bold">Educational Background</h4></div>
+                        <div className="col"><hr /></div>
+                    </div>
+                    {/* body */}
+                    <div className="row gy-3">
+                        <div className="col-md-6">
+                            <div className="form-floating">
+                                <input type="text" className="form-control rounded-0" name="schoolName" id="school-name" placeholder="Your last school" />
+                                <label htmlFor="school-name">Name of Last School Attended</label>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="form-floating">
+                                <input type="text" className="form-control rounded-0" name="graduationYear" id="graduation_year" placeholder="Your graduation year" />
+                                <label htmlFor="school-name">Year of Graduation</label>
+                            </div>
+                        </div>
+                        <div className="col-12">
+                            <div className="form-floating">
+                                <select className="form-select rounded-0" id="highest-education" name="highestEducation" placeholder="Your highest education">
+                                    <option value="">--Please select--</option>
+                                    <option value="none">None</option>
+                                    <option value="primary school">Primary School</option>
+                                    <option value="secondary school certificate">Secondary School Certificate</option>
+                                    <option value="vocational training">Vocational Training</option>
+                                    <option value="HND">HND</option>
+                                    <option value="OND">OND</option>
+                                    <option value="Diploma">Diploma</option>
+                                    <option value="undergraduate">Undergraduate Degree</option>
+                                    <option value="postgraduate">Postgraduate Degree</option>  
+                                </select>
+                                <label htmlFor="highest-education">Highest Level of Education</label>
+                            </div>
+                        </div>
+                        <div className="col-12">
+                            <label htmlFor="cert-files" className="form-label">Upload Your Certificates (.pdf and .png only)</label>
+                            <input ref={certRef} accept=".pdf, .png" type="file" className="form-control form-control-lg rounded-0" name="certificates[]" id="cert-files" multiple />
                         </div>
                     </div>
                 </section>
@@ -233,13 +370,13 @@ const RegistrationForm = () => {
                     <div className="row gy-3">
                         <div className="col-md-6">
                             <div className="form-floating">
-                                <input type="text" className="form-control rounded-0" id="emergency-fullname" name="emergency-fullname" placeholder="Your emergency fullname" required/>
+                                <input type="text" className="form-control rounded-0" id="emergency-fullname" name="emergencyFullname" placeholder="Your emergency fullname" required/>
                                 <label htmlFor="emergency-fullname">Full Name<span className="text-danger">*</span></label>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="form-floating">
-                                <select className="form-select rounded-0" id="emergency-relationship" name="emergency-relationship" placeholder="Your emergency relationship" required>
+                                <select className="form-select rounded-0" id="emergency-relationship" name="emergencyRelationship" placeholder="Your emergency relationship" required>
                                     <option value="">--Please select--</option>
                                     <option value="Father">Father</option>
                                     <option value="Mother">Mother</option>
@@ -253,7 +390,7 @@ const RegistrationForm = () => {
                         </div>
                         <div className="col-md-6">
                             <div className="form-floating">
-                                <input type="number" className="form-control rounded-0" id="emergency-phone" name="emergency-phone" placeholder="Your number" required/>
+                                <input type="number" className="form-control rounded-0" id="emergency-phone" name="emergencyPhone" placeholder="Your number" required/>
                                 <label htmlFor="phone">Phone Number<span className="text-danger">*</span></label>
                             </div>
                         </div>
@@ -270,13 +407,13 @@ const RegistrationForm = () => {
                     <div>
                         <p>Please read the following terms carefully</p>
                         <div className="form-check mb-3">
-                            <input type="checkbox" className="form-check-input" name="reg-terms" id="reg-terms" required/>
+                            <input type="checkbox" className="form-check-input" name="regTerms" value="Yes" id="reg-terms" required/>
                             <label className="form-check-label" htmlFor="reg-terms">
                                 I agree to the <Link to="/terms" target="_blank">terms and conditions</Link> and acknowledge that I am required to pay a fee of <strong>₦20,000</strong> for the processing of this form.
                             </label>
                         </div>
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="reg-privacy" id="reg-privacy" required/>
+                            <input type="checkbox" className="form-check-input" name="regPrivacy" value="Yes" id="reg-privacy" required/>
                             <label className="form-check-label" htmlFor="reg-privacy">
                                 I have read and agree to the <Link to="/privacy" target="_blank">privacy policy</Link> regarding the handling of my personal information.
                             </label>
