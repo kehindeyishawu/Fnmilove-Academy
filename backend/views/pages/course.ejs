@@ -61,7 +61,7 @@
                 <div class="fs-2 fw-bold mb-2 mt-5">
                     <%=price%>
                 </div>
-                <button class="btn btn-lg btn-primary fw-bold d-block rounded-0 course-payment-button">Enrol Now</button>
+                <a href="/registration-form?courseid=<%=post._id%>&courseslug=<%=post.slug%>" class="btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
             </div>
             <!-- show only on small screens fixed to the bottom -->
             <div class="container-fluid d-md-none fixed-bottom bg-white shadow py-2 d-md-none">
@@ -69,7 +69,7 @@
                     <div class="fs-5 fw-bold">
                         <%=price%>
                     </div>
-                    <button class="rounded-2 flex-grow-1 btn btn-lg btn-primary fw-bold d-block rounded-0 course-payment-button">Enrol Now</button>
+                    <a href="/registration-form?courseid=<%=post._id%>&courseslug=<%=post.slug%>" class="rounded-2 flex-grow-1 btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
                 </div>
             </div>
         </section>
@@ -87,6 +87,7 @@
             </div>
         </section>
         <section class="top-spacing container">
+            <p>Please note that before making any course payment, students must complete a registration form, which incurs a fee of ₦20,000.</p>
             <div class="row">
                 <!-- show always -->
                 <div class="col-md-8">
@@ -101,7 +102,7 @@
                         <%}%>
                         <div class="card-body">
                             <div class="fs-3 fw-bold mb-2"><%=price%></div>
-                            <button class="btn btn-lg btn-primary fw-bold d-block rounded-0 course-payment-button">Enrol Now</button>
+                            <a href="/registration-form?courseid=<%=post._id%>&courseslug=<%=post.slug%>" class="btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
                             <h5 class="card-title h6 fw-bold text-secondary my-3">This Course Include</h5>
                             <ul class="list-unstyled text-primary vstack gap-2">
                                 <li class="d-flex gap-2">

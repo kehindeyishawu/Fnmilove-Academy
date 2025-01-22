@@ -7,11 +7,15 @@ const RegistrationForm = () => {
     const [showSpinner, setShowspinner] = useState(true)
     const [courses, setCourses] = useState([])
     const navigate = useNavigate()
-    const {setStaticNotification, setShowLoading} = useOutletContext()
+    const {setStaticNotification, setFadeNotification, setShowLoading} = useOutletContext()
     const [searchQuery, setSearchQuery] = useSearchParams();
     const [selectedCourse, setSelectedCourse] = useState("")
     const certRef = useRef(null);
-    const idRef = useRef(null)
+    const certFeedback = useRef(null);
+    const idRef = useRef(null);
+    const idFeedback = useRef(null)
+    const firstnameRef = useRef(null);
+    const lastnameRef = useRef(null);
     
 
 
@@ -26,8 +30,8 @@ const RegistrationForm = () => {
                 pickedCourse && setSelectedCourse(pickedCourse.title)
                 setShowspinner(false)
             } catch (error) {
-                redirectToCourseID  ? location.href = `/course/${redirectToCourseID}/${redirectToCourseSlug}` : navigate("/")
-                setStaticNotification({ message: error.message, time: (new Date()).toString() })
+                redirectToCourseSlug  ? location.href = `/course/${redirectToCourseID}/${redirectToCourseSlug}` : redirectToCourseID ? navigate("/courses") : navigate("/")
+                setFadeNotification({ message: error.message, time: (new Date()).toString() })
             }
         }
         sideEffect()
@@ -41,20 +45,81 @@ const RegistrationForm = () => {
         try {
             e.preventDefault();
             setShowLoading(true)
+            // media upload validation
+            // for Ids
+            if (idRef.current.files.length > 3) {
+                idRef.current.value = ""
+                idRef.current.classList.add("is-invalid")
+                idFeedback.current.textContent = "Maximum number of file upload is 3"
+                idRef.current.scrollIntoView({ block: "center" })
+                setShowLoading(false)
+                return
+            } else {
+                for (const file of idRef.current.files) {
+                    if (file.size > 3145728) {
+                        idRef.current.value = ""
+                        idRef.current.classList.add("is-invalid")
+                        certFeedback.current.textContent = "Maximum file size of 3MB per file"
+                        idRef.current.scrollIntoView({ block: "center" })
+                        setShowLoading(false)
+                        return
+                    }
+                }
+            }
+            // certificates
+            if(certRef.current.files.length>3){
+                certRef.current.value = ""
+                certRef.current.classList.add("is-invalid")
+                certFeedback.current.textContent = "Maximum number of file upload is 3"
+                certRef.current.scrollIntoView({block: "center"})
+                setShowLoading(false)
+                return
+            }else{
+                for (const file of certRef.current.files) {
+                    if (file.size > 3145728){
+                        certRef.current.value = ""
+                        certRef.current.classList.add("is-invalid")
+                        certFeedback.current.textContent = "Maximum file size of 3MB per file"
+                        certRef.current.scrollIntoView({ block: "center" })
+                        setShowLoading(false)
+                        return
+                    }
+                }
+            }
+            
+
+            // uploading files
+            
+            // for (const file of certRef.current.files) {
+            //     let documents = new FormData()
+            //     documents.append("upload_preset", "reg-form")
+            //     documents.append("asset_folder", `applicants`)
+            //     documents.append("file", file)
+            //     let req = await fetch("https://api.cloudinary.com/v1_1/fnmilove/auto/upload", {
+            //         method: "POST",
+            //         body: documents
+            //     })
+            //     if (!req.ok) {
+            //         throw new Error("An error occured while trying to upload your form file attachments")
+            //     }
+            //     let res = await req.json()
+            //     console.log(res)
+            // }
 
             // sending data
-            let formData = new FormData(e.target)
-            console.log(formData)
-            formData.delete("certificates[]")
-            formData.delete("ids[]")
-            fetch("/api/applicant", {
-                method: "POST",
-                body: formData
-            })
-        } catch (error) {
-            
-        }finally{
+            // let formData = new FormData(e.target)
+            // console.log(formData)
+            // formData.delete("certificates[]")
+            // formData.delete("ids[]")
+            // fetch("/api/applicant", {
+            //     method: "POST",
+            //     body: formData
+            // })
             setShowLoading(false);
+        } catch (error) {
+            setStaticNotification({ message: error.message, time: (new Date()).toString() })
+        }finally{
+            
             // setFadeNotification({ message: "Post saved successfully", time: (new Date()).getTime() })
         }
         // await saveButton();
@@ -78,13 +143,13 @@ const RegistrationForm = () => {
                     <div className="row gy-3">
                         <div className="col-md-6">
                             <div className="form-floating">
-                                <input type="text" className="form-control rounded-0" id="firstname" name="firstname" placeholder="Your first name" required/>
+                                <input ref={firstnameRef} type="text" className="form-control rounded-0" id="firstname" name="firstname" placeholder="Your first name" required/>
                                 <label htmlFor="firstname">First Name<span className="text-danger">*</span></label>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="form-floating">
-                                <input type="text" className="form-control rounded-0" id="lastname" name="lastname" placeholder="Your last name" required/>
+                                <input ref={lastnameRef} type="text" className="form-control rounded-0" id="lastname" name="lastname" placeholder="Your last name" required/>
                                 <label htmlFor="lastname">Last Name<span className="text-danger">*</span></label>
                             </div>
                         </div>
@@ -279,9 +344,11 @@ const RegistrationForm = () => {
                                 None
                             </label>
                         </div>
-                        <div className="mt-3">
-                            <label htmlFor="id-files" className="form-label">Upload Your Identification document (.pdf and .png only)<span className="text-danger">*</span></label>
+                        <div className="mt-4">
+                            <label htmlFor="id-files">Upload Your Identification document (.pdf and .png only)<span className="text-danger">*</span></label>
+                            <span className="form-text d-block mb-1">Max file size of 3MB per upload (you are allowed to upload up to 3 files)</span>
                             <input ref={idRef} type="file" accept=".pdf, .png" className="form-control form-control-lg rounded-0" name="ids[]" id="id-files" multiple required/>
+                            <div ref={idFeedback} className="invalid-feedback"></div>
                         </div>
                     </div>
                 </section>
@@ -323,17 +390,17 @@ const RegistrationForm = () => {
                         <div className="col"><hr /></div>
                     </div>
                     {/* body */}
-                    <div className="row gy-3">
+                    <div className="row gy-4">
                         <div className="col-md-6">
                             <div className="form-floating">
                                 <input type="text" className="form-control rounded-0" name="schoolName" id="school-name" placeholder="Your last school" />
-                                <label htmlFor="school-name">Name of Last School Attended</label>
+                                <label htmlFor="school-name">Name of Last School Attended<span className="text-danger">*</span></label>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="form-floating">
                                 <input type="text" className="form-control rounded-0" name="graduationYear" id="graduation_year" placeholder="Your graduation year" />
-                                <label htmlFor="school-name">Year of Graduation</label>
+                                <label htmlFor="school-name">Year of Graduation<span className="text-danger">*</span></label>
                             </div>
                         </div>
                         <div className="col-12">
@@ -350,12 +417,14 @@ const RegistrationForm = () => {
                                     <option value="undergraduate">Undergraduate Degree</option>
                                     <option value="postgraduate">Postgraduate Degree</option>  
                                 </select>
-                                <label htmlFor="highest-education">Highest Level of Education</label>
+                                <label htmlFor="highest-education">Highest Level of Education<span className="text-danger">*</span></label>
                             </div>
                         </div>
                         <div className="col-12">
-                            <label htmlFor="cert-files" className="form-label">Upload Your Certificates (.pdf and .png only)</label>
+                            <label htmlFor="cert-files">Upload Your Certificates<span className="text-danger">*</span> (.pdf and .png only)</label>
+                            <span className="form-text d-block mb-1">Max file size of 3MB per upload (you are allowed to upload up to 3 files)</span>
                             <input ref={certRef} accept=".pdf, .png" type="file" className="form-control form-control-lg rounded-0" name="certificates[]" id="cert-files" multiple />
+                            <div ref={certFeedback} className="invalid-feedback"></div>
                         </div>
                     </div>
                 </section>

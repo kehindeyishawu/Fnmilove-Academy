@@ -31,7 +31,7 @@ const CourseCard = ({ title, tutors, imgPublicID, price, tag, tipColor, slug, ID
                         <h2 className={`card-title h6 fw-bold text-secondary ${tag || " mt-3"} truncate-line-2`}><a href={`course/${ID}/${slug}`} className="text-reset text-decoration-none">{title}</a></h2>
                         <p className={`card-text mb-4 mt-3 ${tag ? 'truncate-line-1' : 'truncate-line-2' }`}>{tutors}</p>
                         <div className="hstack justify-content-between">
-                            <a className="btn btn-primary rounded-0 fw-bold">ENROLL NOW</a>
+                            <Link to={`/registration-form?courseid=${ID}`} className="btn btn-primary rounded-0 fw-bold">ENROLL NOW</Link>
                             <span className="fw-bold fs-4">{currencyFormatter(price)}</span>
                         </div>
                     </div>

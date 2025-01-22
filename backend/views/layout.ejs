@@ -35,9 +35,6 @@
     <%- include("./partials/deleteDialog") %>
     <%- include("./partials/loadingDialog") %>
     <script src="/bootstrap.min.js"></script>
-    <%if(!post.postType){%>
-        <script src="https://checkout.flutterwave.com/v3.js"></script>
-    <%}%>
     <script>
         // toast function
         const fadingToast = document.getElementById('fadingToast')
@@ -50,36 +47,6 @@
         const staticMessage = document.getElementById("static-toast-msg")
         const staticTime = document.getElementById("static-toast-time")
         // toastStaticBootstrap.show();
-
-        <%if (!post.postType) {%>
-            let coursePaymentButtons = document.querySelectorAll(".course-payment-button");
-            for (const button of coursePaymentButtons) {
-                button.addEventListener("click", (e)=>{
-                    FlutterwaveCheckout({
-                        public_key: 'FLWPUBK_TEST-9a9e8ce2d99ba7d4d81b9456347bdbc3-X',
-                        tx_ref: 'course-48981487343MDI0NzMx',
-                        amount: 350000,
-                        currency: 'NGN',
-                        payment_options: 'card, mobilemoneyghana, ussd',
-                        redirect_url: 'https://glaciers.titanic.com/handle-flutterwave-payment',
-                        meta: {
-                            consumer_id: 23,
-                            consumer_mac: '92a3-912ba-1192a',
-                        },
-                        customer: {
-                            email: 'rose@unsinkableship.com',
-                            phone_number: '08102909304',
-                            name: 'Rose DeWitt Bukater',
-                        },
-                        customizations: {
-                            title: 'Fnmilove Academy',
-                            description: `Payment for course: <%=post.title%>`,
-                            logo: '<%=domain%>/logo.png',
-                        },
-                    });
-                })
-            }
-        <%}%>
 
         <%if(post.postType === "job"){%>
             let jobForm = document.getElementById("job-form");
