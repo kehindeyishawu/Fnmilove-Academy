@@ -1,6 +1,7 @@
 import { Link, useNavigate, useOutletContext, useSearchParams } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import { fetchCourses } from "../components/CourseCard"
+import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 
 
 const RegistrationForm = () => {
@@ -16,6 +17,7 @@ const RegistrationForm = () => {
     const idFeedback = useRef(null)
     const firstnameRef = useRef(null);
     const lastnameRef = useRef(null);
+    const [formSubmited, setFormSubmitted] = useState(false)
     
 
 
@@ -45,6 +47,7 @@ const RegistrationForm = () => {
         try {
             e.preventDefault();
             setShowLoading(true)
+
             // media upload validation
             // for Ids
             if (idRef.current.files.length > 3) {
@@ -66,7 +69,7 @@ const RegistrationForm = () => {
                     }
                 }
             }
-            // certificates
+            // for certificates
             if(certRef.current.files.length>3){
                 certRef.current.value = ""
                 certRef.current.classList.add("is-invalid")
@@ -88,38 +91,91 @@ const RegistrationForm = () => {
             }
             
 
-            // uploading files
-            
-            // for (const file of certRef.current.files) {
-            //     let documents = new FormData()
-            //     documents.append("upload_preset", "reg-form")
-            //     documents.append("asset_folder", `applicants`)
-            //     documents.append("file", file)
-            //     let req = await fetch("https://api.cloudinary.com/v1_1/fnmilove/auto/upload", {
-            //         method: "POST",
-            //         body: documents
-            //     })
-            //     if (!req.ok) {
-            //         throw new Error("An error occured while trying to upload your form file attachments")
-            //     }
-            //     let res = await req.json()
-            //     console.log(res)
-            // }
-
             // sending data
-            // let formData = new FormData(e.target)
-            // console.log(formData)
-            // formData.delete("certificates[]")
-            // formData.delete("ids[]")
-            // fetch("/api/applicant", {
-            //     method: "POST",
-            //     body: formData
-            // })
-            setShowLoading(false);
+            let formData = new URLSearchParams(new FormData(e.target))
+            formData.delete("certificates[]")
+            formData.delete("ids[]")
+            let formRequest = await fetch("/api/applicant", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            if (!formRequest.ok){
+                throw new Error(await formRequest.text())
+            }
+            let formResponse = await formRequest.text()
+            console.log(formResponse);
+
+
+            // uploading files
+            // for ids
+            for (const file of idRef.current.files) {
+                let documents = new FormData()
+                documents.append("upload_preset", "reg-form")
+                documents.append("asset_folder", `applicants/${lastnameRef.current.value}-${formResponse}`)
+                documents.append("file", file)
+                let req = await fetch("https://api.cloudinary.com/v1_1/fnmilove/auto/upload", {
+                    method: "POST",
+                    body: documents
+                })
+                if (!req.ok) {
+                    throw new Error("An error occured while trying to upload your form file attachments")
+                }
+                let res = await req.json()
+                console.log(res)
+            }
+            // for certificate
+            for (const file of certRef.current.files) {
+                let documents = new FormData()
+                documents.append("upload_preset", "reg-form")
+                documents.append("asset_folder", `applicants`)
+                documents.append("file", file)
+                let req = await fetch("https://api.cloudinary.com/v1_1/fnmilove/auto/upload", {
+                    method: "POST",
+                    body: documents
+                })
+                if (!req.ok) {
+                    throw new Error("An error occured while trying to upload your form file attachments")
+                }
+                let res = await req.json()
+                console.log(res)
+            }
+
+
+            // Flutterwave Payment Modal
+            const config = {
+                public_key: 'FLWPUBK_TEST-9a9e8ce2d99ba7d4d81b9456347bdbc3-X',
+                tx_ref: formResponse,
+                amount: 20000,
+                currency: 'NGN',
+                payment_options: "card",
+                customer: {
+                    email: 'user@gmail.com',
+                    phone_number: '070********',
+                    name: 'john doe',
+                },
+                meta: { counsumer_id: "7898", consumer_mac: "kjs9s8ss7dd" },
+                customizations: {
+                    title: 'my Payment Title',
+                    description: 'Payment for items in cart',
+                    logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+                },
+            };
+            const handleFlutterPayment = useFlutterwave(config);
+            handleFlutterPayment({
+                callback: (response) => {
+                    console.log(response);
+                    closePaymentModal() // this will close the modal programmatically
+                },
+                onClose: () => { },
+            });
+            
         } catch (error) {
             setStaticNotification({ message: error.message, time: (new Date()).toString() })
         }finally{
-            
+            setShowLoading(false);
             // setFadeNotification({ message: "Post saved successfully", time: (new Date()).getTime() })
         }
         // await saveButton();
@@ -131,7 +187,7 @@ const RegistrationForm = () => {
         <main id="registration-form">
             <h1 className="text-center fw-bold mt-5">Registration Form</h1>
             <small className="d-block text-center mb-4 px-2">Please note that before making any course payment, students must complete a registration form, which incurs a fee of ₦20,000.</small>
-            <form onSubmit={handleSubmit} className="container" style={{maxWidth: 1000}} noValidate>
+            <form onSubmit={handleSubmit} className="container" style={{maxWidth: 1000}}>
                 <section id="personal-details">
                     {/* head */}
                     <div className="row">
@@ -307,41 +363,35 @@ const RegistrationForm = () => {
                     </div>
                     {/* body */}
                     <div>
-                        <p>What Form of Identification document do you have? Select all that applies?<span className="text-danger">*</span></p>
+                        <p>What Form of Identification document do you have? Select all that applies</p>
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="idCard" value="NIN" id="nin" required/>
+                            <input type="checkbox" className="form-check-input" name="idCard" value="NIN" id="nin"/>
                             <label className="form-check-label" htmlFor="nin">
                                 NIN
                             </label>
                         </div>
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="idCard" value="International Passport" id="intl-passport" required/>
+                            <input type="checkbox" className="form-check-input" name="idCard" value="International Passport" id="intl-passport"/>
                             <label className="form-check-label" htmlFor="intl-passport">
                                 International Passport
                             </label>
                         </div>
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="idCard" value="Driver's License" id="drivers-license" required/>
+                            <input type="checkbox" className="form-check-input" name="idCard" value="Driver's License" id="drivers-license"/>
                             <label className="form-check-label" htmlFor="drivers-license">
                                 Driver's License
                             </label>
                         </div>
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="idCard" value="Voter's Card" id="voters-card" required/>
+                            <input type="checkbox" className="form-check-input" name="idCard" value="Voter's Card" id="voters-card"/>
                             <label className="form-check-label" htmlFor="voters-card">
                                 Voter's Card
                             </label>
                         </div>
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="idCard" value="others" id="other-cards" required/>
+                            <input type="checkbox" className="form-check-input" name="idCard" value="others" id="other-cards"/>
                             <label className="form-check-label" htmlFor="other-cards">
                                 Others
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="idCard" value="None" id="none-card" required/>
-                            <label className="form-check-label" htmlFor="none-card">
-                                None
                             </label>
                         </div>
                         <div className="mt-4">
