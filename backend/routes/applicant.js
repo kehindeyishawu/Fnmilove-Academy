@@ -20,8 +20,9 @@ applicantRouter.post("/", async(req, res, next)=>{
 // for Flutterwave Payment Webhook Notification
 applicantRouter.post("/flw-webhook", (req, res, next)=>{
     console.log("received Webhook from Flutterwave")
+    console.log(req.headers);
     const secretHash = process.env.FLW_SECRET_HASH;
-    const signature = req.headers["verify-hash"];
+    const signature = req.headers["verif-hash"];
     if(!signature || (signature !== secretHash)){
         res.status(401).end()
         console.log("No match")
