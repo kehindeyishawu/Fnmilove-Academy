@@ -24,6 +24,9 @@ applicantRouter.post("/flw-webhook", (req, res, next)=>{
     const signature = req.headers["verify-hash"];
     if(!signature || (signature !== secretHash)){
         res.status(401).end()
+        console.log("No match")
+        console.log(`secret hash: ${secretHash}`)
+        console.log(`signature: ${signature}`)
         return;
     }
     const payload = req.body;

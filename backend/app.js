@@ -103,7 +103,7 @@ app.use((err, req, res, next)=>{
         res.status(err.statusCode).send(err.message);
         console.log(err.message);
     } else {
-        res.status(500).json(`Server Error: ${err.message}`)
+        res.status(500).json(`Something went wrong from our Side`)
         console.log(err.message)
     }
 })
