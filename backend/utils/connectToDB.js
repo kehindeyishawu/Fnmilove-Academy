@@ -113,7 +113,8 @@ export class ApplicantSchema{
         this.emergencyFullname = validate(emergencyFullname, "emergencyFullname")
         this.emergencyRelationship = validate(emergencyRelationship, "emergencyRelationship")
         this.emergencyPhone = validate(emergencyPhone, "emergencyPhone")
-        this.createdAt = new Date()
+        this.paymentVerified = false;
+        this.createdAt = new Date();
     }
 }
 

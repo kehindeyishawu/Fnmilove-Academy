@@ -2,6 +2,7 @@ import { Link, useNavigate, useOutletContext, useSearchParams } from "react-rout
 import { useEffect, useRef, useState } from "react"
 import { fetchCourses } from "../components/CourseCard"
 import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
+import { FaCheckCircle } from "react-icons/fa";
 
 
 const RegistrationForm = () => {
@@ -47,6 +48,7 @@ const RegistrationForm = () => {
         try {
             e.preventDefault();
             setShowLoading(true)
+            let formData = new URLSearchParams(new FormData(e.target)); //formdata parsed for sending
 
             // media upload validation
             // for Ids
@@ -89,24 +91,6 @@ const RegistrationForm = () => {
                     }
                 }
             }
-            
-
-            // sending data
-            let formData = new URLSearchParams(new FormData(e.target))
-            formData.delete("certificates[]")
-            formData.delete("ids[]")
-            let formRequest = await fetch("/api/applicant", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
-            if (!formRequest.ok){
-                throw new Error(await formRequest.text())
-            }
-            let formResponse = await formRequest.text()
-            console.log(formResponse);
 
 
             // uploading files
@@ -114,7 +98,7 @@ const RegistrationForm = () => {
             for (const file of idRef.current.files) {
                 let documents = new FormData()
                 documents.append("upload_preset", "reg-form")
-                documents.append("asset_folder", `applicants/${lastnameRef.current.value}-${formResponse}`)
+                documents.append("asset_folder", `applicants`)
                 documents.append("file", file)
                 let req = await fetch("https://api.cloudinary.com/v1_1/fnmilove/auto/upload", {
                     method: "POST",
@@ -124,6 +108,7 @@ const RegistrationForm = () => {
                     throw new Error("An error occured while trying to upload your form file attachments")
                 }
                 let res = await req.json()
+                formData.append('files', res.public_id)
                 console.log(res)
             }
             // for certificate
@@ -140,8 +125,26 @@ const RegistrationForm = () => {
                     throw new Error("An error occured while trying to upload your form file attachments")
                 }
                 let res = await req.json()
+                formData.append('files', res.public_id)
                 console.log(res)
             }
+
+
+            // sending data
+            formData.delete("certificates[]")
+            formData.delete("ids[]")
+            let formRequest = await fetch("/api/applicant", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            if (!formRequest.ok) {
+                throw new Error(await formRequest.text())
+            }
+            let formResponse = await formRequest.text()
+            console.log(formResponse);
 
 
             // Flutterwave Payment Modal
@@ -152,15 +155,18 @@ const RegistrationForm = () => {
                 currency: 'NGN',
                 payment_options: "card",
                 customer: {
-                    email: 'user@gmail.com',
-                    phone_number: '070********',
-                    name: 'john doe',
+                    email: e.target.elements['email'].value,
+                    phone_number: e.target.elements['phone'].value,
+                    name: e.target.elements['firstname'].value + " " + e.target.elements['lastname'].value,
                 },
-                meta: { counsumer_id: "7898", consumer_mac: "kjs9s8ss7dd" },
                 customizations: {
-                    title: 'my Payment Title',
-                    description: 'Payment for items in cart',
-                    logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+                    title: 'Fnmilove Academy',
+                    description: 'Registration Form processing fee for Fnmilove Academy',
+                    logo: '/logo.png',
+                },
+                configurations: {
+                    session_duration: 10, //Session timeout in minutes (maxValue: 1440 minutes)
+                    max_retry_attempt: 5, //Max retry (int)
                 },
             };
             const handleFlutterPayment = useFlutterwave(config);
@@ -168,22 +174,33 @@ const RegistrationForm = () => {
                 callback: (response) => {
                     console.log(response);
                     closePaymentModal() // this will close the modal programmatically
+                    if(response.status === "successful"){
+                        setFormSubmitted(true)
+                        console.log(`For backend; textRef:${response.tx_ref}  transaction_id:${response.transaction_id}`)
+                    }
+                    setShowLoading(false);
                 },
-                onClose: () => { },
+                onClose: () => { setShowLoading(false); },
             });
             
         } catch (error) {
             setStaticNotification({ message: error.message, time: (new Date()).toString() })
-        }finally{
             setShowLoading(false);
-            // setFadeNotification({ message: "Post saved successfully", time: (new Date()).getTime() })
         }
-        // await saveButton();
     }
+    
     return (
         showSpinner ?   <div className="text-center top-spacing"><div className="spinner-border text-primary p-5" role="status">
                             <span className="visually-hidden">Loading...</span>
-                        </div></div> :
+                        </div></div> :  formSubmited ? 
+                        <div className="container text-center mt-5">
+                            <FaCheckCircle  className="text-success" style={{fontSize: "10rem"}}/>
+                            <p className="mt-4 fw-bold">Thank you for your application! We’re currently processing it and will update you within a few days. If you have any questions, feel free to reach out.</p>
+                            <div className="hstack justify-content-center gap-3">
+                                <Link to={"/"}>Go to Home Page</Link>
+                                <a href="/registration-form">Apply Again</a>
+                            </div>
+                        </div> :
         <main id="registration-form">
             <h1 className="text-center fw-bold mt-5">Registration Form</h1>
             <small className="d-block text-center mb-4 px-2">Please note that before making any course payment, students must complete a registration form, which incurs a fee of ₦20,000.</small>
@@ -449,7 +466,7 @@ const RegistrationForm = () => {
                         </div>
                         <div className="col-md-6">
                             <div className="form-floating">
-                                <input type="text" className="form-control rounded-0" name="graduationYear" id="graduation_year" placeholder="Your graduation year" />
+                                <input type="number" className="form-control rounded-0" name="graduationYear" id="graduation_year" placeholder="Your graduation year" />
                                 <label htmlFor="school-name">Year of Graduation<span className="text-danger">*</span></label>
                             </div>
                         </div>

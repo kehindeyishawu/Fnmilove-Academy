@@ -29,7 +29,7 @@ app.use(expressEjsLayouts)
 app.set("layout", "layout")
 // parse incoming form data and json
 app.use(express.json());
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }));
 //Express Session config 
 let sessionStore = new MongoDBStore(session)(
     {
@@ -86,7 +86,7 @@ app.get("/api/post", async (req, res, next)=>{
         next(error)
     }
 })
-app.use(applicantRouter)
+app.use("/api/applicant", applicantRouter)
 app.use(showPostRouter)
 app.use("/api/articles", articleRouter)
 app.use("/api/jobs", jobRouter)
