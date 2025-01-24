@@ -129,7 +129,6 @@ const RegistrationForm = () => {
                 console.log(res)
             }
 
-
             // sending data
             formData.delete("certificates[]")
             formData.delete("ids[]")
@@ -143,14 +142,14 @@ const RegistrationForm = () => {
             if (!formRequest.ok) {
                 throw new Error(await formRequest.text())
             }
-            let formResponse = await formRequest.text()
-            console.log(formResponse);
+            let { tx_ref, payload_hash } = await formRequest.json()
+            console.log({ tx_ref, payload_hash });
 
 
             // Flutterwave Payment Modal
             const config = {
                 public_key: 'FLWPUBK_TEST-9a9e8ce2d99ba7d4d81b9456347bdbc3-X',
-                tx_ref: formResponse,
+                tx_ref,
                 amount: 20000,
                 currency: 'NGN',
                 payment_options: "card",
@@ -164,6 +163,7 @@ const RegistrationForm = () => {
                     description: 'Registration Form processing fee for Fnmilove Academy',
                     logo: '/logo.png',
                 },
+                payload_hash,
                 configurations: {
                     session_duration: 10, //Session timeout in minutes (maxValue: 1440 minutes)
                     max_retry_attempt: 5, //Max retry (int)
@@ -171,12 +171,24 @@ const RegistrationForm = () => {
             };
             const handleFlutterPayment = useFlutterwave(config);
             handleFlutterPayment({
-                callback: (response) => {
+                callback: async (response) => {
                     console.log(response);
                     closePaymentModal() // this will close the modal programmatically
-                    if(response.status === "successful"){
-                        setFormSubmitted(true)
+                    if (response.status === "successful" || response.status === "completed"){
+                        // setFormSubmitted(true)
                         console.log(`For backend; textRef:${response.tx_ref}  transaction_id:${response.transaction_id}`)
+                        // assign applicant payment id
+                        let data = {tx_ref: response.tx_ref, flw_id: response.transaction_id}
+                        let idResponse = await fetch(`/api/applicant/flwid-assign`, {
+                            method: "PUT",
+                            body: JSON.stringify(data),
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        if(!idResponse.ok){
+                            console.log("Unable to assign ID")
+                        }
                     }
                     setShowLoading(false);
                 },

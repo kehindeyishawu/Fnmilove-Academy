@@ -47,6 +47,18 @@ let validate = (input, name)=>{
         throw new CustomError(`${name} field is empty`, 400)
     }
 }
+let validateArray = (arr, name, minLength = 2) => {
+    if (!Array.isArray(arr)) {
+        throw new CustomError(`${name} should be an array`, 400);
+    }
+    if (arr.length < minLength) {
+        throw new CustomError(`Kindly make sure you fill/upload all required file fields`, 400);
+    }
+    if (!arr.every(item => typeof item === "string")) {
+        throw new CustomError(`All elements in ${name} should be strings`);
+    }
+    return arr;
+}
 
 // Schemas
 export class ArticleSchema{
@@ -96,7 +108,7 @@ export class CourseSchema{
 }
 
 export class ApplicantSchema{
-    constructor({ firstname, lastname, gender, dob, email, phone, street, postalCode, courseTitle, courseType, schoolName, graduationYear, highestEducation, emergencyFullname, emergencyRelationship, emergencyPhone }){
+    constructor({ firstname, lastname, gender, dob, email, phone, street, postalCode, courseTitle, courseType, schoolName, graduationYear, highestEducation, emergencyFullname, emergencyRelationship, emergencyPhone, files }){
         this.firstname = validate(firstname, "firstname")
         this.lastname = validate(lastname, "lastname")
         this.gender = validate(gender, "gender")
@@ -112,8 +124,8 @@ export class ApplicantSchema{
         this.highestEducation = validate(highestEducation, "highestEducation")
         this.emergencyFullname = validate(emergencyFullname, "emergencyFullname")
         this.emergencyRelationship = validate(emergencyRelationship, "emergencyRelationship")
-        this.emergencyPhone = validate(emergencyPhone, "emergencyPhone")
-        this.paymentVerified = false;
+        this.emergencyPhone = validate(emergencyPhone, "emergencyPhone");
+        this.files = validateArray(files, "files");
         this.createdAt = new Date();
     }
 }
