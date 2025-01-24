@@ -30,6 +30,7 @@ applicantRouter.post("/flw-webhook", (req, res, next)=>{
         console.log(`signature: ${signature}`)
         return;
     }
+    console.log("verification valid")
     const payload = req.body;
     console.log(payload)
     // do something with the payload that doesn't take much time here
