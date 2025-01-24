@@ -40,7 +40,6 @@ applicantRouter.post("/flw-webhook", async(req, res, next)=>{
         }
         console.log("verification valid")
         const payload = req.body;
-        console.log(payload)
         // query DB for matching _id to tx_ref(in FLW payload)
         let applicant = await applicantCollection.findOne({_id: ObjectId.createFromHexString(payload.data.tx_ref)})
         if(!applicant){
@@ -73,6 +72,7 @@ applicantRouter.post("/flw-webhook", async(req, res, next)=>{
 applicantRouter.put("/flwid-assign", async(req, res, next) => {
     try {
         let updateReport = await applicantCollection.updateOne({_id: ObjectId.createFromHexString(req.body.tx_ref)}, {$set: {flw_id: req.body.flw_id}})
+        console.log('Payment assigning flw_id report')
         console.log(updateReport)
         res.status(201).end()
     } catch (error) {
