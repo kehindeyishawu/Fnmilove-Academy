@@ -53,7 +53,7 @@ let generateRegFormAttachments = ({files})=>{
     }))
 }
 
-export let regFormMailData = async (inputs)=>{
+export let mailRegFormData = async (inputs)=>{
     try {
         let emailReport = await zoho.sendMail({
             from: "Fnmilove Academy sales@fnmiloveacademy.com",

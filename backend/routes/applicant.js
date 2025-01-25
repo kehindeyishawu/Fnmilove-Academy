@@ -3,6 +3,7 @@ import { applicantCollection, ApplicantSchema } from "../utils/connectToDB.js";
 import Flutterwave from "flutterwave-node-v3"
 import crypto from "crypto"
 import { ObjectId } from "mongodb";
+import { mailRegFormData } from "./mail.js";
 
 
 const flw = new Flutterwave(process.env.FLW_PUBLIC_KEY, process.env.FLW_SECRET_KEY);
@@ -53,6 +54,7 @@ applicantRouter.post("/flw-webhook", async(req, res, next)=>{
             && response.data.amount === 20000
             && response.data.currency === "NGN") {
             // Success! Confirm the customer's payment by sending mail with details to company-------------------------------
+            mailRegFormData()
             // delete applicant record from DB
             await applicantCollection.deleteOne({_id: applicant._id})
             res.status(200).end()
