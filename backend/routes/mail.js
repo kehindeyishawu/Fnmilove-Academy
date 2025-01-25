@@ -55,30 +55,35 @@ let generateRegFormAttachments = ({files})=>{
 }
 
 export let mailRegFormData = async (inputs)=>{
-    let emailReport = await zoho.sendMail({
-        from: "Fnmilove Academy sales@fnmiloveacademy.com",
-        to: "vincent@fnmiloveacademy.com",
-        subject: "Registration Form Applicant",
-        text: convert(generateRegFormData(inputs)),
-        html: generateRegFormData(inputs),
-        attachments: [
-            {
-                filename: "from Server",
-                path: join(import.meta.dirname, "../../frontend/public/logo.png")
-            },
-            {
-                filename: "From Cloudinary Url",
-                path: "https://res.cloudinary.com/fnmilove/image/upload/v1737741934/camera4_umxj3r.png"
-            },
-            {
-                filename: "From Cloudinary Url2",
-                path: "https://res.cloudinary.com/fnmilove/image/upload/v1737749113/CV_Kehinde_Yishawu_j8gtah.pdf"
-            },
-        ]
-    })
-    console.log("emails Envelope")
-    console.log(emailReport.envelope)
-    console.log("emails that were rejected during mail sent")
-    console.log(emailReport.rejected)
+    try {
+        let emailReport = await zoho.sendMail({
+            from: "Fnmilove Academy sales@fnmiloveacademy.com",
+            to: "vincent@fnmiloveacademy.com",
+            subject: "Registration Form Applicant",
+            text: convert(generateRegFormData(inputs)),
+            html: generateRegFormData(inputs),
+            attachments: [
+                {
+                    filename: "from Server",
+                    path: join(import.meta.dirname, "../../frontend/public/logo.png")
+                },
+                {
+                    filename: "From Cloudinary Url",
+                    path: "https://res.cloudinary.com/fnmilove/image/upload/v1737741934/camera4_umxj3r.png"
+                },
+                {
+                    filename: "From Cloudinary Url2",
+                    path: "https://res.cloudinary.com/fnmilove/image/upload/v1737749113/CV_Kehinde_Yishawu_j8gtah.pdf"
+                },
+            ]
+        })
+        console.log("emails Envelope")
+        console.log(emailReport.envelope)
+        console.log("emails that were rejected during mail sent")
+        console.log(emailReport.rejected)
+    } catch (error) {
+        console.log(error.message)
+        throw (new CustomError("Error: Unable to send form data", ))
+    }
 }
 
