@@ -26,6 +26,18 @@ applicantRouter.post("/", async(req, res, next)=>{
     }
 })
 
+// route for assigning flw_id
+applicantRouter.put("/flwid-assign", async (req, res, next) => {
+    try {
+        let updateReport = await applicantCollection.updateOne({ _id: ObjectId.createFromHexString(req.body.tx_ref) }, { $set: { flw_id: req.body.flw_id } })
+        console.log('Payment assigning flw_id report')
+        console.log(updateReport)
+        res.status(201).end()
+    } catch (error) {
+        next(error)
+    }
+})
+
 // for Flutterwave Payment Webhook Notification
 applicantRouter.post("/flw-webhook", async(req, res, next)=>{
     try {
@@ -66,21 +78,10 @@ applicantRouter.post("/flw-webhook", async(req, res, next)=>{
             res.status(200).end()
         }
     } catch (error) {
-        next(error)
+        console.warn(error.message)
     }
 })
 
-// route for assigning flw_id
-applicantRouter.put("/flwid-assign", async(req, res, next) => {
-    try {
-        let updateReport = await applicantCollection.updateOne({_id: ObjectId.createFromHexString(req.body.tx_ref)}, {$set: {flw_id: req.body.flw_id}})
-        console.log('Payment assigning flw_id report')
-        console.log(updateReport)
-        res.status(201).end()
-    } catch (error) {
-        next(error)
-    }
-})
 
 // cronjob function for polling Flutterwave Payment Confirmation every 36 hours
 setInterval(async () => {
