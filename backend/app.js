@@ -9,7 +9,6 @@ import {articleRouter} from "./routes/article.js"
 import { jobRouter } from "./routes/job.js"
 import { courseRouter } from "./routes/course.js"
 import { draftRouter } from "./routes/draft.js"
-import { mailRouter } from "./routes/mail.js"
 import { showPostRouter } from "./routes/showPost.js"
 import { applicantRouter } from "./routes/applicant.js";
 
@@ -92,7 +91,6 @@ app.use("/api/articles", articleRouter)
 app.use("/api/jobs", jobRouter)
 app.use("/api/courses", courseRouter)
 app.use("/api/draft", draftRouter)
-app.use("/api", mailRouter)
 app.get("*", (req, res)=>{
     res.sendFile(join(__dirname, "../frontend", "dist", "index.html"))
 })

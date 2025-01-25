@@ -52,7 +52,7 @@ let validateArray = (arr, name, minLength = 2) => {
         throw new CustomError(`${name} should be an array`, 400);
     }
     if (arr.length < minLength) {
-        throw new CustomError(`Kindly make sure you fill/upload all required file fields`, 400);
+        throw new CustomError(`Kindly make sure you check/upload required ${name} fields`, 400);
     }
     if (!arr.every(item => typeof item === "string")) {
         throw new CustomError(`All elements in ${name} should be strings`);
@@ -108,7 +108,7 @@ export class CourseSchema{
 }
 
 export class ApplicantSchema{
-    constructor({ firstname, lastname, gender, dob, email, phone, street, postalCode, courseTitle, courseType, schoolName, graduationYear, highestEducation, emergencyFullname, emergencyRelationship, emergencyPhone, files }){
+    constructor({ firstname, lastname, gender, dob, email, phone, street, city, state, postalCode, courseTitle, courseType, idCards, parentConsent, schoolName, graduationYear, highestEducation, emergencyFullname, emergencyRelationship, emergencyPhone, files }){
         this.firstname = validate(firstname, "firstname")
         this.lastname = validate(lastname, "lastname")
         this.gender = validate(gender, "gender")
@@ -116,11 +116,15 @@ export class ApplicantSchema{
         this.email = validate(email, "email")
         this.phone = validate(phone, "phone")
         this.street = validate(street, "street")
+        this.city = validate(city, "city")
+        this.state = validate(state, "state")
         this.postalCode = validate(postalCode, "Postal Code")
         this.courseTitle = validate(courseTitle, "Course title")
         this.courseType = validate(courseType, "courseType")
-        this.schoolName = validate(schoolName, "schoolName")
-        this.graduationYear = validate(graduationYear, "graduationYear")
+        this.idCards = validateArray(idCards, "Identification Card", 1)
+        this.parentConsent = validate(parentConsent, "Parental Consent")
+        this.schoolName = validate(schoolName, "School Name")
+        this.graduationYear = validate(graduationYear, "Graduation Year")
         this.highestEducation = validate(highestEducation, "highestEducation")
         this.emergencyFullname = validate(emergencyFullname, "emergencyFullname")
         this.emergencyRelationship = validate(emergencyRelationship, "emergencyRelationship")

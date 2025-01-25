@@ -1,9 +1,8 @@
-function stripHtmlTags(content) {
-    return content.replace(/<\/?[^>]+(>|$)/g, "");
-}
+import { convert } from "html-to-text";
+
 
 export default function generateDescription(content, maxLength = 160) {
-    const plainTextContent = stripHtmlTags(content);
+    const plainTextContent = convert(content);
     if (plainTextContent.length <= maxLength) {
         return plainTextContent;
     }

@@ -345,8 +345,8 @@ const RegistrationForm = () => {
                         </div>
                         <div className="col-md-4">
                             <div className="form-floating">
-                                <input type="number" className="form-control rounded-0" name="postalCode" id="postal-code" placeholder="Your postal code" />
-                                <label htmlFor="postal-code">Postal Code</label>
+                                <input type="number" className="form-control rounded-0" name="postalCode" id="postal-code" placeholder="Your postal code" required/>
+                                <label htmlFor="postal-code">Postal Code<span className="text-danger">*</span></label>
                             </div>
                         </div>
                     </div>
@@ -392,33 +392,33 @@ const RegistrationForm = () => {
                     </div>
                     {/* body */}
                     <div>
-                        <p>What Form of Identification document do you have? Select all that applies</p>
+                                <p>What Form of Identification document do you have? Select at least one<span className="text-danger">*</span></p>
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="idCard" value="NIN" id="nin"/>
+                            <input type="checkbox" className="form-check-input" name="idCards[]" value="NIN" id="nin"/>
                             <label className="form-check-label" htmlFor="nin">
                                 NIN
                             </label>
                         </div>
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="idCard" value="International Passport" id="intl-passport"/>
+                            <input type="checkbox" className="form-check-input" name="idCards[]" value="International Passport" id="intl-passport"/>
                             <label className="form-check-label" htmlFor="intl-passport">
                                 International Passport
                             </label>
                         </div>
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="idCard" value="Driver's License" id="drivers-license"/>
+                            <input type="checkbox" className="form-check-input" name="idCards[]" value="Driver's License" id="drivers-license"/>
                             <label className="form-check-label" htmlFor="drivers-license">
                                 Driver's License
                             </label>
                         </div>
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="idCard" value="Voter's Card" id="voters-card"/>
+                            <input type="checkbox" className="form-check-input" name="idCards[]" value="Voter's Card" id="voters-card"/>
                             <label className="form-check-label" htmlFor="voters-card">
                                 Voter's Card
                             </label>
                         </div>
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" name="idCard" value="others" id="other-cards"/>
+                            <input type="checkbox" className="form-check-input" name="idCards[]" value="others" id="other-cards"/>
                             <label className="form-check-label" htmlFor="other-cards">
                                 Others
                             </label>
