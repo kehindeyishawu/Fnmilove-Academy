@@ -54,7 +54,7 @@ applicantRouter.post("/flw-webhook", async(req, res, next)=>{
             && response.data.amount === 20000
             && response.data.currency === "NGN") {
             // Success! Confirm the customer's payment by sending mail with details to company-------------------------------
-            mailRegFormData()
+            mailRegFormData(applicant);
             // delete applicant record from DB
             await applicantCollection.deleteOne({_id: applicant._id})
             res.status(200).end()

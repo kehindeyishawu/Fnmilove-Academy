@@ -472,19 +472,19 @@ const RegistrationForm = () => {
                     <div className="row gy-4">
                         <div className="col-md-6">
                             <div className="form-floating">
-                                <input type="text" className="form-control rounded-0" name="schoolName" id="school-name" placeholder="Your last school" />
+                                <input type="text" className="form-control rounded-0" name="schoolName" id="school-name" placeholder="Your last school" required/>
                                 <label htmlFor="school-name">Name of Last School Attended<span className="text-danger">*</span></label>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="form-floating">
-                                <input type="number" className="form-control rounded-0" name="graduationYear" id="graduation_year" placeholder="Your graduation year" />
+                                <input type="number" className="form-control rounded-0" name="graduationYear" id="graduation_year" placeholder="Your graduation year" required/>
                                 <label htmlFor="school-name">Year of Graduation<span className="text-danger">*</span></label>
                             </div>
                         </div>
                         <div className="col-12">
                             <div className="form-floating">
-                                <select className="form-select rounded-0" id="highest-education" name="highestEducation" placeholder="Your highest education">
+                                <select className="form-select rounded-0" id="highest-education" name="highestEducation" placeholder="Your highest education" required>
                                     <option value="">--Please select--</option>
                                     <option value="none">None</option>
                                     <option value="primary school">Primary School</option>
