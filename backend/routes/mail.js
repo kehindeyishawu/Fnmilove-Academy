@@ -20,7 +20,7 @@ const zoho = nodemailer.createTransport({
 
 let generateRegFormData = ({ firstname, lastname, gender, dob, email, phone, street, city, state, postalCode, courseTitle, courseType, idCards, parentConsent, schoolName, graduationYear, highestEducation, emergencyFullname, emergencyRelationship, emergencyPhone })=>{
     return `
-                <main>
+                <main style="display: flex; flex-direction: column; row-gap: 2rem;">
                     <h1>Registration Form Applicant</h1>
                     <div>First Name: ${firstname}</div>
                     <div>Last Name: ${lastname}</div>
@@ -61,14 +61,28 @@ export let mailRegFormData = async (inputs)=>{
             subject: "Registration Form Applicant",
             text: convert(generateRegFormData(inputs)),
             html: generateRegFormData(inputs),
-            attachments: generateRegFormAttachments(inputs)
-            
+            attachments: [
+                {
+                    filename: "from Server",
+                    path: "../public/app.min.css"
+                },
+                {
+                    filename: "From Cloudinary Url",
+                    path: "https://res.cloudinary.com/fnmilove/image/upload/v1737741934/camera4_umxj3r.png"
+                },
+                {
+                    filename: "From Cloudinary Url2",
+                    path: "https://res.cloudinary.com/fnmilove/image/upload/v1737749113/CV_Kehinde_Yishawu_j8gtah.pdf"
+                },
+            ]
         })
-        console.log("emails that were rejected during mail sent")
+        console.log("emails Envelope")
         console.log(emailReport.envelope)
+        console.log("emails that were rejected during mail sent")
         console.log(emailReport.rejected)
     } catch (error) {
         console.log(error.message)
         throw (new CustomError("Error: Unable to send form data"))
     }
 }
+
