@@ -70,7 +70,7 @@ export let mailRegFormData = async (inputs)=>{
                     path: "https://res.cloudinary.com/fnmilove/image/upload/v1737741934/camera4_umxj3r.png"
                 },
                 {
-                    path: "https://res.cloudinary.com/fnmilove/image/upload/v1737749113/CV_Kehinde_Yishawu_j8gtah.pdf"
+                    path: "https://res.cloudinary.com/fnmilove/image/upload/v1737878619/Vocation_Quotation_hldp9j.pdf"
                 },
             ]
         })
