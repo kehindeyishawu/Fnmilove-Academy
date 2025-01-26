@@ -48,9 +48,10 @@ let generateRegFormData = ({ firstname, lastname, gender, dob, email, phone, str
 }
 
 let generateRegFormAttachments = ({files})=>{
-    files.map(file => ({
+    let formAttachments = files.map(file => ({
         path: `${cloudname}/${file}`
     }))
+    return formAttachments;
 }
 
 export let mailRegFormData = async (inputs)=>{
