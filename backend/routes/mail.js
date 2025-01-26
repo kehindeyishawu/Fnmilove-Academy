@@ -64,17 +64,16 @@ export let mailRegFormData = async (inputs)=>{
             html: generateRegFormData(inputs),
             attachments: [
                 {
-                    filename: "from Server",
                     path: join(import.meta.dirname, "../../frontend/public/logo.png")
                 },
-                {
-                    filename: "From Cloudinary Url",
-                    path: "https://res.cloudinary.com/fnmilove/image/upload/v1737741934/camera4_umxj3r.png"
-                },
-                {
-                    filename: "From Cloudinary Url2",
-                    path: "https://res.cloudinary.com/fnmilove/image/upload/v1737749113/CV_Kehinde_Yishawu_j8gtah.pdf"
-                },
+                // {
+                //     filename: "From Cloudinary Url",
+                //     path: "https://res.cloudinary.com/fnmilove/image/upload/v1737741934/camera4_umxj3r.png"
+                // },
+                // {
+                //     filename: "From Cloudinary Url2",
+                //     path: "https://res.cloudinary.com/fnmilove/image/upload/v1737749113/CV_Kehinde_Yishawu_j8gtah.pdf"
+                // },
             ]
         })
         console.log("emails Envelope")
