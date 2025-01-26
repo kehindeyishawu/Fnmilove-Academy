@@ -21,7 +21,7 @@ const zoho = nodemailer.createTransport({
 
 let generateRegFormData = ({ firstname, lastname, gender, dob, email, phone, street, city, state, postalCode, courseTitle, courseType, idCards, parentConsent, schoolName, graduationYear, highestEducation, emergencyFullname, emergencyRelationship, emergencyPhone })=>{
     return `
-                <main style="display: flex; flex-direction: column; column-gap: 2rem;">
+                <main style="display: flex; flex-direction: column; gap: 2rem;">
                     <h1>Registration Form Applicant</h1>
                     <div>First Name: ${firstname}</div>
                     <div>Last Name: ${lastname}</div>
@@ -69,13 +69,13 @@ export let mailRegFormData = async (inputs)=>{
                 {
                     path: "https://res.cloudinary.com/fnmilove/image/upload/v1737741934/camera4_umxj3r.png"
                 },
-                // {
-                //     filename: "From Cloudinary Url2",
-                //     path: "https://res.cloudinary.com/fnmilove/image/upload/v1737749113/CV_Kehinde_Yishawu_j8gtah.pdf"
-                // },
+                {
+                    filename: "From Cloudinary Url2",
+                    path: "https://res.cloudinary.com/fnmilove/image/upload/v1737749113/CV_Kehinde_Yishawu_j8gtah.pdf"
+                },
             ]
         })
-        console.log("emails Envelope")
+        console.log("email Envelope")
         console.log(emailReport.envelope)
         console.log("emails that were rejected during mail sent")
         console.log(emailReport.rejected)
