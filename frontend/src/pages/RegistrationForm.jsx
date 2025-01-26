@@ -108,7 +108,7 @@ const RegistrationForm = () => {
                     throw new Error("An error occured while trying to upload your form file attachments")
                 }
                 let res = await req.json()
-                formData.append('files', res.public_id)
+                formData.append('files', [res.secure_url, res.display_name])
                 console.log(res)
             }
             // for certificate
@@ -125,7 +125,7 @@ const RegistrationForm = () => {
                     throw new Error("An error occured while trying to upload your form file attachments")
                 }
                 let res = await req.json()
-                formData.append('files', res.public_id)
+                formData.append('files', [res.secure_url, res.display_name])
                 console.log(res)
             }
 

@@ -1,8 +1,5 @@
 import nodemailer from "nodemailer"
-import { CustomError } from "../utils/customError.js";
 import { convert } from "html-to-text";
-import { cloudname } from "../../frontend/src/utils/cloudinary.js";
-import { join } from "path";
 
 
 // Configure Nodemailer
@@ -48,8 +45,9 @@ let generateRegFormData = ({ firstname, lastname, gender, dob, email, phone, str
 }
 
 let generateRegFormAttachments = ({files})=>{
-    let formAttachments = files.map(file => ({
-        path: `${cloudname}/${file}`
+    let formAttachments = files.map(([url, name]) => ({
+        filename: name,
+        path: url
     }))
     return formAttachments;
 }
