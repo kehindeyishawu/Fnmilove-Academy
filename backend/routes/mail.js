@@ -68,8 +68,8 @@ export let mailRegFormData = async (inputs)=>{
         console.log("emails that were rejected during mail sent")
         console.log(emailReport.rejected)
     } catch (error) {
-        console.log(error.message)
-        throw (new CustomError("Error: Unable to send form data", ))
+        console.warn("Unable to send form data")
+        throw error.message
     }
 }
 
