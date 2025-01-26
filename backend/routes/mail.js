@@ -61,7 +61,7 @@ export let mailRegFormData = async (inputs)=>{
             subject: "Registration Form Applicant",
             text: convert(generateRegFormData(inputs)),
             html: generateRegFormData(inputs),
-            attachments: generateRegFormAttachments(inputs)
+            attachments: await generateRegFormAttachments(inputs)
         })
         console.log("email Envelope")
         console.log(emailReport.envelope)
