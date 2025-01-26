@@ -45,12 +45,10 @@ let generateRegFormData = ({ firstname, lastname, gender, dob, email, phone, str
 }
 
 let generateRegFormAttachments = ({files})=>{
-    console.log(files)
     let formAttachments = files.map(([url, name]) => ({
         filename: name,
         path: url
     }))
-    console.log(formAttachments)
     return formAttachments;
 }
 
