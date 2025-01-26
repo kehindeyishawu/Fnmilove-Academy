@@ -16,6 +16,7 @@ const zoho = nodemailer.createTransport({
     // }
 });
 
+
 let generateRegFormData = ({ firstname, lastname, gender, dob, email, phone, street, city, state, postalCode, courseTitle, courseType, idCards, parentConsent, schoolName, graduationYear, highestEducation, emergencyFullname, emergencyRelationship, emergencyPhone })=>{
     return `
                 <main">

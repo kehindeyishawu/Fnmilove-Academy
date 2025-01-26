@@ -65,7 +65,7 @@ applicantRouter.post("/flw-webhook", async(req, res, next)=>{
             response.data.status === "successful"
             && response.data.amount === 20000
             && response.data.currency === "NGN") {
-            // Success! Confirm the customer's payment by sending mail with details to company-------------------------------
+            // Success! Confirm the customer's payment by sending mail with details to company
             mailRegFormData(applicant);
             // delete applicant record from DB
             await applicantCollection.deleteOne({_id: applicant._id})
@@ -87,7 +87,7 @@ applicantRouter.post("/flw-webhook", async(req, res, next)=>{
 setInterval(async () => {
     try {
         let unverifiedPayments = await applicantCollection.find({flw_id: {$exists: true}})
-        console.log(`Cronjob Delete Report`)
+        console.log(`Cronjob Report`)
         unverifiedPayments.forEach(async(payment) => {
             // verifying transaction id with asssigned flw_id in DB
             const response = await flw.Transaction.verify({ id: payment.flw_id });
@@ -95,23 +95,17 @@ setInterval(async () => {
                 response.data.status === "successful"
                 && response.data.amount === 20000
                 && response.data.currency === "NGN") {
-                // Success! Confirm the customer's payment by sending mail with details to company-----------------------
+                // Success! Confirm the customer's payment by sending mail with details to company
+                mailRegFormData(payment)
                 // delete applicant record from DB
                 let jobReport = await applicantCollection.deleteOne({ _id: payment._id })
-                // implement cloudinary image delete operation below ----------------------------------
+                // implement cloudinary image delete operation below
                 console.log(jobReport)
-                
-            } 
+                return;
+            }
         })
     } catch (error) {
         console.log(error)
     }
 }, 60000 * 60 * 24 * 1.5);
 
-// let sample = async()=>{
-//     let doc = await applicantCollection.deleteOne({ _id: ObjectId.createFromHexString("6792f0351ca82dba5259480e")})
-//     console.log(doc)
-// }
-// setTimeout(() => {
-//     sample()
-// }, 5000);

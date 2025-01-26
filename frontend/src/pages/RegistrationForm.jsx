@@ -175,7 +175,7 @@ const RegistrationForm = () => {
                     console.log(response);
                     closePaymentModal() // this will close the modal programmatically
                     if (response.status === "successful" || response.status === "completed"){
-                        // setFormSubmitted(true)
+                        setFormSubmitted(true)
                         console.log(`For backend; textRef:${response.tx_ref}  transaction_id:${response.transaction_id}`)
                         // assign applicant payment id
                         let data = {tx_ref: response.tx_ref, flw_id: response.transaction_id}
