@@ -21,35 +21,34 @@ const zoho = nodemailer.createTransport({
 
 let generateRegFormData = ({ firstname, lastname, gender, dob, email, phone, street, city, state, postalCode, courseTitle, courseType, idCards, parentConsent, schoolName, graduationYear, highestEducation, emergencyFullname, emergencyRelationship, emergencyPhone })=>{
     return `
-                <main style="display: flex; flex-direction: column; gap: 2rem;">
+                <main">
                     <h1>Registration Form Applicant</h1>
-                    <div>First Name: ${firstname}</div>
-                    <div>Last Name: ${lastname}</div>
-                    <div>Gender: ${gender}</div>
-                    <div>Date of Birth: ${dob}</div>
-                    <div>Email: ${email}</div>
-                    <div>Phone Number: ${phone}</div>
-                    <div>Street Address: ${street}</div>
-                    <div>City: ${city}</div>
-                    <div>State: ${state}</div>
-                    <div>Postal Code: ${postalCode}</div>
-                    <div>Course Title: ${courseTitle}</div>
-                    <div>Course Type: ${courseType}</div>
-                    <div>Identification: ${idCards}</div>
-                    <div>Parental Consent to travel: ${parentConsent}</div>
-                    <div>Last School Attended: ${schoolName}</div>
-                    <div>Year of Graduation: ${graduationYear}</div>
-                    <div>Highest Level of Education: ${highestEducation}</div>
-                    <div>Emergency Contact Fullname: ${emergencyFullname}</div>
-                    <div>Emergency Contact Relationship: ${emergencyRelationship}</div>
-                    <div>Emergency Contact Number: ${emergencyPhone}</div>
+                    <p>First Name: ${firstname}</p>
+                    <p>Last Name: ${lastname}</p>
+                    <p>Gender: ${gender}</p>
+                    <p>Date of Birth: ${dob}</p>
+                    <p>Email: ${email}</p>
+                    <p>Phone Number: ${phone}</p>
+                    <p>Street Address: ${street}</p>
+                    <p>City: ${city}</p>
+                    <p>State: ${state}</p>
+                    <p>Postal Code: ${postalCode}</p>
+                    <p>Course Title: ${courseTitle}</p>
+                    <p>Course Type: ${courseType}</p>
+                    <p>Identification: ${idCards}</p>
+                    <p>Parental Consent to travel: ${parentConsent}</p>
+                    <p>Last School Attended: ${schoolName}</p>
+                    <p>Year of Graduation: ${graduationYear}</p>
+                    <p>Highest Level of Education: ${highestEducation}</p>
+                    <p>Emergency Contact Fullname: ${emergencyFullname}</p>
+                    <p>Emergency Contact Relationship: ${emergencyRelationship}</p>
+                    <p>Emergency Contact Number: ${emergencyPhone}</p>
                 <main>
             `
 }
 
 let generateRegFormAttachments = ({files})=>{
-    files.map((file, index) => ({
-        filename:`document${index + 1}`,
+    files.map(file => ({
         path: `${cloudname}/${file}`
     }))
 }
@@ -62,17 +61,7 @@ export let mailRegFormData = async (inputs)=>{
             subject: "Registration Form Applicant",
             text: convert(generateRegFormData(inputs)),
             html: generateRegFormData(inputs),
-            attachments: [
-                {
-                    path: join(import.meta.dirname, "../../frontend/public/logo.png")
-                },
-                {
-                    path: "https://res.cloudinary.com/fnmilove/image/upload/v1737741934/camera4_umxj3r.png"
-                },
-                {
-                    path: "https://res.cloudinary.com/fnmilove/image/upload/v1737878619/Vocation_Quotation_hldp9j.pdf"
-                },
-            ]
+            attachments: generateRegFormAttachments()
         })
         console.log("email Envelope")
         console.log(emailReport.envelope)
