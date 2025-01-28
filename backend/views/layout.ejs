@@ -48,6 +48,66 @@
         const staticTime = document.getElementById("static-toast-time")
         // toastStaticBootstrap.show();
 
+        // Contact Form logic
+        let contactForm = document.getElementById("contact-form")
+        let contactFormSubmitButton = document.getElementById("contact-form-submit-button");
+        let toggleInputsAccess = (form, toggle)=>{
+            for (const element of form.elements) {
+                element.disabled = toggle;
+            }
+        }
+        let formSubmitLogic = async()=>{
+            try {
+                let contactModal = bootstrap.Modal.getOrCreateInstance('#contactModal')
+                contactFormSubmitButton.disabled = true;
+                contactFormSubmitButton.innerHTML = `
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span role="status">Sending...</span>
+                `
+                let formData = new URLSearchParams(new FormData(contactForm));
+
+                for (const element of contactForm.elements) {
+                    if (element.value === "") {
+                        element.classList.add("is-invalid")
+                        contactFormSubmitButton.innerHTML = "Send"
+                        return
+                    }
+                }
+                toggleInputsAccess(contactForm, true)
+
+                let formRequest = await fetch("/api/contact", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                })
+                if (!formRequest.ok) {
+                    throw new Error(await formRequest.text())
+                }
+
+                contactFormSubmitButton.innerHTML = "Send"
+                contactFormSubmitButton.disabled = false;
+                contactForm.reset();
+                fadeMessage.textContent = "Message sent"
+                toastFadeBootstrap.show()
+                contactModal.hide()
+                toggleInputsAccess(contactForm, false)
+            } catch (error) {
+                toggleInputsAccess(contactForm, false)
+                contactFormSubmitButton.innerHTML = "Send"
+                contactFormSubmitButton.disabled = false;
+                staticMessage.textContent = error.message
+                toastStaticBootstrap.show()
+            }
+        }
+        contactForm.addEventListener("submit", (e)=>{
+            e.preventDefault()
+            formSubmitLogic()
+        })
+        contactFormSubmitButton.addEventListener("click", formSubmitLogic)
+
+
         <%if(post.postType === "job"){%>
             let jobForm = document.getElementById("job-form");
             let jobFormSubmitButton = document.querySelector(".job-form-submit-btn")
@@ -84,13 +144,16 @@
                     const req = await fetch("/api/<%=post.postType || 'course'%>s/<%=post._id%>", {
                         method: "DELETE"
                     })
+                    if(!req.ok){
+                        throw new Error(await req.text())
+                    }
                     fadeMessage.textContent = "<%=post.postType || 'course'%> deleted"
                     toastFadeBootstrap.show()
                     setTimeout(() => {
                         location.href = "/<%=post.postType ? 'blog' : 'courses' %>"
                     }, 1000);
                 } catch (error) {
-                    fadeMessage.textContent = res
+                    staticMessage.textContent = error.message
                     toastStaticBootstrap.show()
                 }
             })

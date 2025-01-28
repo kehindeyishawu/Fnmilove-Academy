@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer"
 import { convert } from "html-to-text";
+import { CustomError } from "../utils/customError.js";
+import { validate } from "../utils/connectToDB.js";
 
 
 // Configure Nodemailer
@@ -16,7 +18,7 @@ const zoho = nodemailer.createTransport({
     // }
 });
 
-
+// Applicant Registration Form Mailing
 let generateRegFormData = ({ firstname, lastname, gender, dob, email, phone, street, city, state, postalCode, courseTitle, courseType, idCards, parentConsent, schoolName, graduationYear, highestEducation, emergencyFullname, emergencyRelationship, emergencyPhone })=>{
     return `
                 <main">
@@ -69,8 +71,38 @@ export let mailRegFormData = async (inputs)=>{
         console.log("emails that were rejected during mail sent")
         console.log(emailReport.rejected)
     } catch (error) {
-        console.warn("Unable to send form data")
+        console.warn("Unable to send Registration form data")
         throw error.message
     }
 }
 
+// Contact Form Mailing
+const genContactFormData = ({fullname, email, phone, issue, message})=>{
+    return `
+        <p>Good Day Fnmilove, here's an email from your website contact form</p>
+        <h3>Issue: ${validate(issue, 'issue')}</h3>
+        <p>${validate(message, 'Message')}</p>
+        <h4 style='margin-top: 60px;'>From: ${validate(fullname, "Full Name")}</h4>
+        <div>${validate(phone, 'phone')}</div>
+        <div>${validate(email, 'email')}</div>
+    `
+}
+
+export let mailContactFormData = async(inputs)=>{
+    try {
+        let emailReport = await zoho.sendMail({
+            from: "Fnmilove Academy sales@fnmiloveacademy.com",
+            to: "vincent@fnmiloveacademy.com",
+            subject: "Contact Form Data",
+            text: convert(genContactFormData(inputs)),
+            html: genContactFormData(inputs)
+        })
+        console.log("email Envelope")
+        console.log(emailReport.envelope)
+        console.log("emails that were rejected during mail sent")
+        console.log(emailReport.rejected)
+    } catch (error) {
+        console.warn(error.message)
+        throw new CustomError("Unable to send Contact form data", 400)
+    }
+}

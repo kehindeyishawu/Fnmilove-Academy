@@ -11,6 +11,8 @@ import { courseRouter } from "./routes/course.js"
 import { draftRouter } from "./routes/draft.js"
 import { showPostRouter } from "./routes/showPost.js"
 import { applicantRouter } from "./routes/applicant.js";
+import { contactRouter } from "./routes/contact.js";
+
 
 let app = express()
 const __dirname = import.meta.dirname;
@@ -91,6 +93,7 @@ app.use("/api/articles", articleRouter)
 app.use("/api/jobs", jobRouter)
 app.use("/api/courses", courseRouter)
 app.use("/api/draft", draftRouter)
+app.use("/api/contact", contactRouter)
 app.get("*", (req, res)=>{
     res.sendFile(join(__dirname, "../frontend", "dist", "index.html"))
 })

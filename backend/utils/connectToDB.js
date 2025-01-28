@@ -40,7 +40,7 @@ export async function connectToDB() {
 }
 
 
-let validate = (input, name)=>{
+export let validate = (input, name)=>{
     if(input && typeof input === "string"){
         return input
     }else{

@@ -19,7 +19,7 @@ const Layout = () => {
         <>
             {postUpdate || pathname==="/login" || pathname==="/signup"? null : <Header setShowModal={setShowModal} />}
             <Outlet context={{setFadeNotification, setStaticNotification, setShowLoading}}/>
-            <ContactDialog showModal={showModal} setShowModal={setShowModal}/>
+            <ContactDialog showModal={showModal} setShowModal={setShowModal} setFadeNotification={setFadeNotification} setStaticNotification={setStaticNotification} />
             {postUpdate || pathname === "/login" || pathname === "/signup" ? null : <Footer setShowModal={setShowModal}/>}
             <Notification fadeNotification={fadeNotification} setFadeNotification={setFadeNotification} staticNotification={staticNotification} setStaticNotification={setStaticNotification}/>
             <LoadingDialog showLoading={showLoading} setShowLoading={setShowLoading}/>
