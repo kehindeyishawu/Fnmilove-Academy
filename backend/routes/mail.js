@@ -106,3 +106,39 @@ export let mailContactFormData = async(inputs)=>{
         throw new CustomError("Unable to send Contact form data", 400)
     }
 }
+
+// Job Form Mail
+const genJobFormData = ({ companyName, title, firstname, lastname, email, phone, message, experience }) => {
+    return `
+        <p>Good Day Fnmilove, You have a new Job Applicant for ${companyName}'s ${title} vacancy </p>
+        <div>First Name: ${validate(firstname, 'firstname')}</div>
+        <div>Last Name: ${validate(lastname, 'lastname')}</div>
+        <div>Phone Number: ${validate(phone, 'phone')}</div>
+        <div>Email: ${validate(email, 'email')}</div>
+        <div>Years of Experience: ${experience}</div>
+        <p>${validate(message, 'Message')}</p>
+    `
+}
+
+export let mailJobFormData = async (inputs, file) => {
+    try {
+        let emailReport = await zoho.sendMail({
+            from: "Fnmilove Academy sales@fnmiloveacademy.com",
+            to: "vincent@fnmiloveacademy.com",
+            subject: "Job Application Form",
+            text: convert(genJobFormData(inputs)),
+            html: genJobFormData(inputs),
+            attachments: [{
+                filename: file.originalname,
+                content: file.buffer
+            }]
+        })
+        console.log("email Envelope")
+        console.log(emailReport.envelope)
+        console.log("emails that were rejected during mail sent")
+        console.log(emailReport.rejected)
+    } catch (error) {
+        console.warn(error.message)
+        throw new CustomError("Unable to send Contact form data", 400)
+    }
+}

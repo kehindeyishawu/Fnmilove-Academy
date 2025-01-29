@@ -51,7 +51,7 @@
         // Contact Form logic
         let contactForm = document.getElementById("contact-form")
         let contactFormSubmitButton = document.getElementById("contact-form-submit-button");
-        let toggleInputsAccess = (form, toggle)=>{
+        let disableFormInputs = (form, toggle)=>{   //this function is also utilized somewhere else on this file so be careful when editing it.
             for (const element of form.elements) {
                 element.disabled = toggle;
             }
@@ -73,7 +73,7 @@
                         return
                     }
                 }
-                toggleInputsAccess(contactForm, true)
+                disableFormInputs(contactForm, true)
 
                 let formRequest = await fetch("/api/contact", {
                     method: "POST",
@@ -92,9 +92,9 @@
                 fadeMessage.textContent = "Message sent"
                 toastFadeBootstrap.show()
                 contactModal.hide()
-                toggleInputsAccess(contactForm, false)
+                disableFormInputs(contactForm, false)
             } catch (error) {
-                toggleInputsAccess(contactForm, false)
+                disableFormInputs(contactForm, false)
                 contactFormSubmitButton.innerHTML = "Send"
                 contactFormSubmitButton.disabled = false;
                 staticMessage.textContent = error.message
@@ -111,18 +111,45 @@
         <%if(post.postType === "job"){%>
             let jobForm = document.getElementById("job-form");
             let jobFormSubmitButton = document.querySelector(".job-form-submit-btn")
-            jobForm.addEventListener("submit", (e)=>{
-                e.preventDefault();
+            jobForm.addEventListener("submit", async(e)=>{
+                try {
+                    e.preventDefault();
+                    let resumeInput = jobForm.elements['resume']
+                    if (resumeInput.files[0].size > 4 * 1024 * 1024) {
+                        resumeInput.classList.add("is-invalid")
+                        resumeInput.value = "";
+                        return;
+                    }
+                    let formData = new FormData(jobForm);
+                    formData.append("title", "<%=post.title%>")
+                    formData.append("companyName", "<%=post.companyName%>")
+                    disableFormInputs(jobForm, true)
 
-                // Disable the form elements
-                Array.from(jobForm.elements).forEach(element => {
-                    element.disabled = true;
-                });
+                    jobFormSubmitButton.innerHTML = `
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        <span role="status">Sending...</span>
+                    `
+                    
+                    let formRequest = await fetch("/api/contact/job", {
+                        method: "POST",
+                        body: formData,
+                    })
+                    if (!formRequest.ok) {
+                        throw new Error(await formRequest.text())
+                    }
 
-                jobFormSubmitButton.innerHTML=`
-                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                    <span role="status">Sending...</span>
-                `
+                    jobFormSubmitButton.innerHTML = "Submit Application"
+                    disableFormInputs(jobForm, false)
+                    jobForm.reset()
+                    contactForm.reset();
+                    fadeMessage.textContent = "Message sent"
+                    toastFadeBootstrap.show()
+                } catch (error) {
+                    jobFormSubmitButton.innerHTML = "Submit Application"
+                    disableFormInputs(jobForm, false);
+                    staticMessage.textContent = error.message
+                    toastStaticBootstrap.show()
+                }
             })
         <%}%>
 

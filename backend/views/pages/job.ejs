@@ -74,19 +74,19 @@
                             </div>
                             <div class='col-lg-6'>
                                 <label htmlFor="firstname" class='form-label'>First name <span class='text-danger'>*</span></label>
-                                <input type="text" class='form-control rounded-0' id='firstname' placeholder='First name' required />
+                                <input type="text" class='form-control rounded-0' name="firstname" id='firstname' placeholder='First name' required />
                             </div>
                             <div class='col-lg-6'>
                                 <label htmlFor="lastname" class='form-label'>Last name <span class='text-danger'>*</span></label>
-                                <input type="text" class='form-control rounded-0' id='lastname' placeholder='Last name' required />
+                                <input type="text" class='form-control rounded-0' name="lastname" id='lastname' placeholder='Last name' required />
                             </div>
                             <div class='col-lg-6'>
                                 <label htmlFor="email" class='form-label'>Email <span class='text-danger'>*</span></label>
-                                <input type="email" class='form-control rounded-0' id='email' placeholder='Email' required />
+                                <input type="email" class='form-control rounded-0' name="email" id='email' placeholder='Email' required />
                             </div>
                             <div class='col-lg-6'>
                                 <label htmlFor="phone" class='form-label'>Phone number</label>
-                                <input type="number" class='form-control rounded-0' id='phone' placeholder='Phone number'
+                                <input type="number" class='form-control rounded-0' name="phone" id='phone' placeholder='Phone number'
                                     required />
                             </div>
                             <div class='col-12'>
@@ -97,6 +97,7 @@
                                 <Label class="form-label" for="resume">Resume</Label>
                                 <input accept=".pdf, .doc, .docx" type="file" class="form-control rounded-0" name="resume" id="resume" required>
                                 <div class="form-text">Max. file size: 4MB (pdf, doc, docx)</div>
+                                <div class="invalid-feedback">Maximum file upload size is 4MB</div>
                             </div>
                             <div class='col-12'>
                                 <div class="my-3">
