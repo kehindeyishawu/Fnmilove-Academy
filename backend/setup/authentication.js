@@ -1,8 +1,7 @@
 import { hash, verify } from "argon2";
-import { Router } from "express";
 import passport from "passport";
 import LocalStrategy from "passport-local"
-import crypto from "crypto"
+import { userCollection } from "../utils/connectToDB";
 
 // const hashedPassword = await hash("password");
 // console.log(hashedPassword)
@@ -23,7 +22,3 @@ passport.use(new LocalStrategy(function verify(username, password, cb) {
         });
     });
 }));
-
-export let authRouter = Router();
-
-// authRouter.get()
