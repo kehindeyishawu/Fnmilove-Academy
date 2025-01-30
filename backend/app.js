@@ -12,6 +12,7 @@ import { draftRouter } from "./routes/draft.js"
 import { showPostRouter } from "./routes/showPost.js"
 import { applicantRouter } from "./routes/applicant.js";
 import { contactRouter } from "./routes/contact.js";
+import { authRouter } from "./routes/auth.js";
 
 
 let app = express()
@@ -93,7 +94,8 @@ app.use("/api/articles", articleRouter)
 app.use("/api/jobs", jobRouter)
 app.use("/api/courses", courseRouter)
 app.use("/api/draft", draftRouter)
-app.use("/api/contact", contactRouter)
+app.use("/api/contact", contactRouter);
+app.use("/api/auth", authRouter)
 app.get("*", (req, res)=>{
     res.sendFile(join(__dirname, "../frontend", "dist", "index.html"))
 })

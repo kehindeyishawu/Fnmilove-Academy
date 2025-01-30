@@ -134,6 +134,16 @@ export class ApplicantSchema{
     }
 }
 
+export class UserSchema{
+    constructor({firstname, lastname, email, password}){
+        this.firstname = validate(firstname, "firstname")
+        this.lastname = validate(lastname, "lastname")
+        this.email = validate(email, "email")
+        this.password = validate(password, "password") //generate a better validation for password
+        this.role = "user";
+    }
+}
+
 // Graceful shutdown process
 let gracefulShutdown = async ()=>{
     setTimeout(()=>{

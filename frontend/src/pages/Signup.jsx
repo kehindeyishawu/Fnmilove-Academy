@@ -3,11 +3,39 @@ import { setContainerHalfWidth } from "../utils/cloudinary"
 import { FaArrowRightLong } from "react-icons/fa6"
 import { Link } from "react-router-dom"
 import { cloudname } from "../utils/cloudinary"
+import { FaCheckCircle } from "react-icons/fa"
 
 const Signup = () => {
     const [formFields, setFormFields] = useState({firstname:    "", lastname:   "", email: "", password: "", confirmPassword:   "" })
+    const [passwordValidation, setPasswordValidation] = useState({
+        minlength: true,
+        hasUpperCase: true,
+        hasLowerCase: true,
+        hasNumber: true,
+        hasSpecialChar: true, 
+    })
+
+    const validatePassword = (value) => {
+        setPasswordValidation({
+            minlength: value.length >= 8,
+            hasUpperCase: /[A-Z]/.test(value),
+            hasLowerCase: /[a-z]/.test(value),
+            hasNumber: /[0-9]/.test(value),
+            hasSpecialChar: /[!@#$%^&*]/.test(value)
+        })
+    }
+    const passedPasswordValidation = ()=>{
+        let validationValues = Object.values(passwordValidation)
+        if (validationValues.every(e => e === true)) return true;
+        return false
+    }
+
     const formSubmit = (e) => {
         e.preventDefault()
+        // make sure password passes validation
+        if(passedPasswordValidation()){
+            //write the rest of your code in here
+        }
     }
     const handleFormInput = (e) => {
         setFormFields((prevState) => {
@@ -15,6 +43,9 @@ const Signup = () => {
             let newInputs = { ...prevState }
             return newInputs
         })
+        if(e.target.name === "password"){
+            validatePassword(e.target.value)
+        }
     }
     const handlePasswordConfirmation = (e) =>{
         handleFormInput(e)
@@ -30,7 +61,7 @@ const Signup = () => {
                         <img className="img-fluid" src={`${cloudname}/${setContainerHalfWidth(`ar_${screen.width >= 1199 ? "1:2," : "1:3,"}`)}/cosmetics-1`} alt="" />
                     </div>
                     <div className="col-md-6 mx-auto">
-                        <div className="container-fluid mt-4 mt-lg-3">
+                        <div className="container-fluid mt-4">
                             <div className="hstack justify-content-center gap-1 align-items-end">
                                 <img src="/fnmi-logo.png" width={61} alt="" />
                                 <img src="/logo.png" width={50} alt="" />
@@ -80,6 +111,13 @@ const Signup = () => {
                                     <div className="form-floating">
                                         <input type="password" name="password" onChange={handleFormInput} value={formFields.password} className="form-control rounded-0" id="floatingPassword" required placeholder="Password" />
                                         <label htmlFor="floatingPassword">Password</label>
+                                    </div>
+                                    <div className="vstack my-2" hidden={passedPasswordValidation()}>
+                                        <span className={passwordValidation.minlength ? 'text-success' : 'text-danger'}><FaCheckCircle /> At least 8 characters long</span>
+                                        <span className={passwordValidation.hasUpperCase ? 'text-success' : 'text-danger'}><FaCheckCircle /> At least one uppercase letter</span>
+                                        <span className={passwordValidation.hasLowerCase ? 'text-success' : 'text-danger'}><FaCheckCircle /> At least one lowercase letter</span>
+                                        <span className={passwordValidation.hasNumber ? 'text-success' : 'text-danger'}><FaCheckCircle /> At least one number</span>
+                                        <span className={passwordValidation.hasSpecialChar ? 'text-success' : 'text-danger'}><FaCheckCircle /> At least one special character</span>
                                     </div>
                                 </div>
                                 <div className="col">

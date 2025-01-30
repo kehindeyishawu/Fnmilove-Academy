@@ -7,6 +7,7 @@ import Notification from "./components/Notification";
 import LoadingDialog from "./components/LoadingDialog";
 
 const Layout = () => {
+    const [user, setUser] = useState(null);
     // contact Form Modal
     const [showModal, setShowModal] = useState(false);
     // Other Modals
@@ -14,13 +15,15 @@ const Layout = () => {
     const [fadeNotification, setFadeNotification] = useState(false);
     const [staticNotification, setStaticNotification] = useState(false);
     let {pathname} = useLocation();
-    let postUpdate = pathname.includes("/edit") || pathname.includes("/new")
+    let hideFromPages = ["/edit", "/new", "/login", "/signup", "/fla-admin"]
+    let hideHeaderAndFooter = hideFromPages.includes(pathname)
+
     return (
         <>
-            {postUpdate || pathname==="/login" || pathname==="/signup"? null : <Header setShowModal={setShowModal} />}
+            {hideHeaderAndFooter ? null : <Header setShowModal={setShowModal} />}
             <Outlet context={{setFadeNotification, setStaticNotification, setShowLoading}}/>
             <ContactDialog showModal={showModal} setShowModal={setShowModal} setFadeNotification={setFadeNotification} setStaticNotification={setStaticNotification} />
-            {postUpdate || pathname === "/login" || pathname === "/signup" ? null : <Footer setShowModal={setShowModal}/>}
+            {hideHeaderAndFooter ? null : <Footer setShowModal={setShowModal}/>}
             <Notification fadeNotification={fadeNotification} setFadeNotification={setFadeNotification} staticNotification={staticNotification} setStaticNotification={setStaticNotification}/>
             <LoadingDialog showLoading={showLoading} setShowLoading={setShowLoading}/>
         </>

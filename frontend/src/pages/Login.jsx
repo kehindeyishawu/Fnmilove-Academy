@@ -67,7 +67,7 @@ const Login = () => {
                             <button className="btn btn-primary py-2 mb-4 fw-bold rounded-0 w-100 hstack">
                                 <span className="mx-auto">Log in</span> <FaArrowRightLong />
                             </button>
-                            <div className="text-center form-text">Don't have an account yet? <Link to="/signup" className="link-info">Sign Up</Link></div>
+                            {/* <div className="text-center form-text">Don't have an account yet? <Link to="/signup" className="link-info">Sign Up</Link></div> */}
                         </form>
                     </div>
                     <div className="col-md-6 col-lg-8 d-none d-md-block">

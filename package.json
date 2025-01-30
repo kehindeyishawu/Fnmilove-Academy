@@ -11,6 +11,7 @@
   "author": "Kehinde Yishawu",
   "license": "ISC",
   "dependencies": {
+    "argon2": "^0.41.1",
     "connect-mongodb-session": "^5.0.0",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
@@ -21,6 +22,8 @@
     "html-to-text": "^9.0.5",
     "mongodb": "^6.12.0",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.16"
+    "nodemailer": "^6.9.16",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
   }
 }

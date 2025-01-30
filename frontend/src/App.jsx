@@ -46,7 +46,7 @@ function App() {
           element: <Terms/>
         },
         {
-          path: "/login",
+          path: "/fla-admin",
           element: <Login />
         },
         {
