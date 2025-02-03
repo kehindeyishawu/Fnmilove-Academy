@@ -54,16 +54,15 @@ sessionStore.on('error', function (error) {
     // Also get an error here
     console.log(error)
 });
-// app.enable('trust proxy')
+// Set trust proxy to recognize the proxy headers appropriately  
+app.set('trust proxy', 1);
 app.use(session({
     secret: process.env.SESSION_SECRETS,
     store: sessionStore,
-    proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
-    // name: 'FnmiloveName',
+    //proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
     cookie: {
         secure: process.env.NODE_ENV === "development" ? false : true,
         maxAge: 60000 * 60 * 24 * 1, //one day expiration
-        // sameSite: "none",
     },
     resave: false,
     saveUninitialized: false,
@@ -76,7 +75,7 @@ app.use((req, res, next)=>{
     res.locals.path = req.path;
     res.locals.cloudname = "https://res.cloudinary.com/fnmilove/image/upload";
     res.locals.user = req.user;
-    console.log(req.isAuthenticated())
+    // console.log(req.isAuthenticated())
     next()
 })
 // Routes
