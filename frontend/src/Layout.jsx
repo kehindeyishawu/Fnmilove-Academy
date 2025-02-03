@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom"
 import Footer from "./components/Footer"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ContactDialog from "./components/ContactDialog";
 import Header from "./components/Header";
 import Notification from "./components/Notification";
@@ -15,13 +15,30 @@ const Layout = () => {
     const [fadeNotification, setFadeNotification] = useState(false);
     const [staticNotification, setStaticNotification] = useState(false);
     let {pathname} = useLocation();
-    let hideFromPages = ["/edit", "/new", "/login", "/signup", "/fla-admin"]
-    let hideHeaderAndFooter = hideFromPages.includes(pathname)
+    let hideFromPages = ["/edit", "/new", "/login", "/signup", "/fla-admin", "/password-reset"]
+    let hideHeaderAndFooter = hideFromPages.some(e => pathname.includes(e))
+
+    useEffect(()=>{
+        let sideEffect = async ()=>{
+            try {
+                let req = await fetch("/api/auth/isloggedin")
+                if (!req.ok){
+                    if(req.status === 401) setUser(null);
+                    return
+                }
+                let currentUser = await req.json()
+                setUser({...currentUser})
+            } catch (error) {
+                console.warn(error.message)
+            }
+        }
+        sideEffect()
+    }, [pathname])
 
     return (
         <>
-            {hideHeaderAndFooter ? null : <Header setShowModal={setShowModal} />}
-            <Outlet context={{setFadeNotification, setStaticNotification, setShowLoading}}/>
+            {hideHeaderAndFooter ? null : <Header setShowModal={setShowModal} setStaticNotification={setStaticNotification} setFadeNotification={setFadeNotification} user={user} setUser={setUser} />}
+            <Outlet context={{setFadeNotification, setStaticNotification, setShowLoading, user, setUser}}/>
             <ContactDialog showModal={showModal} setShowModal={setShowModal} setFadeNotification={setFadeNotification} setStaticNotification={setStaticNotification} />
             {hideHeaderAndFooter ? null : <Footer setShowModal={setShowModal}/>}
             <Notification fadeNotification={fadeNotification} setFadeNotification={setFadeNotification} staticNotification={staticNotification} setStaticNotification={setStaticNotification}/>

@@ -1,4 +1,6 @@
-<header>
-    <%- include("./headline.ejs") %>
-    <%- include("./headNav.ejs") %>
-</header>
+<%if(!user){%>
+    <header>
+        <%- include("./headline.ejs") %>
+        <%- include("./headNav.ejs") %>
+    </header>
+<%}%>

@@ -6,7 +6,6 @@ import About from './pages/About.jsx'
 import Courses from './pages/Courses.jsx'
 import Blog from './pages/Blog.jsx'
 import Login from './pages/Login.jsx'
-import Signup from './pages/Signup.jsx'
 import Privacy from './pages/Privacy.jsx'
 import Terms from './pages/Terms.jsx'
 import JobUpdate from './pages/JobUpdate.jsx'
@@ -14,6 +13,7 @@ import ArticleUpdate from './pages/ArticleUpdate.jsx'
 import CourseUpdate from './pages/CourseUpdate.jsx'
 import NotFound from './pages/NotFound.jsx'
 import RegistrationForm from './pages/RegistrationForm.jsx'
+import PasswordReset from './pages/PasswordReset.jsx'
 
 function App() {
   const router = createBrowserRouter([
@@ -50,8 +50,8 @@ function App() {
           element: <Login />
         },
         {
-          path: "/signup",
-          element: <Signup />
+          path: "/password-reset",
+          element: <PasswordReset />
         },
         {
           path: "/job/new",

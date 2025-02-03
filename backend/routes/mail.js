@@ -142,3 +142,32 @@ export let mailJobFormData = async (inputs, file) => {
         throw new CustomError("Unable to send Contact form data", 400)
     }
 }
+
+// Password reset toke mail
+let genPasswordResetHtml = (token)=>{
+    return `
+                <p>A passord reset has been initiated on your account. Click the link below to continue</p>
+                <a href="https://fnmiloveacademy.com/password-reset?token=${token}">Reset Password</a>
+                <p>This token is only valid for 15 minutes</p>
+                <p>If you didn't initiate this process, kindly ignore this mail</p>
+            `
+}
+
+export let mailPasswordResetToken = async (token, email) => {
+    try {
+        let emailReport = await zoho.sendMail({
+            from: "Fnmilove Academy sales@fnmiloveacademy.com",
+            to: email,
+            subject: "Password Reset token",
+            text: convert(genPasswordResetHtml(token)),
+            html: genPasswordResetHtml(token)
+        })
+        console.log("email Envelope")
+        console.log(emailReport.envelope)
+        console.log("emails that were rejected during mail sent")
+        console.log(emailReport.rejected)
+    } catch (error) {
+        console.warn(error.message)
+        throw new CustomError("Unable to send Contact form data", 400)
+    }
+}

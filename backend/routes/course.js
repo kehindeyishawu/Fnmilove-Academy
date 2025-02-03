@@ -1,7 +1,8 @@
 import { ObjectId } from "mongodb";
-import { courseCollection, CourseSchema } from "../utils/connectToDB.js";
+import { courseCollection, CourseSchema, userCollection } from "../utils/connectToDB.js";
 import { Router } from "express";
 import { CustomError } from "../utils/customError.js";
+import { isLoggedIn } from "../authmiddleware.js";
 
 export let courseRouter = Router();
 
@@ -12,6 +13,7 @@ let createNewCourse = async (req, res, next)=>{
         input.createdAt = new Date()
         let newCourse = await courseCollection.insertOne(input)
         res.json({ id: newCourse.insertedId, slug: input.slug })
+        await userCollection.updateOne({ _id: req.user.id }, { $unset: { "draft.course": "" } })
     } catch (error) {
         next(error)
     }
@@ -74,5 +76,11 @@ let deleteCourse = async (req, res, next) => {
     }
 }
 
-courseRouter.route("/").get(findAllCourses).post(createNewCourse)
-courseRouter.route("/:id").get(findOneCourse).patch(updateCourse).delete(deleteCourse)
+courseRouter.route("/")
+    .get(findAllCourses)
+    .post(isLoggedIn, createNewCourse);
+
+courseRouter.route("/:id")
+    .get(isLoggedIn, findOneCourse)
+    .patch(isLoggedIn, updateCourse)
+    .delete(isLoggedIn, deleteCourse);

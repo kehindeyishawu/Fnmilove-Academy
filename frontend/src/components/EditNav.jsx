@@ -5,14 +5,19 @@ import Spinner from 'react-bootstrap/Spinner';
 
 const EditNav = ({publishButton, saveButton}) => {
     const [isSaving, setIsSaving] = useState(false)
-    let {pathname} = useLocation()
-    const {setFadeNotification} = useOutletContext()
+    let {pathname} = useLocation();
+    const {setFadeNotification, setStaticNotification} = useOutletContext()
     let saving = async ()=>{
-        console.log("Saving")
-        setIsSaving(true)
-        await saveButton();
-        setIsSaving(false)
-        setFadeNotification({ message: "Post saved successfully", time: (new Date()).getTime() })
+        try {
+            console.log("Saving")
+            setIsSaving(true)
+            await saveButton();
+            setIsSaving(false)
+            setFadeNotification({ message: "Post saved successfully", time: (new Date()).getTime() })
+        } catch (error) {
+            setIsSaving(false)
+            setStaticNotification({ message: `Auto save Failed: ${error.message}`, time: (new Date()).getTime() })
+        }
     }
     return (
         <nav className='border-bottom shadow-sm py-2 bg-white'>

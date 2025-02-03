@@ -6,11 +6,12 @@ import "./PostEdit.scss"
 import TextEditor from '../components/TextEditor'
 import { cloudname, cloudAPI } from '../utils/cloudinary'
 import Spinner from 'react-bootstrap/Spinner';
+import ExpiredSession from '../components/ExpiredSession'
 
 const JobUpdate = () => {
   let [featuredImg1, setFeaturedImg1] = useState("")
   let [featuredImg2, setFeaturedImg2] = useState("")
-  const { setShowLoading, setStaticNotification } = useOutletContext()
+  const { setShowLoading, setStaticNotification, setFadeNotification } = useOutletContext()
   let logoAccent = useRef(null);
   let companyName = useRef(null);
   let title = useRef(null);
@@ -22,22 +23,27 @@ const JobUpdate = () => {
   let imgSrc = useRef(null)
   let imgSrc2 = useRef(null)
   let { pathname } = useLocation()
-  let onEditPage = pathname.includes("/edit")
+  let onEditPage = pathname.includes("/edit");
+  let onCreatePage = pathname.includes("/new");
   let { id } = useParams();
   let navigate = useNavigate();
   const [editerInitialValue, setEditorInitialvalue] = useState("<p> Start putting your ideas here.</p>")
+  const [sessionExpired, setSessionExpired] = useState(false)
 
   useEffect(() => {
     let sideEffect = async () => {
-      // check if the user has a draft. If yes, load the draft by equating the drafted variable to the createdAt date or is it assetFolder
-      // then fill the form with the draft data by setting their values with the useRef.current.value
-      if (onEditPage) {
+      if (onCreatePage) {
         try {
           setShowLoading(true)
-          let req = await fetch(`/api/jobs/${id}`)
+          let req = await fetch(`/api/draft/job`)
           if (!req.ok) {
-            throw new Error("Couldn't load data for editing");
-          } else {
+            if (req.status === 401) {
+              setFadeNotification({ message: "Your Session has expired. Login Again", time: (new Date()).toString() })
+              return navigate("/fla-admin", { state: { from: pathname } });
+            }
+            throw new Error("Error trying to check for any saved data from server");
+          }
+          if (req.status !== 204) {
             let res = await req.json()
             title.current.value = res.title
             setEditorInitialvalue(res.content)
@@ -50,6 +56,31 @@ const JobUpdate = () => {
             logoAccent.current.value = res.logoAccent
             setDrafted(res.assetFolder)
           }
+        } catch (error) {
+          setFadeNotification({ message: error.message, time: (new Date()).toString() })
+        } finally {
+          setShowLoading(false)
+        }
+      }
+      if (onEditPage) {
+        try {
+          setShowLoading(true)
+          let req = await fetch(`/api/jobs/${id}`)
+          if (!req.ok) {
+            if (req.status === 401) throw new Error("You need to be Logged In to do this");
+            throw new Error("Couldn't load data for editing");
+          } 
+          let res = await req.json()
+          title.current.value = res.title
+          setEditorInitialvalue(res.content)
+          jobType.current.value = res.jobType;
+          jobLocation.current.value = res.jobLocation;
+          companyName.current.value = res.companyName;
+          applicationDeadline.current.value = res.applicationDeadline;
+          setFeaturedImg1(res.companyCoverImg)
+          setFeaturedImg2(res.companyLogo)
+          logoAccent.current.value = res.logoAccent
+          setDrafted(res.assetFolder)
         } catch (error) {
           setStaticNotification({ message: error.message, time: (new Date()).toString() })
           navigate("/blog");
@@ -99,6 +130,7 @@ const JobUpdate = () => {
       body: JSON.stringify(payload)
     })
     if(!req.ok){
+      if (req.status === 401) return setSessionExpired(true);
       setStaticNotification({ message: "An error occured while trying to save this job", time: (new Date()).toString() })
     }
     let res = await req.json()
@@ -128,6 +160,10 @@ const JobUpdate = () => {
         body: JSON.stringify(payload)
       })
       if (!req.ok) {
+        if (req.status === 401) {
+          setShowLoading(false)
+          return setSessionExpired(true)
+        };
         throw new Error("An error occured while trying to publish this job")
       }
       setStaticNotification({ message: !id ? "New Job Created" : "Job Updated", time: (new Date()).toString() })
@@ -337,6 +373,7 @@ const JobUpdate = () => {
             </div>
           </div>
         </div>
+        <ExpiredSession sessionExpired={sessionExpired} setSessionExpired={setSessionExpired} />
       </main>
     </>
   )

@@ -1,7 +1,8 @@
 import { ObjectId } from "mongodb";
-import { postCollection, ArticleSchema } from "../utils/connectToDB.js";
+import { postCollection, ArticleSchema, userCollection } from "../utils/connectToDB.js";
 import { Router } from "express";
 import { CustomError } from "../utils/customError.js";
+import { isLoggedIn } from "../authmiddleware.js";
 
 export let articleRouter = Router();
 
@@ -13,6 +14,7 @@ let createNewArticle = async (req, res, next)=>{
         input.createdAt = new Date()
         let newArticle = await postCollection.insertOne(input)
         res.json({ id: newArticle.insertedId, slug: input.slug })
+        await userCollection.updateOne({_id: req.user.id}, {$unset: {"draft.article": ""}})
     } catch (error) {
         next(error)
     }
@@ -70,7 +72,13 @@ let deleteArticle = async (req, res, next) => {
     }
 }
 
-articleRouter.route("/").get(findAllArticles).post(createNewArticle)
-articleRouter.route("/:id").get(findOneArticle).patch(updateArticle).delete(deleteArticle)
+articleRouter.route("/")
+    .get(findAllArticles).
+    post(isLoggedIn, createNewArticle);
+
+articleRouter.route("/:id")
+    .get(isLoggedIn, findOneArticle)
+    .patch(isLoggedIn, updateArticle)
+    .delete(isLoggedIn,deleteArticle)
 
 

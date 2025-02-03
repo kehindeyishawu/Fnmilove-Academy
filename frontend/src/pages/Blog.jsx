@@ -17,7 +17,7 @@ const Blog = () => {
     const [buttonLoad, setButtonLoad] = useState(false);
     const [hideLoadButton, setHideLoadButton] = useState(false);
     const filteredJobs = useRef(null);
-    const {setStaticNotification} = useOutletContext();
+    const {setStaticNotification, user} = useOutletContext();
 
     // Take caution useEffect(with passed dependency)in Strict Mode. You would have to disable React Strict mode when working with this function in development as strict will execute the function twice, doubling the expexted value
     useEffect(() => {
@@ -130,7 +130,7 @@ const Blog = () => {
                         </div>
                     </section>
                 </div>
-                <CreateButton/>
+                {user && <CreateButton/>}
             </section>
         </main>
     )

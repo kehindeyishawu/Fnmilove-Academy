@@ -13,6 +13,7 @@ import { showPostRouter } from "./routes/showPost.js"
 import { applicantRouter } from "./routes/applicant.js";
 import { contactRouter } from "./routes/contact.js";
 import { authRouter } from "./routes/auth.js";
+import passport from "passport";
 
 
 let app = express()
@@ -58,16 +59,20 @@ app.use(session({
     store: sessionStore,
     cookie: {
         secure: process.env.NODE_ENV === "development" ? false : true,
-        maxAge: 60000 * 60 * 24 * 2, //two day expiration
+        maxAge: 60000 * 60 * 24 * 1, //one day expiration
     },
     resave: false,
     saveUninitialized: false,
 }))
+// passport
+app.use(passport.authenticate('session'));
 // passing variables to all views
 app.use((req, res, next)=>{
     res.locals.domain = "https://fnmiloveacademy.com";
     res.locals.path = req.path;
     res.locals.cloudname = "https://res.cloudinary.com/fnmilove/image/upload";
+    res.locals.user = req.user;
+    // console.log(req.user)
     next()
 })
 // Routes

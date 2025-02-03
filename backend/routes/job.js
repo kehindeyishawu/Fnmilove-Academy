@@ -1,7 +1,8 @@
 import { ObjectId } from "mongodb";
-import { postCollection, JobSchema } from "../utils/connectToDB.js";
+import { postCollection, JobSchema, userCollection } from "../utils/connectToDB.js";
 import { Router } from "express";
 import { CustomError } from "../utils/customError.js";
+import { isLoggedIn } from "../authmiddleware.js";
 
 export let jobRouter = Router();
 
@@ -13,6 +14,7 @@ let createNewJob = async (req, res, next)=>{
         input.createdAt = new Date()
         let newJob = await postCollection.insertOne(input)
         res.json({ id: newJob.insertedId, slug: input.slug })
+        await userCollection.updateOne({ _id: req.user.id }, { $unset: { "draft.job": "" } })
     } catch (error) {
         next(error)
     }
@@ -69,7 +71,13 @@ let deleteJob = async (req, res, next) => {
     }
 }
 
-jobRouter.route("/").get(findAllJobs).post(createNewJob)
-jobRouter.route("/:id").get(findOneJob).patch(updateJob).delete(deleteJob)
+jobRouter.route("/")
+    .get(findAllJobs)
+    .post(isLoggedIn, createNewJob);
+
+jobRouter.route("/:id")
+    .get(isLoggedIn, findOneJob)
+    .patch(isLoggedIn, updateJob)
+    .delete(isLoggedIn, deleteJob);
 
 

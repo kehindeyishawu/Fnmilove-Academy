@@ -9,7 +9,7 @@ import { mailRegFormData } from "./mail.js";
 const flw = new Flutterwave(process.env.FLW_PUBLIC_KEY, process.env.FLW_SECRET_KEY);
 
 export let applicantRouter = Router()
-
+// route for adding applicant data to DB and sending back information neccessary for the payment portal
 applicantRouter.post("/", async(req, res, next)=>{
     try {
         const inputs = new ApplicantSchema(req.body)

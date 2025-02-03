@@ -14,7 +14,7 @@ const Courses = () => {
   const [courseSkip, setCourseSkip] = useState(0);
   const [buttonLoad, setButtonLoad] = useState(false);
   const [hideLoadButton, setHideLoadButton] = useState(false);
-  const {setStaticNotification} = useOutletContext()
+  const {setStaticNotification, user} = useOutletContext()
 
   useEffect(()=>{
     const sideEffect = async () => {
@@ -86,7 +86,7 @@ const Courses = () => {
               </button>
             </div>
           </div>
-          <CreateButton postType="course"/>
+          {user && <CreateButton postType="course"/>}
         </div>
       </section>
     </main>

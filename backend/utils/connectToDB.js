@@ -8,6 +8,7 @@ export let courseCollection;
 export let postCollection;
 export let userCollection;
 export let applicantCollection;
+export let tokenCollection;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.DB_CONNECT_STRING, {
@@ -31,9 +32,11 @@ export async function connectToDB() {
         postCollection = db.collection("posts")
         userCollection = db.collection("users")
         applicantCollection = db.collection("applicants");
+        tokenCollection = db.collection("tokens");
         await courseCollection.createIndex({ title: "text", content: "text" });
         await postCollection.createIndex({ title: "text", content: "text" });
         await applicantCollection.createIndex({ createdAt: 1}, { expireAfterSeconds: 3600 * 24 * 14 });
+        await tokenCollection.createIndex({ createdAt: 1}, { expireAfterSeconds: 60 * 15 });
     } catch (error) {
         throw new Error(error.message)
     }

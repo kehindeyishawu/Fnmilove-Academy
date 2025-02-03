@@ -3,14 +3,14 @@ Remember to change cloudinary cloudname
 // change the id to the user id when the user authentication is implemented
 - Remember to implement Draft saving and Work on edit post logic
 - Add logic to clear user draft whenever a post is created
-- create new post notification on show post pages(course, job & article)
--integrate email for sending job application, resume etc
 - Remember to implement delete code for past featured image upload and upon post deletion
 - Remember to implement delete code for past Registration form image upload and upon Applicant deletion and cronjob for those up to 3 weeks
 - add appropriate FLW logo link
 - Remember to work on ejs layout for optimization/Performance. Make only code that are needed in the script tag are shown. Eliminated unneeded ones from rendering using ejs
 - make sure to include react custom error handling with Error Element / Boundary. Especially on fetch posts OR JUST WORK WITH THE NOTIFICATION SYSTEM YOU IMPLEMWNTED
 - Look into atlas Search
+
+- implement session 
 
 on FLW Live:
 - change public key on frontEnd react
