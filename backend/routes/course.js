@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import { courseCollection, CourseSchema, userCollection } from "../utils/connectToDB.js";
 import { Router } from "express";
 import { CustomError } from "../utils/customError.js";
-import { isLoggedIn } from "../authmiddleware.js";
+import { isLoggedIn } from "../authMiddleware.js";
 
 export let courseRouter = Router();
 
