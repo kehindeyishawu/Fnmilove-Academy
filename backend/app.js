@@ -54,7 +54,7 @@ sessionStore.on('error', function (error) {
     // Also get an error here
     console.log(error)
 });
-app.enable('trust proxy')
+// app.enable('trust proxy')
 app.use(session({
     secret: process.env.SESSION_SECRETS,
     store: sessionStore,
