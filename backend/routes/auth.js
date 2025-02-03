@@ -87,7 +87,7 @@ authRouter.post("/password-reset", async(req, res, next)=>{
         console.log(email)
         if (!user) return res.status(404).send("User not found");
         await tokenCollection.insertOne({email: email, token, createdAt: new Date()});
-        await mailPasswordResetToken(token, email);
+        await mailPasswordResetToken(token, email, req.hostname);
         res.status(200).end();
     } catch (error) {
         next(error)

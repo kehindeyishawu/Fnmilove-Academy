@@ -72,7 +72,7 @@ app.use((req, res, next)=>{
     res.locals.path = req.path;
     res.locals.cloudname = "https://res.cloudinary.com/fnmilove/image/upload";
     res.locals.user = req.user;
-    console.log(req.hostname)
+    // console.log(req.hostname)
     next()
 })
 // Routes
