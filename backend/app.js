@@ -60,7 +60,7 @@ app.use(session({
     cookie: {
         secure: process.env.NODE_ENV === "development" ? false : true,
         maxAge: 60000 * 60 * 24 * 1, //one day expiration
-        domain: "fnmilove-academy.onrender.com"
+        sameSite: "none",
     },
     resave: false,
     saveUninitialized: false,
