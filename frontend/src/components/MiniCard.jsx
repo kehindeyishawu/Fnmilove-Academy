@@ -24,7 +24,7 @@ const MiniCard = ({imgPublicID, title, applicationDeadline, description, updated
                 <div className="card">
                     <div className="row g-0">
                         <div className="col-4">
-                            <img src={`${cloudname}/w_150,c_fill,f_auto,q_auto,ar_7:14,dpr_${devicePixelRatio}/${imgPublicID}`} className="img-fluid rounded-start d-md-none" alt={title} />
+                            <img src={`${cloudname}/w_150,c_fill,f_auto,q_auto,ar_7:16,dpr_${devicePixelRatio}/${imgPublicID}`} className="img-fluid rounded-start d-md-none" alt={title} />
                             <img src={`${cloudname}/w_250,c_fill,f_auto,q_auto,ar_1:1,dpr_${devicePixelRatio}/${imgPublicID}`} className="img-fluid rounded-start d-none d-md-block" alt={title} />
                         </div>
                         <div className="col-8">
