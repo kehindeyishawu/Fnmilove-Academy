@@ -59,11 +59,11 @@ app.use(session({
     secret: process.env.SESSION_SECRETS,
     store: sessionStore,
     proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
-    name: 'FnmiloveName',
+    // name: 'FnmiloveName',
     cookie: {
         secure: process.env.NODE_ENV === "development" ? false : true,
         maxAge: 60000 * 60 * 24 * 1, //one day expiration
-        sameSite: "none",
+        // sameSite: "none",
     },
     resave: false,
     saveUninitialized: false,
