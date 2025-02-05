@@ -7,7 +7,7 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="<%=post.title%>">
     <meta property="og:description" content="<%=post.description%>">
-    <meta property="og:image" content="<%=cloudname%>/q_auto,ar_1.91:1,q_auto,w_1200,g_auto,c_lfill/<%=post.featuredImg%>">
+    <meta property="og:image" content="<%=cloudname%>/q_auto,ar_1.91:1,q_auto,g_auto,w_1200,c_lfill/<%=post.featuredImg%>">
     <meta property="og:url" content="<%=domain+path%>">
     <meta property="og:type" content="<%=post.postType || 'course'%>">
     
@@ -22,7 +22,7 @@
     <meta name="description" content="<%=post.description%>">
     <link rel="canonical" href="https://fnmiloveacademy.com">
 
-    <title>Title</title>
+    <title><%=post.title%></title>
     <link rel="stylesheet" href="/app.min.css">
 </head>
 <body>

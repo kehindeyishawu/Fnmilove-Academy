@@ -95,12 +95,11 @@ export class JobSchema{
     }
 }
 export class CourseSchema{
-    constructor({ title, tutors, featuredImg, content, price, assetFolder, tag }){
+    constructor({ title, tutors, featuredImg, content, assetFolder, tag }){
         this.title = validate(title, "title")
         this.tutors = validate(tutors, "tutors")
         this.content = validate(content, "content")
         this.featuredImg = featuredImg|| ""
-        this.price = validate(price, "price")
         this.tag = tag || ""
         this.description = generateDescription(content)
         this.tipColor = generateTipColor();

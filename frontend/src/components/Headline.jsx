@@ -21,7 +21,7 @@ const Headline = () => {
                         </a>
                     </div>
                 </div>
-                <div className='py-2 px-5 bg-primary text-dark'>Phone: +234 7678 4879..</div>
+                <div className='py-2 px-5 bg-primary text-dark'>Phone: 09013727947</div>
             </div>
         </>
     )

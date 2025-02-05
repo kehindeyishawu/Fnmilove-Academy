@@ -1,7 +1,6 @@
 import { FaPlay } from "react-icons/fa6"; 
 import { cloudname, setContainer3rdWidth } from "../utils/cloudinary"
 import { Link } from "react-router-dom"
-import { currencyFormatter } from "../utils/currencyFormatter";
 
 
 export const fetchCourses = async(limit, skip, searchQuery, project)=>{
@@ -17,7 +16,7 @@ export const fetchCourses = async(limit, skip, searchQuery, project)=>{
     }
 }
 
-const CourseCard = ({ title, tutors, imgPublicID, price, tag, tipColor, slug, ID }) => {
+const CourseCard = ({ title, tutors, imgPublicID, tag, tipColor, slug, ID }) => {
     return (
         <>
             <div className="col">
@@ -30,10 +29,7 @@ const CourseCard = ({ title, tutors, imgPublicID, price, tag, tipColor, slug, ID
                         </span>
                         <h2 className={`card-title h6 fw-bold text-secondary ${tag || " mt-3"} truncate-line-2`}><a href={`course/${ID}/${slug}`} className="text-reset text-decoration-none">{title}</a></h2>
                         <p className={`card-text mb-4 mt-3 ${tag ? 'truncate-line-1' : 'truncate-line-2' }`}>{tutors}</p>
-                        <div className="hstack justify-content-between">
-                            <Link to={`/registration-form?courseid=${ID}`} className="btn btn-primary rounded-0 fw-bold">ENROLL NOW</Link>
-                            <span className="fw-bold fs-4">{currencyFormatter(price)}</span>
-                        </div>
+                        <Link to={`/registration-form?courseid=${ID}`} className="btn btn-primary rounded-0 fw-bold">ENROLL NOW</Link>
                     </div>
                 </div>
             </div>

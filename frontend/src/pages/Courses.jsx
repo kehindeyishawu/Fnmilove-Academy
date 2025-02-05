@@ -73,7 +73,7 @@ const Courses = () => {
             {showSpinner ? <div className="spinner-border text-primary p-5 fs-3" role="status">
                             <span className="visually-hidden">Loading...</span>
                           </div> : courses.length === 0 ? <p>No Courses Found</p> : 
-                          courses.map((e) => <CourseCard key={e._id} title={e.title} tutors={e.tutors} imgPublicID={e.featuredImg} price={e.price} tag={e.tag} tipColor={e.tipColor} slug={e.slug} ID={e._id} />)
+                          courses.map((e) => <CourseCard key={e._id} title={e.title} tutors={e.tutors} imgPublicID={e.featuredImg} tag={e.tag} tipColor={e.tipColor} slug={e.slug} ID={e._id} />)
             }
             <div className="col text-center align-self-center" style={{ display: showSpinner || courses.length === 0 ? "none" : "block" }}>
               <p style={{ display: hideLoadButton ? "block" : "none" }}>No more Posts!!!</p>

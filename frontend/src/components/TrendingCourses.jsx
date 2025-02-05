@@ -38,7 +38,7 @@ const TrendingCourses = () => {
                     {showSpinner ?  <div className="spinner-border text-primary mt-5 p-5 fs-3" role="status">
                                         <span className="visually-hidden">Loading...</span>
                                     </div> : courses.length === 0 ? <p className="mt-5 text-center">No Courses Found</p> : 
-                    courses.map((e) => <CourseCard key={e._id} title={e.title} tutors={e.tutors} imgPublicID={e.featuredImg} price={e.price} tag={e.tag} tipColor={e.tipColor} slug={e.slug} ID={e._id} />)}
+                    courses.map((e) => <CourseCard key={e._id} title={e.title} tutors={e.tutors} imgPublicID={e.featuredImg} tag={e.tag} tipColor={e.tipColor} slug={e.slug} ID={e._id} />)}
                     <div className="col text-center align-self-center" hidden={courses.length===0}>
                         <Link to="/courses" className="btn btn-outline-primary btn-lg rounded-0 fw-bold">Browse More</Link>
                     </div>

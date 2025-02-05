@@ -11,7 +11,6 @@ import ExpiredSession from '../components/ExpiredSession'
 const CourseUpdate = () => {
     let [featuredImg1, setFeaturedImg1] = useState("")
     const { setShowLoading, setStaticNotification, setFadeNotification } = useOutletContext()
-    let price = useRef(null);
     let title = useRef(null);
     let tutors = useRef(null);
     const [drafted, setDrafted] = useState((new Date()).getTime());
@@ -45,7 +44,6 @@ const CourseUpdate = () => {
                         title.current.value = res.title
                         setEditorInitialvalue(res.content)
                         tutors.current.value = res.tutors;
-                        price.current.value = res.price;
                         setFeaturedImg1(res.featuredImg)
                         tag.current.value = res.tag
                         setDrafted(res.assetFolder);
@@ -68,7 +66,6 @@ const CourseUpdate = () => {
                     title.current.value = res.title
                     setEditorInitialvalue(res.content)
                     tutors.current.value = res.tutors;
-                    price.current.value = res.price;
                     setFeaturedImg1(res.featuredImg)
                     tag.current.value = res.tag
                     setDrafted(res.assetFolder);
@@ -105,7 +102,6 @@ const CourseUpdate = () => {
             featuredImg: featuredImg1,
             title: title.current.value,
             tutors: tutors.current.value,
-            price: price.current.value,
             tag: tag.current.value,
             postType: "course",
             content: editorRef.current.getContent(),
@@ -131,7 +127,6 @@ const CourseUpdate = () => {
             featuredImg: featuredImg1,
             title: validate(title),
             tutors: validate(tutors),
-            price: validate(price),
             tag: tag.current.value,
             content: editorRef.current.getContent(),
             assetFolder: drafted
@@ -256,15 +251,6 @@ const CourseUpdate = () => {
                         </div>
                         <div className="col-lg-4">
                             <div className='vstack gap-3'>
-                                {/* course price inputs */}
-                                <div className='border p-3 bg-white shadow-sm'>
-                                    <label htmlFor='course-name' className='fw-bold form-label'>Price</label>
-                                    <div className="input-group">
-                                        <span className="input-group-text rounded-0" id="currency-addon">₦</span>
-                                        <input ref={price} type="number" id='course-name' className='form-control rounded-0' aria-describedby="currency-addon"/>
-                                    </div>
-                                    <div className="invalid-feedback">Price Field is empty</div>
-                                </div>
                                 {/* first feature image */}
                                 <div className='border p-3 bg-white shadow-sm'>
                                     <span className='fw-bold'>Featured Image</span>
