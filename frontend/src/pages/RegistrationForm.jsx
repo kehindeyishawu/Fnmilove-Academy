@@ -129,7 +129,7 @@ const RegistrationForm = () => {
                 console.log(res)
             }
             
-            // sending data
+            // Non-FLW way: sending form data to backend
             formData.delete("certificates[]")
             formData.delete("ids[]")
             let formRequest = await fetch("/api/applicant", {
@@ -142,62 +142,77 @@ const RegistrationForm = () => {
             if (!formRequest.ok) {
                 throw new Error(await formRequest.text())
             }
-            let { tx_ref, payload_hash } = await formRequest.json()
-            console.log({ tx_ref, payload_hash });
+            setFormSubmitted(true)
+
+            // FLW-way: sending form data to backend
+            // formData.delete("certificates[]")
+            // formData.delete("ids[]")
+            // let formRequest = await fetch("/api/applicant", {
+            //     method: "POST",
+            //     body: formData,
+            //     headers: {
+            //         'Content-Type': 'application/x-www-form-urlencoded'
+            //     }
+            // })
+            // if (!formRequest.ok) {
+            //     throw new Error(await formRequest.text())
+            // }
+            // let { tx_ref, payload_hash } = await formRequest.json()
+            // console.log({ tx_ref, payload_hash });
 
 
             // Flutterwave Payment Modal
-            const config = {
-                public_key: 'FLWPUBK_TEST-9a9e8ce2d99ba7d4d81b9456347bdbc3-X',
-                tx_ref,
-                amount: 20000,
-                currency: 'NGN',
-                payment_options: "card",
-                customer: {
-                    email: e.target.elements['email'].value,
-                    phone_number: e.target.elements['phone'].value,
-                    name: e.target.elements['firstname'].value + " " + e.target.elements['lastname'].value,
-                },
-                customizations: {
-                    title: 'Fnmilove Academy',
-                    description: 'Registration Form processing fee for Fnmilove Academy',
-                    logo: '/logo.png',
-                },
-                payload_hash,
-                configurations: {
-                    session_duration: 10, //Session timeout in minutes (maxValue: 1440 minutes)
-                    max_retry_attempt: 5, //Max retry (int)
-                },
-            };
-            const handleFlutterPayment = useFlutterwave(config);
-            handleFlutterPayment({
-                callback: async (response) => {
-                    console.log(response);
-                    closePaymentModal() // this will close the modal programmatically
-                    if (response.status === "successful" || response.status === "completed"){
-                        setFormSubmitted(true)
-                        console.log(`For backend; textRef:${response.tx_ref}  transaction_id:${response.transaction_id}`)
-                        // assign applicant payment id
-                        let data = {tx_ref: response.tx_ref, flw_id: response.transaction_id}
-                        let idResponse = await fetch(`/api/applicant/flwid-assign`, {
-                            method: "PUT",
-                            body: JSON.stringify(data),
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        })
-                        if(!idResponse.ok){
-                            console.log("Unable to assign ID")
-                        }
-                    }
-                    setShowLoading(false);
-                },
-                onClose: () => { setShowLoading(false); },
-            });
+            // const config = {
+            //     public_key: 'FLWPUBK_TEST-9a9e8ce2d99ba7d4d81b9456347bdbc3-X',
+            //     tx_ref,
+            //     amount: 20000,
+            //     currency: 'NGN',
+            //     payment_options: "card",
+            //     customer: {
+            //         email: e.target.elements['email'].value,
+            //         phone_number: e.target.elements['phone'].value,
+            //         name: e.target.elements['firstname'].value + " " + e.target.elements['lastname'].value,
+            //     },
+            //     customizations: {
+            //         title: 'Fnmilove Academy',
+            //         description: 'Registration Form processing fee for Fnmilove Academy',
+            //         logo: '/logo.png',
+            //     },
+            //     payload_hash,
+            //     configurations: {
+            //         session_duration: 10, //Session timeout in minutes (maxValue: 1440 minutes)
+            //         max_retry_attempt: 5, //Max retry (int)
+            //     },
+            // };
+            // const handleFlutterPayment = useFlutterwave(config);
+            // handleFlutterPayment({
+            //     callback: async (response) => {
+            //         console.log(response);
+            //         closePaymentModal() // this will close the modal programmatically
+            //         if (response.status === "successful" || response.status === "completed"){
+            //             setFormSubmitted(true)
+            //             console.log(`For backend; textRef:${response.tx_ref}  transaction_id:${response.transaction_id}`)
+            //             // assign applicant payment id
+            //             let data = {tx_ref: response.tx_ref, flw_id: response.transaction_id}
+            //             let idResponse = await fetch(`/api/applicant/flwid-assign`, {
+            //                 method: "PUT",
+            //                 body: JSON.stringify(data),
+            //                 headers: {
+            //                     'Content-Type': 'application/json'
+            //                 }
+            //             })
+            //             if(!idResponse.ok){
+            //                 console.log("Unable to assign ID")
+            //             }
+            //         }
+            //     },
+            //     onClose: () => {  },
+            // });
             
         } catch (error) {
             setStaticNotification({ message: error.message, time: (new Date()).toString() })
-            setShowLoading(false);
+        }finally{
+            setShowLoading(false)
         }
     }
     
@@ -568,7 +583,35 @@ const RegistrationForm = () => {
                         </div>
                     </div>
                 </section>
-                <button type="submit" className="btn btn-lg btn-dark rounded-0 d-block w-75 mt-4 mx-auto">Submit</button>
+                {/* Non-FLW way section */}
+                <section className="mt-5" id="payment">
+                    {/* head */}
+                    <div className="row">
+                        <div className="col"><hr /></div>
+                        <div className="col-auto"><h4 className="fw-bold">Payment</h4></div>
+                        <div className="col"><hr /></div>
+                    </div>
+                    {/* body */}
+                    <div>
+                        <p>Kind make payment to the account below before submitting the form</p>
+                        <div className="mb-3">Bank: <strong>LOTUS BANK</strong></div>
+                        <div className="mb-3">Account Number: <strong>1002595532</strong></div>
+                        <div className="mb-3">Account Name: <strong>Funmi-Love Hair and Beauty</strong></div>
+                    </div>
+                </section>
+                <section className="mt-5" id="declaration">
+                    {/* head */}
+                    <div className="row">
+                        <div className="col"><hr /></div>
+                        <div className="col-auto"><h4 className="fw-bold">Declaration</h4></div>
+                        <div className="col"><hr /></div>
+                    </div>
+                    {/* body */}
+                    <div>
+                        <p>By submitting this form, I declare that the information provided is accurate and true to the best of my knowledge.</p>
+                    </div>
+                </section>
+                <button type="submit" className="btn btn-lg btn-dark rounded-0 d-block w-75 mt-5 mx-auto">Submit</button>
             </form>
         </main>
     )

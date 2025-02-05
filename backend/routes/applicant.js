@@ -12,15 +12,21 @@ export let applicantRouter = Router()
 // route for adding applicant data to DB and sending back information neccessary for the payment portal
 applicantRouter.post("/", async(req, res, next)=>{
     try {
+        // Non-FLW-Way
         const inputs = new ApplicantSchema(req.body)
-        let formEntry = await applicantCollection.insertOne(inputs);
-        // generating payload_hash
-        let tx_ref = formEntry.insertedId.toString()
-        let {email} = inputs
-        const hashedSecretKey = crypto.createHash("sha256").update(process.env.FLW_SECRET_KEY, 'utf8').digest("hex");
-        const StringToBeHashed = 20000 + 'NGN' + email + tx_ref + hashedSecretKey;
-        const payload_hash = crypto.createHash("sha256").update(StringToBeHashed, 'utf8').digest("hex");
-        res.send({tx_ref, payload_hash})
+        mailRegFormData(inputs);
+        res.status(200).end()
+
+        
+        // FLW-Way
+        // let formEntry = await applicantCollection.insertOne(inputs);
+        // // generating payload_hash
+        // let tx_ref = formEntry.insertedId.toString()
+        // let {email} = inputs
+        // const hashedSecretKey = crypto.createHash("sha256").update(process.env.FLW_SECRET_KEY, 'utf8').digest("hex");
+        // const StringToBeHashed = 20000 + 'NGN' + email + tx_ref + hashedSecretKey;
+        // const payload_hash = crypto.createHash("sha256").update(StringToBeHashed, 'utf8').digest("hex");
+        // res.send({tx_ref, payload_hash})
     } catch (error) {
         next(error)
     }
@@ -84,28 +90,28 @@ applicantRouter.post("/flw-webhook", async(req, res, next)=>{
 
 
 // cronjob function for polling Flutterwave Payment Confirmation every 36 hours
-setInterval(async () => {
-    try {
-        let unverifiedPayments = await applicantCollection.find({flw_id: {$exists: true}})
-        console.log(`Cronjob Report`)
-        unverifiedPayments.forEach(async(payment) => {
-            // verifying transaction id with asssigned flw_id in DB
-            const response = await flw.Transaction.verify({ id: payment.flw_id });
-            if (
-                response.data.status === "successful"
-                && response.data.amount === 20000
-                && response.data.currency === "NGN") {
-                // Success! Confirm the customer's payment by sending mail with details to company
-                mailRegFormData(payment)
-                // delete applicant record from DB
-                let jobReport = await applicantCollection.deleteOne({ _id: payment._id })
-                // implement cloudinary image delete operation below
-                console.log(jobReport)
-                return;
-            }
-        })
-    } catch (error) {
-        console.log(error)
-    }
-}, 60000 * 60 * 24 * 1.5);
+// setInterval(async () => {
+//     try {
+//         let unverifiedPayments = await applicantCollection.find({flw_id: {$exists: true}})
+//         console.log(`Cronjob Report`)
+//         unverifiedPayments.forEach(async(payment) => {
+//             // verifying transaction id with asssigned flw_id in DB
+//             const response = await flw.Transaction.verify({ id: payment.flw_id });
+//             if (
+//                 response.data.status === "successful"
+//                 && response.data.amount === 20000
+//                 && response.data.currency === "NGN") {
+//                 // Success! Confirm the customer's payment by sending mail with details to company
+//                 mailRegFormData(payment)
+//                 // delete applicant record from DB
+//                 let jobReport = await applicantCollection.deleteOne({ _id: payment._id })
+//                 // implement cloudinary image delete operation below
+//                 console.log(jobReport)
+//                 return;
+//             }
+//         })
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }, 60000 * 60 * 24 * 1.5);
 
