@@ -3,6 +3,7 @@ import { postCollection, ArticleSchema, userCollection } from "../utils/connectT
 import { Router } from "express";
 import { CustomError } from "../utils/customError.js";
 import { isLoggedIn } from "../authMiddleware.js";
+import { deleteFolder } from "../utils/assetUploads.js";
 
 export let articleRouter = Router();
 
@@ -61,9 +62,9 @@ let deleteArticle = async (req, res, next) => {
     try {
         if (ObjectId.isValid(req.params.id)) {
             let id = ObjectId.createFromHexString(req.params.id);
-            let deletedArticle = await postCollection.deleteOne({ _id: id })
-            res.json(deletedArticle)
-            console.log(deletedArticle)
+            let deletedArticle = await postCollection.findOneAndDelete({ _id: id })
+            res.status(204).end()
+            deleteFolder(`article/${deletedArticle.assetFolder}`);
         } else {
             throw new CustomError("404: Page not found", 400)
         }

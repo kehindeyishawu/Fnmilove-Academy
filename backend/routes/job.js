@@ -3,6 +3,7 @@ import { postCollection, JobSchema, userCollection } from "../utils/connectToDB.
 import { Router } from "express";
 import { CustomError } from "../utils/customError.js";
 import { isLoggedIn } from "../authMiddleware.js";
+import { deleteFolder } from "../utils/assetUploads.js";
 
 export let jobRouter = Router();
 
@@ -61,8 +62,9 @@ let deleteJob = async (req, res, next) => {
     try {
         if (ObjectId.isValid(req.params.id)) {
             let id = ObjectId.createFromHexString(req.params.id)
-            let deletedJob = await postCollection.deleteOne({ _id: id })
-            res.json(deletedJob)
+            let deletedJob = await postCollection.findOneAndDelete({ _id: id })
+            res.status(204).end();
+            deleteFolder(`job/${deletedJob.assetFolder}`);
         } else {
             throw new CustomError("404: Page not found", 400)
         }

@@ -3,6 +3,7 @@ import { courseCollection, CourseSchema, userCollection } from "../utils/connect
 import { Router } from "express";
 import { CustomError } from "../utils/customError.js";
 import { isLoggedIn } from "../authMiddleware.js";
+import { deleteFolder } from "../utils/assetUploads.js";
 
 export let courseRouter = Router();
 
@@ -66,8 +67,9 @@ let deleteCourse = async (req, res, next) => {
     try {
         if (ObjectId.isValid(req.params.id)) {
             let id = ObjectId.createFromHexString(req.params.id)
-            let deletedCourse = await courseCollection.deleteOne({ _id: id })
-            res.json(deletedCourse)
+            let deletedCourse = await courseCollection.findOneAndDelete({ _id: id })
+            res.status(204).end();
+            deleteFolder(`course/${deletedCourse.assetFolder}`);
         } else {
             throw new CustomError("404: Page not found", 400)
         }
