@@ -4,6 +4,7 @@ import Flutterwave from "flutterwave-node-v3"
 import crypto from "crypto"
 import { ObjectId } from "mongodb";
 import { mailRegFormData } from "./mail.js";
+import { deleteImages } from "../utils/assetUploads.js";
 
 
 const flw = new Flutterwave(process.env.FLW_PUBLIC_KEY, process.env.FLW_SECRET_KEY);
@@ -14,9 +15,9 @@ applicantRouter.post("/", async(req, res, next)=>{
     try {
         // Non-FLW-Way
         const inputs = new ApplicantSchema(req.body)
-        mailRegFormData(inputs);
+        await mailRegFormData(inputs);
         res.status(200).end()
-
+        deleteImages(inputs.files);
         
         // FLW-Way
         // let formEntry = await applicantCollection.insertOne(inputs);
@@ -72,11 +73,12 @@ applicantRouter.post("/flw-webhook", async(req, res, next)=>{
             && response.data.amount === 20000
             && response.data.currency === "NGN") {
             // Success! Confirm the customer's payment by sending mail with details to company
-            mailRegFormData(applicant);
+            await mailRegFormData(applicant);
             // delete applicant record from DB
             await applicantCollection.deleteOne({_id: applicant._id})
             res.status(200).end()
-            // implement cloudinary image delete operation below ----------------------------------
+            // implement cloudinary image delete operation below 
+            deleteImages(applicant.files);
             return;
         } else {
             // Inform the customer their payment was unsuccessful (optional: incase you activated webhook for failed transactions)
@@ -102,10 +104,11 @@ applicantRouter.post("/flw-webhook", async(req, res, next)=>{
 //                 && response.data.amount === 20000
 //                 && response.data.currency === "NGN") {
 //                 // Success! Confirm the customer's payment by sending mail with details to company
-//                 mailRegFormData(payment)
+//                 await mailRegFormData(payment)
 //                 // delete applicant record from DB
 //                 let jobReport = await applicantCollection.deleteOne({ _id: payment._id })
 //                 // implement cloudinary image delete operation below
+//                 deleteImages(payment.files);
 //                 console.log(jobReport)
 //                 return;
 //             }

@@ -2,6 +2,7 @@ import nodemailer from "nodemailer"
 import { convert } from "html-to-text";
 import { CustomError } from "../utils/customError.js";
 import { validate } from "../utils/connectToDB.js";
+import { findAssetDetails } from "../utils/assetUploads.js";
 
 
 // Configure Nodemailer
@@ -47,13 +48,13 @@ let generateRegFormData = ({ firstname, lastname, gender, dob, email, phone, str
             `
 }
 
-let generateRegFormAttachments = ({files})=>{
-    console.log(files)
-    let formAttachments = files.map(file => ({
-        path: file,
-    }))
-    console.log(formAttachments)
-    return formAttachments;
+let generateRegFormAttachments = async({files})=>{
+    let attachments = [];
+    for (const file of files) {
+        let asset = await findAssetDetails(file);
+        attachments.push({ filename: `${asset.display_name}.${asset.format}`, path: asset.secure_url });
+    }
+    return attachments;
 }
 
 export let mailRegFormData = async (inputs)=>{
@@ -64,7 +65,7 @@ export let mailRegFormData = async (inputs)=>{
             subject: "Registration Form Applicant",
             text: convert(generateRegFormData(inputs)),
             html: generateRegFormData(inputs),
-            attachments: generateRegFormAttachments(inputs)
+            attachments: await generateRegFormAttachments(inputs)
         })
         console.log("email Envelope")
         console.log(emailReport.envelope)
@@ -72,7 +73,7 @@ export let mailRegFormData = async (inputs)=>{
         console.log(emailReport.rejected)
     } catch (error) {
         console.warn("Unable to send Registration form data")
-        throw error.message
+        throw error
     }
 }
 

@@ -5,6 +5,7 @@ import ContactDialog from "./components/ContactDialog";
 import Header from "./components/Header";
 import Notification from "./components/Notification";
 import LoadingDialog from "./components/LoadingDialog";
+import useScrollToTop from "./useScrollToTop";
 
 const Layout = () => {
     const [user, setUser] = useState(null);
@@ -17,6 +18,8 @@ const Layout = () => {
     let {pathname} = useLocation();
     let hideFromPages = ["/edit", "/new", "/login", "/signup", "/fla-admin", "/password-reset"]
     let hideHeaderAndFooter = hideFromPages.some(e => pathname.includes(e))
+
+    useScrollToTop(); // Use the custom hook to scroll to top on route change
 
     useEffect(()=>{
         let sideEffect = async ()=>{

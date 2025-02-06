@@ -46,7 +46,7 @@ function HeadNav({ setShowModal, setStaticNotification, setFadeNotification, use
                         <Nav>
                             <NavLink eventKey="7" to="/registration-form" className="btn btn-primary rounded-0 fw-bold px-4">Enroll</NavLink>
                             {user && 
-                                <NavDropdown eventKey="8" title="Admin" id="basic-nav-dropdown">
+                                <NavDropdown eventKey="8" className="text-center" title="Admin" id="basic-nav-dropdown">
                                     <NavDropdown.Item as={Link} to="/course/new">Create Course</NavDropdown.Item>
                                     <NavDropdown.Item as={Link} to="/article/new">
                                         Create Article

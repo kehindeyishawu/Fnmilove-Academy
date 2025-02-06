@@ -73,7 +73,7 @@ const Privacy = () => {
                     Email: privacy@fnmiloveacademy.com
                 </address>
                 <address>
-                    Phone: [Insert Phone Number]
+                    Phone: 09013727947
                 </address>
                 <address>
                     Address: Lekki Peninsula Scheme II, Ajah, Lagos.
