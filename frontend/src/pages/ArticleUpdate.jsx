@@ -13,6 +13,7 @@ const ArticleUpdate = () => {
     const { setShowLoading, setStaticNotification, setFadeNotification } = useOutletContext()
     let title = useRef(null);
     const [drafted, setDrafted] = useState((new Date()).getTime());
+    const draftedRef = useRef(drafted); // Create a ref for drafted because imageUploadFunction is not receiving the updated drafted value
     let editorRef = useRef(null)
     let imgSrc = useRef(null)
     let { pathname } = useLocation()
@@ -22,6 +23,10 @@ const ArticleUpdate = () => {
     let navigate = useNavigate();
     const [editerInitialValue, setEditorInitialvalue] = useState("<p> Start putting your ideas here.</p>")
     const [sessionExpired, setSessionExpired] = useState(false)
+
+    useEffect(() => {
+        draftedRef.current = drafted; // Update the ref whenever drafted changes
+    }, [drafted]);
 
     useEffect(() => {
         let sideEffect = async () => {
@@ -152,7 +157,7 @@ const ArticleUpdate = () => {
     let imageUploadFunction = async (blobInfo, progress) => {
         const formData = new FormData();
         formData.append('file', blobInfo.blob());
-        formData.append('asset_folder', `article/${drafted}`);
+        formData.append('asset_folder', `article/${draftedRef.current}`); //use the ref value to get the current or latest drafted value
         formData.append('upload_preset', 'fnmi-academy');
         try {
             const req = await fetch(`${cloudAPI}`, {

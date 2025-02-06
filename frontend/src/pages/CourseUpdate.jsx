@@ -14,6 +14,7 @@ const CourseUpdate = () => {
     let title = useRef(null);
     let tutors = useRef(null);
     const [drafted, setDrafted] = useState((new Date()).getTime());
+    const draftedRef = useRef(drafted); // Create a ref for drafted because imageUploadFunction is not receiving the updated drafted value
     let editorRef = useRef(null)
     let imgSrc = useRef(null)
     let tag = useRef(null)
@@ -25,6 +26,9 @@ const CourseUpdate = () => {
     const [editerInitialValue, setEditorInitialvalue] = useState("<p> Start putting your ideas here.</p>")
     const [sessionExpired, setSessionExpired] = useState(false)
 
+    useEffect(() => {
+        draftedRef.current = drafted; // Update the ref whenever drafted changes
+    }, [drafted]);
 
     useEffect(() => {
         let sideEffect = async()=>{
@@ -164,7 +168,7 @@ const CourseUpdate = () => {
     let imageUploadFunction = async (blobInfo, progress) => {
         const formData = new FormData();
         formData.append('file', blobInfo.blob());
-        formData.append('asset_folder', `course/${drafted}`);
+        formData.append('asset_folder', `course/${draftedRef.current}`);
         formData.append('upload_preset', 'fnmi-academy');
         try {
             const req = await fetch(`${cloudAPI}`, {
