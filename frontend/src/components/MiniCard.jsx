@@ -29,7 +29,7 @@ const MiniCard = ({imgPublicID, title, applicationDeadline, description, updated
                         </div>
                         <div className="col-8">
                             <div className="card-body">
-                                <h5 className="card-title text-secondary h6 fw-bold"><Link to={`/${applicationDeadline ? 'job':'article'}/${ID}/${slug}`} className="text-reset text-decoration-none truncate-line-2">{title}</Link></h5>
+                                <h5 className="card-title text-secondary h6 fw-bold"><a href={`/${applicationDeadline ? 'job':'article'}/${ID}/${slug}`} className="text-reset text-decoration-none truncate-line-2">{title}</a></h5>
                                 <small className="fw-bold text-info">
                                     {applicationDeadline && <> <FaCalendarAlt /> {applicationDeadline} </>}
                                 </small>
