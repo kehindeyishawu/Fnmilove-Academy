@@ -13,8 +13,7 @@ const CourseUpdate = () => {
     const { setShowLoading, setStaticNotification, setFadeNotification } = useOutletContext()
     let title = useRef(null);
     let tutors = useRef(null);
-    const [drafted, setDrafted] = useState((new Date()).getTime());
-    const draftedRef = useRef(drafted); // Create a ref for drafted because imageUploadFunction is not receiving the updated drafted value
+    const draftedRef = useRef((new Date()).getTime());
     let editorRef = useRef(null)
     let imgSrc = useRef(null)
     let tag = useRef(null)
@@ -26,9 +25,6 @@ const CourseUpdate = () => {
     const [editerInitialValue, setEditorInitialvalue] = useState("<p> Start putting your ideas here.</p>")
     const [sessionExpired, setSessionExpired] = useState(false)
 
-    useEffect(() => {
-        draftedRef.current = drafted; // Update the ref whenever drafted changes
-    }, [drafted]);
 
     useEffect(() => {
         let sideEffect = async()=>{
@@ -50,7 +46,7 @@ const CourseUpdate = () => {
                         tutors.current.value = res.tutors;
                         setFeaturedImg1(res.featuredImg)
                         tag.current.value = res.tag
-                        setDrafted(res.assetFolder);
+                        draftedRef.current = res.assetFolder;
                     }
                 } catch (error) {
                     setFadeNotification({ message: error.message, time: (new Date()).toString() })
@@ -72,7 +68,7 @@ const CourseUpdate = () => {
                     tutors.current.value = res.tutors;
                     setFeaturedImg1(res.featuredImg)
                     tag.current.value = res.tag
-                    setDrafted(res.assetFolder);
+                    draftedRef.current = res.assetFolder;
                 } catch (error) {
                     setStaticNotification({ message: error.message, time: (new Date()).toString() })
                     navigate("/courses");
@@ -109,7 +105,7 @@ const CourseUpdate = () => {
             tag: tag.current.value,
             postType: "course",
             content: editorRef.current.getContent(),
-            assetFolder: drafted
+            assetFolder: draftedRef.current
         }
         let req = await fetch(`/api/draft`, {
             method: "POST",
@@ -133,7 +129,7 @@ const CourseUpdate = () => {
             tutors: validate(tutors),
             tag: tag.current.value,
             content: editorRef.current.getContent(),
-            assetFolder: drafted
+            assetFolder: draftedRef.current
         }
         setShowLoading(true)
         try {
@@ -198,7 +194,7 @@ const CourseUpdate = () => {
             let formData = new FormData()
             formData.append("file", imgUpload)
             formData.append("upload_preset", "fnmi-academy")
-            formData.append("asset_folder", `course/${drafted}`)
+            formData.append("asset_folder", `course/${draftedRef.current}`)
             let req = await fetch(`${cloudAPI}`, {
                 method: "POST",
                 body: formData

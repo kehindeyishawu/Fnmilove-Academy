@@ -12,8 +12,7 @@ const ArticleUpdate = () => {
     let [featuredImg1, setFeaturedImg1] = useState("")
     const { setShowLoading, setStaticNotification, setFadeNotification } = useOutletContext()
     let title = useRef(null);
-    const [drafted, setDrafted] = useState((new Date()).getTime());
-    const draftedRef = useRef(drafted); // Create a ref for drafted because imageUploadFunction is not receiving the updated drafted value
+    const draftedRef = useRef((new Date()).getTime());
     let editorRef = useRef(null)
     let imgSrc = useRef(null)
     let { pathname } = useLocation()
@@ -23,10 +22,7 @@ const ArticleUpdate = () => {
     let navigate = useNavigate();
     const [editerInitialValue, setEditorInitialvalue] = useState("<p> Start putting your ideas here.</p>")
     const [sessionExpired, setSessionExpired] = useState(false)
-
-    useEffect(() => {
-        draftedRef.current = drafted; // Update the ref whenever drafted changes
-    }, [drafted]);
+    
 
     useEffect(() => {
         let sideEffect = async () => {
@@ -46,7 +42,7 @@ const ArticleUpdate = () => {
                         title.current.value = res.title
                         setEditorInitialvalue(res.content)
                         setFeaturedImg1(res.featuredImg)
-                        setDrafted(res.assetFolder)
+                        draftedRef.current = res.assetFolder
                     }
                 } catch (error) {
                     setFadeNotification({ message: error.message, time: (new Date()).toString() })
@@ -66,7 +62,7 @@ const ArticleUpdate = () => {
                     title.current.value = res.title
                     setEditorInitialvalue(res.content)
                     setFeaturedImg1(res.featuredImg)
-                    setDrafted(res.assetFolder)
+                    draftedRef.current = res.assetFolder
                 } catch (error) {
                     setStaticNotification({ message: error.message, time: (new Date()).toString() })
                     navigate("/blog");
@@ -100,7 +96,7 @@ const ArticleUpdate = () => {
             title: title.current.value,
             postType: "article",
             content: editorRef.current.getContent(),
-            assetFolder: drafted
+            assetFolder: draftedRef.current
         }
         let req = await fetch(`/api/draft`, {
             method: "POST",
@@ -122,7 +118,7 @@ const ArticleUpdate = () => {
             featuredImg: featuredImg1,
             title: validate(title),
             content: editorRef.current.getContent(),
-            assetFolder: drafted
+            assetFolder: draftedRef.current
         }
         setShowLoading(true)
         try {
@@ -157,7 +153,7 @@ const ArticleUpdate = () => {
     let imageUploadFunction = async (blobInfo, progress) => {
         const formData = new FormData();
         formData.append('file', blobInfo.blob());
-        formData.append('asset_folder', `article/${draftedRef.current}`); //use the ref value to get the current or latest drafted value
+        formData.append('asset_folder', `article/${draftedRef.current}`);
         formData.append('upload_preset', 'fnmi-academy');
         try {
             const req = await fetch(`${cloudAPI}`, {
@@ -187,7 +183,7 @@ const ArticleUpdate = () => {
             let formData = new FormData()
             formData.append("file", imgUpload)
             formData.append("upload_preset", "fnmi-academy")
-            formData.append("asset_folder", `article/${drafted}`)
+            formData.append("asset_folder", `article/${draftedRef.current}`)
             let req = await fetch(`${cloudAPI}`, {
                 method: "POST",
                 body: formData
