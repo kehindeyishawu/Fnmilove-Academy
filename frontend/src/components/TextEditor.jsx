@@ -31,7 +31,7 @@ const TextEditor = ({ editorRef, imageUploadFunction, editerInitialValue = ""}) 
                     toolbar: 'undo redo | blocks | ' +
                         'bold italic forecolor | alignleft aligncenter ' +
                         'alignright alignjustify | bullist numlist outdent indent | ' +
-                        'removeformat | help | image',
+                        'removeformat | help | image | media',
                     // statusbar: false,
                     branding: false,
                     promotion: false,
