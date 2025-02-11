@@ -38,8 +38,8 @@ let members = [
     },
     {
         img: "Team_CEO_mkoobc",
-        name: "Emeka Nwosu",
-        position: "Photographer",
+        name: "Funmilola Alabi",
+        position: "CEO",
         social: {
             fb: "",
             ig: "",
