@@ -11,16 +11,16 @@ const Footer = ({ setShowModal }) => {
                         {" "} <h1 className="radley-font fs-4 text-white d-inline border-start border-2 border-light ps-1 py-2 align-middle">Fnmilove Academy</h1>
                     </div>
                     <div className="order-1 order-md-2 gap-4 d-flex fs-3">
-                        <a href="" className="text-white">
+                        <a href="https://www.facebook.com/share/15rDVa32u6" className="text-white">
                         <FaFacebookF />
                         </a>
-                        <a href="" className="text-white">
+                        <a href="https://www.instagram.com/flacademy.fl" className="text-white">
                         <FaInstagram />
                         </a>
-                        <a href="" className="text-white">
+                        <a href="https://www.linkedin.com/in/funmilola-alabi-a911b366" className="text-white">
                         <FaLinkedinIn />
                         </a>
-                        <a href="" className="text-white">
+                        <a href="https://x.com/fnmiloveacademy" className="text-white">
                         <FaXTwitter />
                         </a>
                     </div>

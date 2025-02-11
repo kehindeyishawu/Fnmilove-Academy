@@ -7,16 +7,16 @@ const Headline = () => {
                 <div className='flex-grow-1 px-5 d-flex'>
                     <div className='py-2 me-auto'>Welcome To Fnmilove Academy. <span className='text-primary'>Connect With Us</span></div>
                     <div className="align-items-center gap-4 d-flex">
-                        <a href="" className="text-white">
+                        <a href="https://www.facebook.com/share/15rDVa32u6" className="text-white">
                         <FaFacebookF />
                         </a>
-                        <a href="" className="text-white">
+                        <a href="https://www.instagram.com/flacademy.fl" className="text-white">
                         <FaInstagram />
                         </a>
-                        <a href="" className="text-white">
+                        <a href="https://www.linkedin.com/in/funmilola-alabi-a911b366" className="text-white">
                         <FaLinkedinIn />
                         </a>
-                        <a href="" className="text-white">
+                        <a href="https://x.com/fnmiloveacademy" className="text-white">
                         <FaXTwitter />
                         </a>
                     </div>
