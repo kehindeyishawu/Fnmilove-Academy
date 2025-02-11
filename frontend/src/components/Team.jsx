@@ -4,9 +4,31 @@ import TeamCard from './TeamCard';
 
 let members = [
     {
-        img: "face1_rl3dax",
+        img: "Team_Makeup_Artist_r0typm",
+        name: "Elisabeth Omashaye",
+        position: "Makeup Artist",
+        social: {
+            fb: "",
+            ig: "",
+            in: "",
+            x:  ""
+        }
+    },
+    {
+        img: "Team_Esthetician_ax6",
+        name: "Isoken Isibo",
+        position: "Esthetician",
+        social: {
+            fb: "",
+            ig: "",
+            in: "",
+            x:  ""
+        }
+    },
+    {
+        img: "Vincent_Henry_nvfoly",
         name: "Vincent Henry",
-        position: "Cinematographer",
+        position: "SMM/Cinematographer",
         social: {
             fb: "",
             ig: "",
@@ -15,29 +37,7 @@ let members = [
         }
     },
     {
-        img: "face2_tpasfv",
-        name: "Princess Okafor",
-        position: "Hair Stylist",
-        social: {
-            fb: "",
-            ig: "",
-            in: "",
-            x:  ""
-        }
-    },
-    {
-        img: "face3_af6epz",
-        name: "Fatima Abdullahi",
-        position: "Fashion Designer",
-        social: {
-            fb: "",
-            ig: "",
-            in: "",
-            x:  ""
-        }
-    },
-    {
-        img: "face4_z4aeir",
+        img: "Team_CEO_mkoobc",
         name: "Emeka Nwosu",
         position: "Photographer",
         social: {

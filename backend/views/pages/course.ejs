@@ -4,7 +4,7 @@
         <section class="d-lg-none">
             <nav class="container pt-5 pb-4 fs-5 fw-bold">
                 <a class="text-decoration-none" href="/">Home</a> >>
-                <a class="text-decoration-none" href="/">Courses</a>
+                <a class="text-decoration-none" href="/courses">Courses</a>
             </nav>
             <div class="container-md px-0 px-md-3">
                 <img src="<%=cloudname%>/q_auto,f_auto,w_1200,c_limit/<%=post.featuredImg%>" class="card-img-top rounded-0" alt="" />
@@ -60,12 +60,6 @@
                 </ul>
                 <a href="/registration-form?courseid=<%=post._id%>&courseslug=<%=post.slug%>" class="mt-4 btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
             </div>
-            <!-- show only on small screens fixed to the bottom -->
-            <div class="container-fluid d-md-none fixed-bottom bg-white shadow py-2 d-md-none">
-                <div class="hstack gap-2 justify-content-around">
-                    <a href="/registration-form?courseid=<%=post._id%>&courseslug=<%=post.slug%>" class="rounded-2 flex-grow-1 btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
-                </div>
-            </div>
         </section>
         <!-- show only from lg screens -->
         <section class="d-none d-lg-block vertical-padding pt-0 text-center banner bg-dark">
@@ -87,6 +81,13 @@
                 <div class="col-md-8">
                     <h2 class="fw-bold">About This Course</h2>
                     <%-post.content%>
+                </div>
+                <!-- show only on small screens sticky to the bottom -->
+                <div class="container-fluid d-md-none sticky-bottom bg-white shadow py-2 d-md-none">
+                    <div class="hstack gap-2 justify-content-around">
+                        <a href="/registration-form?courseid=<%=post._id%>&courseslug=<%=post.slug%>"
+                            class="rounded-2 flex-grow-1 btn btn-lg btn-primary fw-bold d-block rounded-0">Enrol Now</a>
+                    </div>
                 </div>
                 <div class="col-lg-4">
                     <!-- show only from lg screens -->
@@ -164,5 +165,6 @@
                 </div>
             </div>
         </section>
+        
     </article>
 </main>

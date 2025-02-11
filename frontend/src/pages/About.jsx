@@ -150,7 +150,7 @@ const About = () => {
         </div>
       </article>
       <section className="top-spacing">
-        <Team present={"all"} />
+        <Team present={4} />
       </section>
     </main>
   )
