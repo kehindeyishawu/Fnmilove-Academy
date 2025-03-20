@@ -60,8 +60,8 @@ let generateRegFormAttachments = async({files})=>{
 export let mailRegFormData = async (inputs)=>{
     try {
         let emailReport = await zoho.sendMail({
-            from: "Fnmilove Academy sales@fnmiloveacademy.com",
-            to: "vincent@fnmiloveacademy.com",
+            from: `Fnmilove Academy ${process.env.EMAIL_USER}`,
+            to: process.env.SUPPORT_EMAIL,
             subject: "Registration Form Applicant",
             text: convert(generateRegFormData(inputs)),
             html: generateRegFormData(inputs),
@@ -92,8 +92,8 @@ const genContactFormData = ({fullname, email, phone, issue, message})=>{
 export let mailContactFormData = async(inputs)=>{
     try {
         let emailReport = await zoho.sendMail({
-            from: "Fnmilove Academy sales@fnmiloveacademy.com",
-            to: "vincent@fnmiloveacademy.com",
+            from: `Fnmilove Academy ${process.env.EMAIL_USER}`,
+            to: process.env.SUPPORT_EMAIL,
             subject: "Contact Form Data",
             text: convert(genContactFormData(inputs)),
             html: genContactFormData(inputs)
@@ -124,8 +124,8 @@ const genJobFormData = ({ companyName, title, firstname, lastname, email, phone,
 export let mailJobFormData = async (inputs, file) => {
     try {
         let emailReport = await zoho.sendMail({
-            from: "Fnmilove Academy sales@fnmiloveacademy.com",
-            to: "vincent@fnmiloveacademy.com",
+            from: `Fnmilove Academy ${process.env.EMAIL_USER}`,
+            to: process.env.SUPPORT_EMAIL,
             subject: "Job Application Form",
             text: convert(genJobFormData(inputs)),
             html: genJobFormData(inputs),
@@ -157,7 +157,7 @@ let genPasswordResetHtml = (token, hostname)=>{
 export let mailPasswordResetToken = async (token, email, hostname) => {
     try {
         let emailReport = await zoho.sendMail({
-            from: "Fnmilove Academy sales@fnmiloveacademy.com",
+            from: `Fnmilove Academy ${process.env.EMAIL_USER}`,
             to: email,
             subject: "Password Reset token",
             text: convert(genPasswordResetHtml(token, hostname)),
