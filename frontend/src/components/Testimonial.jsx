@@ -17,21 +17,21 @@ const Testimonial = () => {
             <p className='z-1 position-relative fw-bold text-info'>Transforming Lives One Lesson at a Time</p>
             <Carousel fade>
                 <Carousel.Item>
-                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_face,")}/student9`} className='' alt="Academy Student" />
+                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_auto,")}/student2-dark`} className='' alt="Academy Student" />
                     <Carousel.Caption>
-                        <h2>Caleb Okonkwo</h2>
-                        <p><em>"It so easy getting myself back on track. <br /> I definitely recommend Fnmilove"</em></p>
+                        <h2>Atara Akin</h2>
+                        <p><em>"Highly recommended for personal <br /> and intellectual growth."</em></p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_face,")}/face3`} className='' alt="Academy Student" />
+                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_face,")}/student3-darker`} className='' alt="Academy Student" />
                     <Carousel.Caption>
-                        <h2>Eliza John</h2>
-                        <p><em>"Thanks to Fnmilove Academy, I now have the <br /> skills and confidence to excel in my career"</em></p>
+                        <h2>Chioma</h2>
+                        <p><em>"It’s a no judgment zone and you are free <br /> to make mistakes while you learn"</em></p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_face,")}/student10`} className='' alt="Academy Student" />
+                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_face,")}/student10-dark`} className='' alt="Academy Student" />
                     <Carousel.Caption>
                         <h2>Bright Ezekiel</h2>
                         <p>
