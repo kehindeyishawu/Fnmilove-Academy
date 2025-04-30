@@ -17,21 +17,24 @@ const Testimonial = () => {
             <p className='z-1 position-relative fw-bold text-info'>Transforming Lives One Lesson at a Time</p>
             <Carousel fade>
                 <Carousel.Item>
-                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_auto,")}/student2-dark`} className='' alt="Academy Student" />
+                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_auto,")}/student2-dark`} className='d-none d-lg-inline' alt="Academy Student" />
+                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_4:3,c_fill,g_auto,")}/student2-dark`} className='d-lg-none' alt="Academy Student" />
                     <Carousel.Caption>
                         <h2>Atara Akin</h2>
                         <p><em>"Highly recommended for personal <br /> and intellectual growth."</em></p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_face,")}/student3-darker`} className='' alt="Academy Student" />
+                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_face,")}/student3-darker`} className='d-none d-lg-inline' alt="Academy Student" />
+                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_4:3,c_fill,g_face,")}/student3-darker`} className='d-lg-none' alt="Academy Student" />
                     <Carousel.Caption>
                         <h2>Chioma</h2>
                         <p><em>"It’s a no judgment zone and you are free <br /> to make mistakes while you learn"</em></p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_face,")}/student10-dark`} className='' alt="Academy Student" />
+                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_3:2,c_fill,g_face,")}/student10-dark`} className='d-none d-lg-inline' alt="Academy Student" />
+                    <img src={`${cloudname}/${setContainerHalfWidth("r_30,ar_4:3,c_fill,g_face,")}/student10-dark`} className='d-lg-none' alt="Academy Student" />
                     <Carousel.Caption>
                         <h2>Bright Ezekiel</h2>
                         <p>
