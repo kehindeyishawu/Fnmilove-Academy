@@ -26,6 +26,11 @@
     }
     .carousel-caption {
         // position: absolute;
+        background-color: rgba(0, 0, 0, 0.65);
+        // width: 250px;
+        width: 50%;
+        margin: 0 auto;
+        border-radius: 2rem;
         bottom: 0;
     }
     h2{
@@ -35,15 +40,20 @@
 }
 
 
-
-
-
 @media (max-width: 991px) {
     .testimonial-container{
         height: 500px;
     }
 }
 
+@media (max-width: 768px) {
+    .testimonial-container {
+        .carousel-caption {
+            border-radius: 1rem;
+            padding: 15px 0;
+        }
+    }
+}
 
 @media (max-width: 575px) {
     .testimonial-container {
@@ -57,6 +67,10 @@
         }
         img {
             width: 75%;
+        }
+        .carousel-caption {
+            width: 70%;
+            border-radius: 1rem;
         }
     }
 }
